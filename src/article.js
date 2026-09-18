@@ -127,7 +127,7 @@ function render(L, page, allPages, alternates = [], updated = null) {
   }];
 
   return layout(L, {
-    title: `${P.metaTitle || P.title} | ${site.name}`,
+    title: `${P.metaTitle || P.title} | ${site.brandShort}`,
     description: P.description,
     path: `${P.slug}/`,
     body,

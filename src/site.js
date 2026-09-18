@@ -2,6 +2,8 @@
 const site = {
   name: "Ananta Tours & Travels",
   shortName: "Ananta",
+  // Used as the suffix of every page title; the full name is too long for a search result.
+  brandShort: "Ananta Tours",
   tagline: "Experience Koraput in Comfort",
   // Public address. Set customDomain once the branded domain points at GitHub Pages:
   // build.js then writes dist/CNAME and every canonical, hreflang, sitemap and schema URL follows.

@@ -186,7 +186,7 @@ function creditsPage(L, alternates) {
   </header>
   <ul class="credit-list">${rows}</ul>
 </article>`;
-  return layout(L, { title: `${t.title} | ${site.name}`, description: t.description, path: "photo-credits/", body, alternates });
+  return layout(L, { title: `${t.title} | ${site.brandShort}`, description: t.description, path: "photo-credits/", body, alternates });
 }
 
 module.exports = { esc, pic, icon, layout, header, footer, ctaCard, creditsPage, logo, isOwn, realBadge, fill };
