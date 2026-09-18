@@ -164,7 +164,7 @@ module.exports = [
     slug: "koraput-sightseeing",
     title: "Koraput sightseeing, place by place",
     short: "Koraput sightseeing",
-    metaTitle: "Koraput Sightseeing: 10 Places, Distances and Best Times",
+    metaTitle: "Places to Visit in Koraput: 10 Tourist Places, Distances, Best Times",
     description: "Ten places worth the drive around Koraput: Deomali, Duduma, Rani Duduma, Gupteswar, Upper Kolab, Sabara Srikhetra, the Tribal Museum, Maliguda, Nandapur and Onukadelli, with distances and timing.",
     kind: "Places", icon: "map",
     hero: "koraput-fields", heroAlt: "Green fields and low hills on the road between Koraput and Jeypore",
@@ -200,7 +200,9 @@ module.exports = [
       { type: "h2", text: "Nandapur", id: "nandapur" },
       { type: "p", html: "The old capital before Jeypore, about 45 km south. Small stone shrines and the Batrisa Singhasana, the 32-step throne of the old kings. Twenty minutes of history on the road to Rani Duduma." },
       { type: "h2", text: "Onukadelli", id: "onukadelli" },
-      { type: "p", html: "A weekly market near Duduma, on Thursdays, where Bonda and other communities come to trade. It is a working market, not a show. We visit quietly, buy something, and photograph people only when they agree." }
+      { type: "p", html: "A weekly market near Duduma, on Thursdays, where Bonda and other communities come to trade. It is a working market, not a show. We visit quietly, buy something, and photograph people only when they agree." },
+      { type: "h2", text: "Offbeat: Talamali, Kaliamali, Dudhari", id: "offbeat" },
+      { type: "p", html: "Three places local groups ask about that we do not put on a first-visit plan without checking the road that week. <strong>Talamali</strong> and <strong>Kaliamali</strong> are open highland tops in the Semiliguda–Pottangi hills with long views and rough final approaches. <strong>Dudhari</strong> is a smaller waterfall whose access changes with the season. If you want one of them, ask us on WhatsApp and we will tell you honestly whether the Traveller can get there that week." }
     ],
     related: ["deomali-tour", "duduma-waterfall-tour", "gupteswar-tour", "kolab-dam-tour"],
     message: "Hi Ananta Tours, we are planning Koraput sightseeing. Please suggest a route and share the 17-seater Traveller price."
@@ -209,7 +211,7 @@ module.exports = [
     slug: "koraput-3-day-itinerary",
     title: "Koraput in 3 days",
     short: "3-day itinerary",
-    metaTitle: "Koraput 3-Day Itinerary: Deomali, Rani Duduma, Duduma, Kolab",
+    metaTitle: "Koraput 3-Day Itinerary: Deomali, Rani Duduma, Duduma Waterfall, Kolab",
     description: "A balanced three-day Koraput itinerary for groups: town and Kolab on day one, Deomali and Rani Duduma on day two, Duduma Waterfall on day three.",
     kind: "Itinerary", icon: "calendar",
     hero: "deomali-peak", heroAlt: "Green slopes of Deomali under a hazy sky",
@@ -245,7 +247,7 @@ module.exports = [
     slug: "koraput-2-day-itinerary",
     title: "Koraput in 2 days",
     short: "2-day itinerary",
-    metaTitle: "Koraput 2-Day Itinerary: Deomali, Kolab, Rani Duduma",
+    metaTitle: "Koraput 2-Day Itinerary (Weekend Trip): Deomali, Kolab, Rani Duduma",
     description: "A two-day Koraput itinerary for a weekend: the town and Upper Kolab on day one, Deomali, Nandapur and Rani Duduma on day two.",
     kind: "Itinerary", icon: "calendar",
     hero: "raniduduma-road", heroAlt: "Country road through green paddy fields near Rani Duduma",
@@ -402,4 +404,4 @@ module.exports = [
     related: ["koraput-2-day-itinerary", "gupteswar-tour", "koraput-tour", "koraput-sightseeing"],
     message: "Hi Ananta Tours, we would like to include Upper Kolab in a Koraput tour. Please share the plan and the 17-seater Traveller price."
   }
-];
+].concat(require("./pages-extra"));

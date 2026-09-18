@@ -123,6 +123,21 @@ function render() {
   </div>
 </section>
 
+<section class="band band-paper" id="itineraries" aria-labelledby="itineraries-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="itineraries-title">How many days do you have?</h2>
+      <p class="lede">Four realistic plans, each one a page with timings, stops and what to skip. Pick the closest and we adjust it to your group.</p>
+    </div>
+    <div class="itin-grid">
+      <a class="itin-card" href="koraput-1-day-itinerary/"><b>1</b><span class="itin-day">day</span><strong>Temple, museum, Kolab, Deomali sunset</strong><small>Long but doable from a night in town.</small><span class="itin-more">See the plan ${icon("arrow")}</span></a>
+      <a class="itin-card" href="koraput-2-day-itinerary/"><b>2</b><span class="itin-day">days</span><strong>Town and Kolab, then Deomali and Rani Duduma</strong><small>The weekend version.</small><span class="itin-more">See the plan ${icon("arrow")}</span></a>
+      <a class="itin-card is-featured" href="koraput-3-day-itinerary/"><b>3</b><span class="itin-day">days</span><strong>Adds Duduma Waterfall and the Machkund valley</strong><small>The sweet spot for most groups.</small><span class="itin-more">See the plan ${icon("arrow")}</span></a>
+      <a class="itin-card" href="koraput-4-day-itinerary/"><b>4</b><span class="itin-day">days</span><strong>Adds Gupteswar cave temple and the Maliguda railway</strong><small>Every direction, nothing rushed.</small><span class="itin-more">See the plan ${icon("arrow")}</span></a>
+    </div>
+  </div>
+</section>
+
 <section class="band band-mist" id="planner" aria-labelledby="planner-title">
   <div class="wrap planner-grid">
     <div class="planner-copy">
@@ -165,6 +180,12 @@ function render() {
         <label for="trip-date">Around when? <small>(optional)</small></label>
         <input type="date" id="trip-date" name="date">
       </div>
+      <fieldset>
+        <legend>${icon("pin")}Places you want to include <small>(optional)</small></legend>
+        <div class="chips chips-multi">
+          ${dests.map(d => `<label class="chip"><input type="checkbox" name="places" value="${esc(d.name)}"><span>${icon(d.icon)}${esc(d.name)}</span></label>`).join("\n          ")}
+        </div>
+      </fieldset>
       <div class="route-result" aria-live="polite">
         <h3 id="route-title">Your 3-day Koraput journey</h3>
         <div class="route-days" id="route-days"></div>
@@ -183,6 +204,39 @@ function render() {
     </div>
     <div class="dest-grid">
       ${dests.map((d, i) => destCard(d, i === 0)).join("\n")}
+    </div>
+  </div>
+</section>
+
+<section class="band band-mist" id="together" aria-labelledby="together-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="together-title">One group. One vehicle. One trip.</h2>
+      <p class="lede">For 10 to 17 people, several small cars turn a holiday into coordination. One Traveller keeps everyone on the same road at the same time.</p>
+    </div>
+    <div class="compare">
+      <div class="compare-card compare-bad">
+        <div class="compare-head"><span>Three to five cars</span><strong>The group splits</strong></div>
+        <div class="compare-row" aria-hidden="true"><i class="car">4</i><i class="car">5</i><i class="car">4</i><i class="car">4</i></div>
+        <ul>
+          <li>${icon("close")}Different drivers, different arrival times</li>
+          <li>${icon("close")}Phone calls to find each other at every stop</li>
+          <li>${icon("close")}Luggage in the wrong car</li>
+          <li>${icon("close")}Half the group misses the explanation</li>
+        </ul>
+      </div>
+      <div class="compare-vs" aria-hidden="true">vs</div>
+      <div class="compare-card compare-good">
+        <div class="compare-head"><span>One Traveller</span><strong>Everyone together</strong></div>
+        <div class="compare-row" aria-hidden="true"><i class="van-shape">17</i></div>
+        <ul>
+          <li>${icon("check")}One pickup, one route, one set of timings</li>
+          <li>${icon("check")}One driver who knows the road</li>
+          <li>${icon("check")}Luggage loaded once</li>
+          <li>${icon("check")}Same view, same story, same time</li>
+        </ul>
+        <a class="text-link" href="group-tour-koraput/">How a group day runs ${icon("arrow")}</a>
+      </div>
     </div>
   </div>
 </section>
@@ -366,8 +420,8 @@ function render() {
   ];
 
   return layout({
-    title: `${site.name} | Experience Koraput in Comfort`,
-    description: "Discover Koraput with a brand-new 17-seater AC Traveller, a friendly local driver, support staff and guided tours. Deomali, Duduma, Gupteswar, Kolab and more. Plan your trip on WhatsApp.",
+    title: `${site.name} | Koraput Trip Planning, Sightseeing and a 17-Seater AC Traveller for Groups`,
+    description: "Plan a Koraput trip: tourist places, 1 to 4 day itineraries, tours from Bhubaneswar and Kolkata, and one 17-seater AC Traveller with a local driver and support staff for your group. Enquire on WhatsApp.",
     path: "",
     depth: 0,
     body,

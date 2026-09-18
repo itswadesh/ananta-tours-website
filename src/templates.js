@@ -46,8 +46,10 @@ function footer(root) {
     <div class="footer-col">
       <h4>Plan</h4>
       <a href="${root}koraput-tour/">Koraput tour</a>
+      <a href="${root}koraput-1-day-itinerary/">1-day itinerary</a>
       <a href="${root}koraput-2-day-itinerary/">2-day itinerary</a>
       <a href="${root}koraput-3-day-itinerary/">3-day itinerary</a>
+      <a href="${root}koraput-4-day-itinerary/">4-day itinerary</a>
       <a href="${root}koraput-tour-package-from-bhubaneswar/">From Bhubaneswar</a>
       <a href="${root}koraput-tour-package-from-kolkata/">From Kolkata</a>
     </div>
@@ -62,7 +64,10 @@ function footer(root) {
     <div class="footer-col">
       <h4>Ananta</h4>
       <a href="${root}17-seater-traveller-koraput/">The Traveller</a>
+      <a href="${root}traveller-rental-koraput/">Traveller rental</a>
+      <a href="${root}group-tour-koraput/">Group tours</a>
       <a href="${root}#map">Map of stops</a>
+      <a href="${root}contact/">Contact</a>
       <button class="link-btn js-whatsapp" type="button">WhatsApp us</button>
       <a href="${root}photo-credits/">Photo credits</a>
     </div>

@@ -24,6 +24,7 @@ module.exports = {
   },
   nav: [
     { href: "#journey", label: "The road" },
+    { href: "#itineraries", label: "Itineraries" },
     { href: "#destinations", label: "Destinations" },
     { href: "#traveller", label: "Traveller" },
     { href: "#map", label: "Map" }
