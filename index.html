@@ -19,7 +19,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="assets/icon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..600,50;1,9..144,400..600,50&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
 <link rel="preload" as="image" href="assets/photos/traveller-front-garland-960.jpg" imagesrcset="assets/photos/traveller-front-garland-480.webp 480w, assets/photos/traveller-front-garland-960.webp 960w, assets/photos/traveller-front-garland-1530.webp 1530w" imagesizes="100vw" fetchpriority="high">
 <link rel="stylesheet" href="styles.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"TravelAgency","name":"Ananta Tours & Travels","description":"Koraput sightseeing journeys for families and groups in a new 17-seater AC Traveller with a local driver, support staff and guided-tour assistance.","url":"https://itswadesh.github.io/ananta-tours-website","areaServed":["Koraput","Odisha"],"telephone":"+917609835466","email":"saramanihembram434@gmail.com","address":{"@type":"PostalAddress","streetAddress":"Kalinga Nagar","addressLocality":"Semiliguda","addressRegion":"Odisha","postalCode":"764036","addressCountry":"IN"},"contactPoint":[{"@type":"ContactPoint","contactType":"reservations","telephone":"+917978707236","availableLanguage":["en","or","hi"]}],"priceRange":"₹₹","makesOffer":[{"@type":"Offer","itemOffered":{"@type":"TouristTrip","name":"Deomali day trip","url":"https://itswadesh.github.io/ananta-tours-website/deomali-tour/"}},{"@type":"Offer","itemOffered":{"@type":"TouristTrip","name":"Duduma Waterfall day trip","url":"https://itswadesh.github.io/ananta-tours-website/duduma-waterfall-tour/"}},{"@type":"Offer","itemOffered":{"@type":"TouristTrip","name":"Gupteswar Cave Temple day trip","url":"https://itswadesh.github.io/ananta-tours-website/gupteswar-tour/"}},{"@type":"Offer","itemOffered":{"@type":"TouristTrip","name":"Upper Kolab Reservoir day trip","url":"https://itswadesh.github.io/ananta-tours-website/kolab-dam-tour/"}}]}</script>
@@ -42,12 +42,26 @@
 <main id="main">
 
 <section class="hero" aria-labelledby="hero-title">
-  <div class="hero-media">
-    <picture class="pic"><source type="image/webp" srcset="assets/photos/traveller-front-garland-480.webp 480w, assets/photos/traveller-front-garland-960.webp 960w, assets/photos/traveller-front-garland-1530.webp 1530w" sizes="100vw"><img src="assets/photos/traveller-front-garland-960.jpg" alt="Our Force Traveller with a marigold garland on the day it was delivered, September 2026" width="1530" height="1530" loading="eager" fetchpriority="high" decoding="async"></picture>
+  <div class="hero-media" id="hero-slider">
+    <picture class="pic hero-slide is-active"><source type="image/webp" srcset="assets/photos/traveller-front-garland-480.webp 480w, assets/photos/traveller-front-garland-960.webp 960w, assets/photos/traveller-front-garland-1530.webp 1530w" sizes="100vw"><img src="assets/photos/traveller-front-garland-960.jpg" alt="Our Force Traveller with a marigold garland on delivery day" width="1530" height="1530" loading="eager" fetchpriority="high" decoding="async"></picture>
+    <picture class="pic hero-slide"><source type="image/webp" srcset="assets/photos/traveller-side-480.webp 480w, assets/photos/traveller-side-960.webp 960w, assets/photos/traveller-side-1530.webp 1530w" sizes="100vw"><img src="assets/photos/traveller-side-960.jpg" alt="Side view of our Force Traveller" width="1530" height="1530" loading="lazy" decoding="async"></picture>
+    <picture class="pic hero-slide"><source type="image/webp" srcset="assets/photos/traveller-front-hill-480.webp 480w, assets/photos/traveller-front-hill-960.webp 960w, assets/photos/traveller-front-hill-1200.webp 1200w" sizes="100vw"><img src="assets/photos/traveller-front-hill-960.jpg" alt="Front of our Traveller on a Koraput hillside" width="1200" height="1600" loading="lazy" decoding="async"></picture>
+    <picture class="pic hero-slide"><source type="image/webp" srcset="assets/photos/traveller-cabin-480.webp 480w, assets/photos/traveller-cabin-960.webp 960w, assets/photos/traveller-cabin-1530.webp 1530w" sizes="100vw"><img src="assets/photos/traveller-cabin-960.jpg" alt="Inside the Traveller: pushback seats in a 2+1 layout" width="1530" height="1530" loading="lazy" decoding="async"></picture>
+    <picture class="pic hero-slide"><source type="image/webp" srcset="assets/photos/traveller-rear-480.webp 480w, assets/photos/traveller-rear-960.webp 960w, assets/photos/traveller-rear-1530.webp 1530w" sizes="100vw"><img src="assets/photos/traveller-rear-960.jpg" alt="Rear doors of our Traveller" width="1530" height="1530" loading="lazy" decoding="async"></picture>
   </div>
   <div class="hero-shade" aria-hidden="true"></div>
+  <button class="hero-open" type="button" aria-label="Open the photo gallery" data-gallery-open="0"></button>
+  <div class="hero-ui" aria-label="Photo slider">
+    <p class="hero-slide-caption" id="hero-slide-caption">Delivery day, 4 September 2026. Real photo of our Traveller.</p>
+    <div class="hero-ui-row">
+      <button class="hero-arrow" type="button" data-slide="-1" aria-label="Previous photo"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+      <div class="hero-dots" role="tablist"><button type="button" role="tab" aria-selected="true" data-slide-to="0" aria-label="Photo 1: Delivery day, 4 September 2026. Real photo of our Traveller."></button><button type="button" role="tab" aria-selected="false" data-slide-to="1" aria-label="Photo 2: Side view. Registration OD02 DT 9296, all-India permit."></button><button type="button" role="tab" aria-selected="false" data-slide-to="2" aria-label="Photo 3: On a Koraput hillside in its first week."></button><button type="button" role="tab" aria-selected="false" data-slide-to="3" aria-label="Photo 4: Inside: 2+1 pushback seats, curtains, overhead rack, AC vents."></button><button type="button" role="tab" aria-selected="false" data-slide-to="4" aria-label="Photo 5: Rear doors, emergency exit and our numbers."></button></div>
+      <button class="hero-arrow" type="button" data-slide="1" aria-label="Next photo"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+      <button class="btn btn-sand btn-sm hero-view" type="button" data-gallery-open="current"><svg class="ic" aria-hidden="true"><use href="#i-photo"/></svg><span>View 5 photos</span></button>
+    </div>
+  </div>
   <div class="hero-inner">
-    <span class="real-badge real-badge-inline"><svg class="ic" aria-hidden="true"><use href="#i-camera"/></svg>Real photo · our Traveller on delivery day, 18 September 2026</span>
+    <span class="real-badge real-badge-inline"><svg class="ic" aria-hidden="true"><use href="#i-camera"/></svg>Real photo · our Traveller on delivery day, 4 September 2026</span>
     <h1 id="hero-title"><span class="hero-word"><span>Discover</span></span> <span class="hero-word"><span>Koraput.</span></span><br><em><span class="hero-word"><span>We’ll</span></span> <span class="hero-word"><span>take</span></span> <span class="hero-word"><span>care</span></span> <span class="hero-word"><span>of</span></span> <span class="hero-word"><span>the</span></span> <span class="hero-word"><span>journey.</span></span></em></h1>
     <p class="hero-copy">Travel through the mountains, waterfalls and hidden landscapes of Koraput in our brand-new 17-seater AC Traveller, with a friendly local driver, support staff and guided-tour assistance.</p>
     <div class="hero-actions">
@@ -91,19 +105,33 @@
     </div>
   </div>
   <div class="wrap road-track">
-    <svg class="road-svg" aria-hidden="true"><path class="road-base"/><path class="road-dash"/><path class="road-drawn"/></svg>
-    <div class="van" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-van"/></svg></div>
+    <svg class="road-svg" aria-hidden="true"><path class="road-base"/><path class="road-edge"/><path class="road-dash"/><path class="road-drawn"/></svg>
+    <div class="van" aria-hidden="true">
+      <svg viewBox="0 0 64 34" class="van-top">
+        <ellipse cx="32" cy="30" rx="26" ry="3" fill="rgba(0,0,0,0.45)"/>
+        <rect x="6" y="8" width="52" height="18" rx="5" fill="#fff"/>
+        <path d="M52 8 h4 a6 6 0 0 1 6 6 v6 a6 6 0 0 1 -6 6 h-4 z" fill="#fff"/>
+        <rect x="10" y="10" width="34" height="14" rx="2" fill="#dbe7f5"/>
+        <g fill="#fff"><rect x="17" y="10" width="2" height="14"/><rect x="24" y="10" width="2" height="14"/><rect x="31" y="10" width="2" height="14"/><rect x="38" y="10" width="2" height="14"/></g>
+        <rect x="46" y="10" width="10" height="14" rx="2" fill="#cfe0f3"/>
+        <rect x="22" y="12" width="10" height="10" rx="2" fill="#e9eef5"/>
+        <rect x="6" y="15" width="52" height="3" fill="#f26a1b"/>
+        <rect x="60" y="11" width="3" height="4" rx="1" fill="#ffd27a"/><rect x="60" y="19" width="3" height="4" rx="1" fill="#ffd27a"/>
+        <rect x="3" y="11" width="3" height="4" rx="1" fill="#e04b4b"/><rect x="3" y="19" width="3" height="4" rx="1" fill="#e04b4b"/>
+        <g fill="#1a1a1a"><rect x="12" y="5" width="8" height="4" rx="1.5"/><rect x="44" y="5" width="8" height="4" rx="1.5"/><rect x="12" y="25" width="8" height="4" rx="1.5"/><rect x="44" y="25" width="8" height="4" rx="1.5"/></g>
+      </svg>
+    </div>
     <article class="stop stop-start">
-      <span class="stop-marker" aria-hidden="true"></span>
+      <span class="stop-marker stop-marker-flag" aria-hidden="true"><i><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg></i></span>
       <div class="stop-body">
         <span class="stop-kind"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>Start</span>
         <h3>Koraput town</h3>
         <p>Pickup at your hotel, the railway station or wherever your journey into the hills begins.</p>
-        <div class="stop-vehicle"><picture class="pic"><source type="image/webp" srcset="assets/photos/traveller-front-garland-480.webp 480w, assets/photos/traveller-front-garland-960.webp 960w, assets/photos/traveller-front-garland-1530.webp 1530w" sizes="12rem"><img src="assets/photos/traveller-front-garland-960.jpg" alt="The Ananta Traveller, ready for pickup" width="1530" height="1530" loading="lazy" decoding="async"></picture><span>Our Traveller, photographed on the day it arrived, 18 September 2026. Real photo.</span></div>
+        <div class="stop-vehicle"><picture class="pic"><source type="image/webp" srcset="assets/photos/traveller-front-garland-480.webp 480w, assets/photos/traveller-front-garland-960.webp 960w, assets/photos/traveller-front-garland-1530.webp 1530w" sizes="12rem"><img src="assets/photos/traveller-front-garland-960.jpg" alt="The Ananta Traveller, ready for pickup" width="1530" height="1530" loading="lazy" decoding="async"></picture><span>Our Traveller, photographed on the day it arrived, 4 September 2026. Real photo.</span></div>
       </div>
     </article>
     <article class="stop" id="stop-deomali" style="--mx:56%">
-  <span class="stop-marker" aria-hidden="true"></span>
+  <span class="stop-marker" aria-hidden="true"><i>1</i></span>
   <div class="stop-media" data-parallax="7"><picture class="pic"><source type="image/webp" srcset="assets/photos/deomali-range-480.webp 480w, assets/photos/deomali-range-960.webp 960w, assets/photos/deomali-range-1600.webp 1600w" sizes="(min-width: 900px) 45vw, 100vw"><img src="assets/photos/deomali-range-960.jpg" alt="Deomali, Koraput" width="1920" height="886" loading="lazy" decoding="async"></picture></div>
   <div class="stop-body">
     <span class="stop-kind"><svg class="ic" aria-hidden="true"><use href="#i-mountain"/></svg>Mountain</span>
@@ -114,7 +142,7 @@
   </div>
 </article>
 <article class="stop" id="stop-rani-duduma" style="--mx:44%">
-  <span class="stop-marker" aria-hidden="true"></span>
+  <span class="stop-marker" aria-hidden="true"><i>2</i></span>
   <div class="stop-media" data-parallax="7"><picture class="pic"><source type="image/webp" srcset="assets/photos/raniduduma-road-480.webp 480w, assets/photos/raniduduma-road-960.webp 960w, assets/photos/raniduduma-road-1600.webp 1600w" sizes="(min-width: 900px) 45vw, 100vw"><img src="assets/photos/raniduduma-road-960.jpg" alt="Rani Duduma, Koraput" width="1920" height="1440" loading="lazy" decoding="async"></picture></div>
   <div class="stop-body">
     <span class="stop-kind"><svg class="ic" aria-hidden="true"><use href="#i-waterfall"/></svg>Waterfall</span>
@@ -125,7 +153,7 @@
   </div>
 </article>
 <article class="stop" id="stop-duduma" style="--mx:56%">
-  <span class="stop-marker" aria-hidden="true"></span>
+  <span class="stop-marker" aria-hidden="true"><i>3</i></span>
   <div class="stop-media" data-parallax="7"><picture class="pic"><source type="image/webp" srcset="assets/photos/duduma-gorge-480.webp 480w, assets/photos/duduma-gorge-960.webp 960w, assets/photos/duduma-gorge-1600.webp 1600w" sizes="(min-width: 900px) 45vw, 100vw"><img src="assets/photos/duduma-gorge-960.jpg" alt="Duduma Waterfall, Koraput" width="1920" height="1440" loading="lazy" decoding="async"></picture></div>
   <div class="stop-body">
     <span class="stop-kind"><svg class="ic" aria-hidden="true"><use href="#i-waterfall"/></svg>Waterfall</span>
@@ -136,7 +164,7 @@
   </div>
 </article>
 <article class="stop" id="stop-gupteswar" style="--mx:44%">
-  <span class="stop-marker" aria-hidden="true"></span>
+  <span class="stop-marker" aria-hidden="true"><i>4</i></span>
   <div class="stop-media" data-parallax="7"><picture class="pic"><source type="image/webp" srcset="assets/photos/gupteswar-river-480.webp 480w, assets/photos/gupteswar-river-960.webp 960w" sizes="(min-width: 900px) 45vw, 100vw"><img src="assets/photos/gupteswar-river-960.jpg" alt="Gupteswar Cave Temple, Koraput" width="1280" height="720" loading="lazy" decoding="async"></picture></div>
   <div class="stop-body">
     <span class="stop-kind"><svg class="ic" aria-hidden="true"><use href="#i-stairs"/></svg>Cave and pilgrimage</span>
@@ -147,7 +175,7 @@
   </div>
 </article>
 <article class="stop" id="stop-kolab" style="--mx:56%">
-  <span class="stop-marker" aria-hidden="true"></span>
+  <span class="stop-marker" aria-hidden="true"><i>5</i></span>
   <div class="stop-media" data-parallax="7"><picture class="pic"><source type="image/webp" srcset="assets/photos/kolab-garden-480.webp 480w, assets/photos/kolab-garden-960.webp 960w, assets/photos/kolab-garden-1600.webp 1600w" sizes="(min-width: 900px) 45vw, 100vw"><img src="assets/photos/kolab-garden-960.jpg" alt="Upper Kolab Reservoir, Koraput" width="1600" height="1200" loading="lazy" decoding="async"></picture></div>
   <div class="stop-body">
     <span class="stop-kind"><svg class="ic" aria-hidden="true"><use href="#i-wind"/></svg>Reservoir and garden</span>
@@ -158,7 +186,7 @@
   </div>
 </article>
     <article class="stop stop-end">
-      <span class="stop-marker" aria-hidden="true"></span>
+      <span class="stop-marker stop-marker-flag" aria-hidden="true"><i><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></i></span>
       <div class="stop-body">
         <span class="stop-kind"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>Back to Koraput</span>
         <h3>Where should we take you?</h3>
@@ -483,27 +511,27 @@
   <div class="wrap">
     <div class="section-head">
       <h2 id="vehicle-title">Your vehicle for Koraput</h2>
-      <p class="lede">A brand-new Force Traveller, air conditioned, 17 passenger seats, photographed in Semiliguda on the day it arrived, 18 September 2026. Facts, not adjectives.</p>
+      <p class="lede">A brand-new Force Traveller, air conditioned, 17 passenger seats, photographed in Semiliguda on the day it arrived, 4 September 2026. Facts, not adjectives.</p>
     </div>
     <div class="gallery" id="vehicle-gallery">
-      <figure class="gallery-main">
-        <picture class="pic gallery-img is-active"><source type="image/webp" srcset="assets/photos/traveller-side-480.webp 480w, assets/photos/traveller-side-960.webp 960w" sizes="(min-width: 900px) 62vw, 100vw"><img src="assets/photos/traveller-side-960.jpg" alt="The white Ananta Force Traveller seen from the side, showing the full window line" width="1530" height="1530" loading="lazy" decoding="async"></picture>
-        <picture class="pic gallery-img"><source type="image/webp" srcset="assets/photos/traveller-front-hill-480.webp 480w, assets/photos/traveller-front-hill-960.webp 960w" sizes="(min-width: 900px) 62vw, 100vw"><img src="assets/photos/traveller-front-hill-960.jpg" alt="Front of the Ananta Traveller parked on a hillside in Koraput" width="1200" height="1600" loading="lazy" decoding="async"></picture>
+      <figure class="gallery-main" data-gallery-open="gallery" role="button" tabindex="0" aria-label="Open this photo full screen">
+        <picture class="pic gallery-img is-active"><source type="image/webp" srcset="assets/photos/traveller-side-480.webp 480w, assets/photos/traveller-side-960.webp 960w, assets/photos/traveller-side-1530.webp 1530w" sizes="(min-width: 900px) 62vw, 100vw"><img src="assets/photos/traveller-side-960.jpg" alt="The white Ananta Force Traveller seen from the side, showing the full window line" width="1530" height="1530" loading="lazy" decoding="async"></picture>
+        <picture class="pic gallery-img"><source type="image/webp" srcset="assets/photos/traveller-front-hill-480.webp 480w, assets/photos/traveller-front-hill-960.webp 960w, assets/photos/traveller-front-hill-1200.webp 1200w" sizes="(min-width: 900px) 62vw, 100vw"><img src="assets/photos/traveller-front-hill-960.jpg" alt="Front of the Ananta Traveller parked on a hillside in Koraput" width="1200" height="1600" loading="lazy" decoding="async"></picture>
         <picture class="pic gallery-img"><source type="image/webp" srcset="assets/photos/traveller-front-garland-480.webp 480w, assets/photos/traveller-front-garland-960.webp 960w, assets/photos/traveller-front-garland-1530.webp 1530w" sizes="(min-width: 900px) 62vw, 100vw"><img src="assets/photos/traveller-front-garland-960.jpg" alt="Front of the Traveller with a marigold garland on delivery day" width="1530" height="1530" loading="lazy" decoding="async"></picture>
-        <picture class="pic gallery-img"><source type="image/webp" srcset="assets/photos/traveller-rear-480.webp 480w, assets/photos/traveller-rear-960.webp 960w" sizes="(min-width: 900px) 62vw, 100vw"><img src="assets/photos/traveller-rear-960.jpg" alt="Rear doors of the Traveller with the emergency exit and contact numbers" width="1530" height="1530" loading="lazy" decoding="async"></picture>
-        <picture class="pic gallery-img"><source type="image/webp" srcset="assets/photos/traveller-cabin-480.webp 480w, assets/photos/traveller-cabin-960.webp 960w" sizes="(min-width: 900px) 62vw, 100vw"><img src="assets/photos/traveller-cabin-960.jpg" alt="Inside the Traveller: pushback seats in a 2+1 layout, curtains, overhead rack and AC vents" width="1530" height="1530" loading="lazy" decoding="async"></picture>
+        <picture class="pic gallery-img"><source type="image/webp" srcset="assets/photos/traveller-rear-480.webp 480w, assets/photos/traveller-rear-960.webp 960w, assets/photos/traveller-rear-1530.webp 1530w" sizes="(min-width: 900px) 62vw, 100vw"><img src="assets/photos/traveller-rear-960.jpg" alt="Rear doors of the Traveller with the emergency exit and contact numbers" width="1530" height="1530" loading="lazy" decoding="async"></picture>
+        <picture class="pic gallery-img"><source type="image/webp" srcset="assets/photos/traveller-cabin-480.webp 480w, assets/photos/traveller-cabin-960.webp 960w, assets/photos/traveller-cabin-1530.webp 1530w" sizes="(min-width: 900px) 62vw, 100vw"><img src="assets/photos/traveller-cabin-960.jpg" alt="Inside the Traveller: pushback seats in a 2+1 layout, curtains, overhead rack and AC vents" width="1530" height="1530" loading="lazy" decoding="async"></picture>
         <span class="real-badge"><svg class="ic" aria-hidden="true"><use href="#i-camera"/></svg>Real photo · our Traveller</span>
         <figcaption id="gallery-caption">Side view. Registration OD02 DT 9296, all-India permit.</figcaption>
       </figure>
       <div class="gallery-thumbs" role="tablist" aria-label="Vehicle photographs">
-        <button type="button" role="tab" aria-selected="true" data-index="0" data-caption="Side view. Registration OD02 DT 9296, all-India permit."><picture class="pic"><source type="image/webp" srcset="assets/photos/traveller-side-480.webp 480w, assets/photos/traveller-side-960.webp 960w" sizes="12rem"><img src="assets/photos/traveller-side-960.jpg" alt="Side view" width="1530" height="1530" loading="lazy" decoding="async"></picture><span>Side</span></button>
-        <button type="button" role="tab" aria-selected="false" data-index="4" data-caption="Inside: pushback seats with armrests, 2+1 across, curtains on every window, overhead rack, AC vents."><picture class="pic"><source type="image/webp" srcset="assets/photos/traveller-cabin-480.webp 480w, assets/photos/traveller-cabin-960.webp 960w" sizes="12rem"><img src="assets/photos/traveller-cabin-960.jpg" alt="Cabin and seats" width="1530" height="1530" loading="lazy" decoding="async"></picture><span>Cabin</span></button>
-        <button type="button" role="tab" aria-selected="false" data-index="1" data-caption="On a Koraput hillside, first week out."><picture class="pic"><source type="image/webp" srcset="assets/photos/traveller-front-hill-480.webp 480w, assets/photos/traveller-front-hill-960.webp 960w" sizes="12rem"><img src="assets/photos/traveller-front-hill-960.jpg" alt="Front, on a hillside" width="1200" height="1600" loading="lazy" decoding="async"></picture><span>On the hills</span></button>
-        <button type="button" role="tab" aria-selected="false" data-index="2" data-caption="Delivery day, 18 September 2026."><picture class="pic"><source type="image/webp" srcset="assets/photos/traveller-front-garland-480.webp 480w, assets/photos/traveller-front-garland-960.webp 960w, assets/photos/traveller-front-garland-1530.webp 1530w" sizes="12rem"><img src="assets/photos/traveller-front-garland-960.jpg" alt="Front, delivery day" width="1530" height="1530" loading="lazy" decoding="async"></picture><span>Delivery day</span></button>
-        <button type="button" role="tab" aria-selected="false" data-index="3" data-caption="Rear doors with the emergency exit and our numbers."><picture class="pic"><source type="image/webp" srcset="assets/photos/traveller-rear-480.webp 480w, assets/photos/traveller-rear-960.webp 960w" sizes="12rem"><img src="assets/photos/traveller-rear-960.jpg" alt="Rear" width="1530" height="1530" loading="lazy" decoding="async"></picture><span>Rear</span></button>
+        <button type="button" role="tab" aria-selected="true" data-index="0" data-caption="Side view. Registration OD02 DT 9296, all-India permit."><picture class="pic"><source type="image/webp" srcset="assets/photos/traveller-side-480.webp 480w, assets/photos/traveller-side-960.webp 960w, assets/photos/traveller-side-1530.webp 1530w" sizes="12rem"><img src="assets/photos/traveller-side-960.jpg" alt="Side view" width="1530" height="1530" loading="lazy" decoding="async"></picture><span>Side</span></button>
+        <button type="button" role="tab" aria-selected="false" data-index="4" data-caption="Inside: pushback seats with armrests, 2+1 across, curtains on every window, overhead rack, AC vents."><picture class="pic"><source type="image/webp" srcset="assets/photos/traveller-cabin-480.webp 480w, assets/photos/traveller-cabin-960.webp 960w, assets/photos/traveller-cabin-1530.webp 1530w" sizes="12rem"><img src="assets/photos/traveller-cabin-960.jpg" alt="Cabin and seats" width="1530" height="1530" loading="lazy" decoding="async"></picture><span>Cabin</span></button>
+        <button type="button" role="tab" aria-selected="false" data-index="1" data-caption="On a Koraput hillside, first week out."><picture class="pic"><source type="image/webp" srcset="assets/photos/traveller-front-hill-480.webp 480w, assets/photos/traveller-front-hill-960.webp 960w, assets/photos/traveller-front-hill-1200.webp 1200w" sizes="12rem"><img src="assets/photos/traveller-front-hill-960.jpg" alt="Front, on a hillside" width="1200" height="1600" loading="lazy" decoding="async"></picture><span>On the hills</span></button>
+        <button type="button" role="tab" aria-selected="false" data-index="2" data-caption="Delivery day, 4 September 2026."><picture class="pic"><source type="image/webp" srcset="assets/photos/traveller-front-garland-480.webp 480w, assets/photos/traveller-front-garland-960.webp 960w, assets/photos/traveller-front-garland-1530.webp 1530w" sizes="12rem"><img src="assets/photos/traveller-front-garland-960.jpg" alt="Front, delivery day" width="1530" height="1530" loading="lazy" decoding="async"></picture><span>Delivery day</span></button>
+        <button type="button" role="tab" aria-selected="false" data-index="3" data-caption="Rear doors with the emergency exit and our numbers."><picture class="pic"><source type="image/webp" srcset="assets/photos/traveller-rear-480.webp 480w, assets/photos/traveller-rear-960.webp 960w, assets/photos/traveller-rear-1530.webp 1530w" sizes="12rem"><img src="assets/photos/traveller-rear-960.jpg" alt="Rear" width="1530" height="1530" loading="lazy" decoding="async"></picture><span>Rear</span></button>
       </div>
     </div>
-    <p class="gallery-note"><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg><span>These are real, unedited photographs of our own Force Traveller (OD02 DT 9296), taken by us on delivery day, 18 September 2026. No stock or AI-generated vehicle images are used anywhere on this site.</span></p>
+    <p class="gallery-note"><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg><span>These are real, unedited photographs of our own Force Traveller (OD02 DT 9296), taken by us on delivery day, 4 September 2026. No stock or AI-generated vehicle images are used anywhere on this site.</span></p>
   </div>
   <div class="wrap vehicle-grid">
     <div class="vehicle-copy">
@@ -703,7 +731,7 @@
 <section class="band band-grey">
   <div class="wrap">
     <section class="cta-card" aria-label="Plan on WhatsApp">
-  <picture class="pic"><source type="image/webp" srcset="assets/photos/traveller-front-hill-480.webp 480w, assets/photos/traveller-front-hill-960.webp 960w" sizes="(min-width: 900px) 50vw, 100vw"><img src="assets/photos/traveller-front-hill-960.jpg" alt="" width="1200" height="1600" loading="lazy" decoding="async"></picture>
+  <picture class="pic"><source type="image/webp" srcset="assets/photos/traveller-front-hill-480.webp 480w, assets/photos/traveller-front-hill-960.webp 960w, assets/photos/traveller-front-hill-1200.webp 1200w" sizes="(min-width: 900px) 50vw, 100vw"><img src="assets/photos/traveller-front-hill-960.jpg" alt="" width="1200" height="1600" loading="lazy" decoding="async"></picture>
   <span class="real-badge"><svg class="ic" aria-hidden="true"><use href="#i-camera"/></svg>Real photo · our Traveller</span>
   <div class="cta-card-body">
     <h2>Tell us your dates. We'll shape the road ahead.</h2>
@@ -717,6 +745,14 @@
   </div>
 </section>
 
+<div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Photo gallery">
+  <button class="lb-close" type="button" aria-label="Close gallery"><svg class="ic" aria-hidden="true"><use href="#i-close"/></svg></button>
+  <button class="lb-arrow lb-prev" type="button" aria-label="Previous photo"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+  <figure class="lb-figure"><img id="lb-img" alt="" decoding="async"><figcaption><span id="lb-caption"></span><span class="lb-count" id="lb-count"></span></figcaption></figure>
+  <button class="lb-arrow lb-next" type="button" aria-label="Next photo"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+  <div class="lb-thumbs" id="lb-thumbs"><button type="button" data-lb-to="0" aria-label="Photo 1"><picture class="pic"><source type="image/webp" srcset="assets/photos/traveller-front-garland-480.webp 480w, assets/photos/traveller-front-garland-960.webp 960w, assets/photos/traveller-front-garland-1530.webp 1530w" sizes="6rem"><img src="assets/photos/traveller-front-garland-960.jpg" alt="" width="1530" height="1530" loading="lazy" decoding="async"></picture></button><button type="button" data-lb-to="1" aria-label="Photo 2"><picture class="pic"><source type="image/webp" srcset="assets/photos/traveller-side-480.webp 480w, assets/photos/traveller-side-960.webp 960w, assets/photos/traveller-side-1530.webp 1530w" sizes="6rem"><img src="assets/photos/traveller-side-960.jpg" alt="" width="1530" height="1530" loading="lazy" decoding="async"></picture></button><button type="button" data-lb-to="2" aria-label="Photo 3"><picture class="pic"><source type="image/webp" srcset="assets/photos/traveller-front-hill-480.webp 480w, assets/photos/traveller-front-hill-960.webp 960w, assets/photos/traveller-front-hill-1200.webp 1200w" sizes="6rem"><img src="assets/photos/traveller-front-hill-960.jpg" alt="" width="1200" height="1600" loading="lazy" decoding="async"></picture></button><button type="button" data-lb-to="3" aria-label="Photo 4"><picture class="pic"><source type="image/webp" srcset="assets/photos/traveller-cabin-480.webp 480w, assets/photos/traveller-cabin-960.webp 960w, assets/photos/traveller-cabin-1530.webp 1530w" sizes="6rem"><img src="assets/photos/traveller-cabin-960.jpg" alt="" width="1530" height="1530" loading="lazy" decoding="async"></picture></button><button type="button" data-lb-to="4" aria-label="Photo 5"><picture class="pic"><source type="image/webp" srcset="assets/photos/traveller-rear-480.webp 480w, assets/photos/traveller-rear-960.webp 960w, assets/photos/traveller-rear-1530.webp 1530w" sizes="6rem"><img src="assets/photos/traveller-rear-960.jpg" alt="" width="1530" height="1530" loading="lazy" decoding="async"></picture></button></div>
+</div>
+<script id="gallery-data" type="application/json">[{"src":"assets/photos/traveller-front-garland-1530.webp","fallback":"assets/photos/traveller-front-garland-960.jpg","caption":"Delivery day, 4 September 2026. Real photo of our Traveller.","alt":"Our Force Traveller with a marigold garland on delivery day"},{"src":"assets/photos/traveller-side-1530.webp","fallback":"assets/photos/traveller-side-960.jpg","caption":"Side view. Registration OD02 DT 9296, all-India permit.","alt":"Side view of our Force Traveller"},{"src":"assets/photos/traveller-front-hill-1200.webp","fallback":"assets/photos/traveller-front-hill-960.jpg","caption":"On a Koraput hillside in its first week.","alt":"Front of our Traveller on a Koraput hillside"},{"src":"assets/photos/traveller-cabin-1530.webp","fallback":"assets/photos/traveller-cabin-960.jpg","caption":"Inside: 2+1 pushback seats, curtains, overhead rack, AC vents.","alt":"Inside the Traveller: pushback seats in a 2+1 layout"},{"src":"assets/photos/traveller-rear-1530.webp","fallback":"assets/photos/traveller-rear-960.jpg","caption":"Rear doors, emergency exit and our numbers.","alt":"Rear doors of our Traveller"}]</script>
 <script id="site-data" type="application/json">{"destinations":[{"slug":"deomali","name":"Deomali","icon":"mountain","lat":18.6756,"lng":82.9817,"kind":"Mountain","drive":"About 2 h","km":70,"page":"deomali-tour"},{"slug":"rani-duduma","name":"Rani Duduma","icon":"waterfall","lat":18.5434,"lng":82.7523,"kind":"Waterfall","drive":"About 1.5 h","km":50,"page":null},{"slug":"duduma","name":"Duduma Waterfall","icon":"waterfall","lat":18.5199,"lng":82.4515,"kind":"Waterfall","drive":"About 3 h","km":90,"page":"duduma-waterfall-tour"},{"slug":"gupteswar","name":"Gupteswar Cave Temple","icon":"stairs","lat":18.8226,"lng":82.1673,"kind":"Cave and pilgrimage","drive":"About 2.5 h","km":80,"page":"gupteswar-tour"},{"slug":"kolab","name":"Upper Kolab Reservoir","icon":"wind","lat":18.7905,"lng":82.6023,"kind":"Reservoir and garden","drive":"About 35 min","km":20,"page":"kolab-dam-tour"},{"slug":"sabara-srikhetra","name":"Sabara Srikhetra","icon":"temple","lat":18.8106,"lng":82.7092,"kind":"Temple","drive":"In town","km":2,"page":null},{"slug":"tribal-museum","name":"Tribal Museum","icon":"museum","lat":18.8099,"lng":82.7077,"kind":"Museum","drive":"In town","km":2,"page":null},{"slug":"maliguda","name":"Maliguda","icon":"train","lat":18.9508,"lng":82.6413,"kind":"Railway and valley","drive":"About 50 min","km":27,"page":null},{"slug":"nandapur","name":"Nandapur","icon":"compass","lat":18.586,"lng":82.7543,"kind":"Heritage","drive":"About 1.25 h","km":45,"page":null},{"slug":"onukadelli","name":"Onukadelli","icon":"users","lat":18.5171,"lng":82.4314,"kind":"Weekly market","drive":"About 3 h","km":90,"page":null}],"koraput":{"lat":18.812,"lng":82.71}}</script>
 </main>
 <footer class="site-footer">
