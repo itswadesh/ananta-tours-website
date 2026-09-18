@@ -137,6 +137,62 @@
     }
   }
 
+  /* ---------- Hero slider + full-screen gallery ---------- */
+  const slider = $("#hero-slider");
+  const lb = $("#lightbox");
+  const galleryData = (() => { try { return JSON.parse($("#gallery-data")?.textContent || "[]"); } catch (e) { return []; } })();
+  let slideIndex = 0, slideTimer;
+  if (slider) {
+    const slides = $$(".hero-slide", slider), dots = $$(".hero-dots button"), cap = $("#hero-slide-caption");
+    const show = i => {
+      slideIndex = (i + slides.length) % slides.length;
+      slides.forEach((s, k) => s.classList.toggle("is-active", k === slideIndex));
+      dots.forEach((d, k) => d.setAttribute("aria-selected", String(k === slideIndex)));
+      if (cap && galleryData[slideIndex]) cap.textContent = galleryData[slideIndex].caption;
+    };
+    const restart = () => { clearInterval(slideTimer); slideTimer = setInterval(() => show(slideIndex + 1), 5500); };
+    $$("[data-slide]").forEach(b => b.addEventListener("click", () => { show(slideIndex + Number(b.dataset.slide)); restart(); }));
+    dots.forEach(d => d.addEventListener("click", () => { show(Number(d.dataset.slideTo)); restart(); }));
+    hero.addEventListener("pointerenter", () => clearInterval(slideTimer));
+    hero.addEventListener("pointerleave", restart);
+    restart();
+  }
+  if (lb && galleryData.length) {
+    const img = $("#lb-img"), capEl = $("#lb-caption"), count = $("#lb-count"), thumbs = $$("#lb-thumbs button");
+    let lbIndex = 0, lastFocus = null;
+    const render = () => {
+      const g = galleryData[lbIndex];
+      img.src = root(g.src); img.alt = g.alt; capEl.textContent = g.caption; count.textContent = `${lbIndex + 1} / ${galleryData.length}`;
+      thumbs.forEach((t, k) => t.setAttribute("aria-current", String(k === lbIndex)));
+      img.onerror = () => { img.onerror = null; img.src = root(g.fallback); };
+    };
+    function root(p) { return (document.body.dataset.root || "") + p; }
+    const open = i => { lbIndex = (i + galleryData.length) % galleryData.length; lastFocus = document.activeElement; lb.hidden = false; document.body.classList.add("lb-open"); lenis?.stop(); render(); $(".lb-close", lb).focus(); clearInterval(slideTimer); };
+    const close = () => { lb.hidden = true; document.body.classList.remove("lb-open"); lenis?.start(); lastFocus?.focus?.(); if (slider) { clearInterval(slideTimer); slideTimer = setInterval(() => $$("[data-slide='1']")[0]?.click(), 5500); } };
+    const step = n => { lbIndex = (lbIndex + n + galleryData.length) % galleryData.length; render(); };
+    $$("[data-gallery-open]").forEach(el => {
+      const handler = () => {
+        const v = el.dataset.galleryOpen;
+        let i = 0;
+        if (v === "current") i = slideIndex;
+        else if (v === "gallery") { const active = $$(".gallery-img").findIndex(p => p.classList.contains("is-active")); const map = [1, 2, 0, 4, 3]; i = active >= 0 ? map[active] : 0; }
+        else i = Number(v) || 0;
+        open(i);
+      };
+      el.addEventListener("click", handler);
+      if (el.tagName !== "BUTTON") el.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); handler(); } });
+    });
+    $(".lb-close", lb).addEventListener("click", close);
+    $(".lb-prev", lb).addEventListener("click", () => step(-1));
+    $(".lb-next", lb).addEventListener("click", () => step(1));
+    thumbs.forEach(t => t.addEventListener("click", () => { lbIndex = Number(t.dataset.lbTo); render(); }));
+    lb.addEventListener("click", e => { if (e.target === lb) close(); });
+    document.addEventListener("keydown", e => { if (lb.hidden) return; if (e.key === "Escape") close(); else if (e.key === "ArrowRight") step(1); else if (e.key === "ArrowLeft") step(-1); });
+    let sx = null;
+    lb.addEventListener("pointerdown", e => { sx = e.clientX; });
+    lb.addEventListener("pointerup", e => { if (sx === null) return; const dx = e.clientX - sx; sx = null; if (Math.abs(dx) > 50) step(dx < 0 ? 1 : -1); });
+  }
+
   /* ---------- Parallax for framed photos (scroll-linked) ---------- */
   if (hasGsap) {
     $$("[data-parallax]").forEach(box => {
@@ -170,7 +226,7 @@
       }
       const last = pts[pts.length - 1];
       d += ` L ${last.x} ${H}`;
-      [base, dash, drawn].forEach(p => p.setAttribute("d", d));
+      [base, $(".road-edge", svg), dash, drawn].forEach(p => p && p.setAttribute("d", d));
       const len = drawn.getTotalLength();
       drawn.style.strokeDasharray = `${len}`;
       drawn.style.strokeDashoffset = `${len}`;
@@ -180,7 +236,7 @@
         gsap.to(drawn, { strokeDashoffset: 0, ease: "none", scrollTrigger: { ...st, id: "road" } });
         if (van && window.MotionPathPlugin) {
           gsap.set(van, { x: 0, y: 0 });
-          gsap.to(van, { ease: "none", motionPath: { path: drawn, align: drawn, alignOrigin: [0.5, 0.5] }, scrollTrigger: { ...st, id: "van" } });
+          gsap.to(van, { ease: "none", motionPath: { path: drawn, align: drawn, alignOrigin: [0.5, 0.5], autoRotate: true }, scrollTrigger: { ...st, id: "van" } });
         }
       } else {
         drawn.style.strokeDashoffset = "0";

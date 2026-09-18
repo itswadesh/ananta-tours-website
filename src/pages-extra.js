@@ -65,7 +65,7 @@ module.exports = [
     metaTitle: "Koraput Group Tour: Travel Together in One 17-Seater Traveller",
     description: "How a Koraput trip works for a group of 8 to 17: one vehicle, one driver, realistic day plans, seating, meals, hotels and the questions families, pilgrim groups and office teams ask.",
     kind: "Group travel", icon: "users",
-    hero: "traveller-front-garland", heroAlt: "The Ananta Traveller with a marigold garland on delivery day, 18 September 2026",
+    hero: "traveller-front-garland", heroAlt: "The Ananta Traveller with a marigold garland on delivery day, 4 September 2026",
     ctaPhoto: "deomali-range",
     lede: "Groups are where Koraput gets complicated: too many people for one car, too few for a bus. One Traveller with a local team removes the coordination, and this page shows how a group day actually runs.",
     facts: [

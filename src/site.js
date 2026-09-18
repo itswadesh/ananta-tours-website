@@ -22,7 +22,7 @@ module.exports = {
   vehicle: {
     seats: 17,
     purchased: "September 2026",
-    deliveredOn: "18 September 2026"
+    deliveredOn: "4 September 2026"
   },
   nav: [
     { href: "#journey", label: "The road" },

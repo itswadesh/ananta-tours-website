@@ -363,7 +363,7 @@ Show actual:
 
 Prominently mention:
 
-> **New vehicle — purchased September 2026**
+> **New vehicle — Purchased September 2026**
 
 ---
 

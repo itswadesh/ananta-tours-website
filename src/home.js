@@ -26,7 +26,7 @@ function stop(d, i) {
   // Photo alternates sides; the road marker sits under the photo edge so the road weaves without crossing text.
   const x = i % 2 === 0 ? 56 : 44;
   return `<article class="stop" id="stop-${d.slug}" style="--mx:${x}%">
-  <span class="stop-marker" aria-hidden="true"></span>
+  <span class="stop-marker" aria-hidden="true"><i>${i + 1}</i></span>
   <div class="stop-media" data-parallax="7">${pic(d.photo, { alt: `${d.name}, Koraput`, sizes: "(min-width: 900px) 45vw, 100vw" })}</div>
   <div class="stop-body">
     <span class="stop-kind">${icon(d.icon)}${esc(d.kind)}</span>
@@ -53,14 +53,32 @@ function destCard(d, featured) {
 </article>`;
 }
 
+const heroSlides = [
+  { photo: "traveller-front-garland", alt: "Our Force Traveller with a marigold garland on delivery day", caption: `Delivery day, ${site.vehicle.deliveredOn}. Real photo of our Traveller.` },
+  { photo: "traveller-side", alt: "Side view of our Force Traveller", caption: "Side view. Registration OD02 DT 9296, all-India permit." },
+  { photo: "traveller-front-hill", alt: "Front of our Traveller on a Koraput hillside", caption: "On a Koraput hillside in its first week." },
+  { photo: "traveller-cabin", alt: "Inside the Traveller: pushback seats in a 2+1 layout", caption: "Inside: 2+1 pushback seats, curtains, overhead rack, AC vents." },
+  { photo: "traveller-rear", alt: "Rear doors of our Traveller", caption: "Rear doors, emergency exit and our numbers." }
+];
+
 function render() {
   const journey = dests.filter(d => d.journey);
   const body = `
 <section class="hero" aria-labelledby="hero-title">
-  <div class="hero-media">
-    ${pic("traveller-front-garland", { alt: "Our Force Traveller with a marigold garland on the day it was delivered, September 2026", sizes: "100vw", priority: true })}
+  <div class="hero-media" id="hero-slider">
+    ${heroSlides.map((s, i) => pic(s.photo, { alt: s.alt, sizes: "100vw", priority: i === 0, cls: "hero-slide" + (i === 0 ? " is-active" : "") })).join("\n    ")}
   </div>
   <div class="hero-shade" aria-hidden="true"></div>
+  <button class="hero-open" type="button" aria-label="Open the photo gallery" data-gallery-open="0"></button>
+  <div class="hero-ui" aria-label="Photo slider">
+    <p class="hero-slide-caption" id="hero-slide-caption">${esc(heroSlides[0].caption)}</p>
+    <div class="hero-ui-row">
+      <button class="hero-arrow" type="button" data-slide="-1" aria-label="Previous photo">${icon("arrow")}</button>
+      <div class="hero-dots" role="tablist">${heroSlides.map((s, i) => `<button type="button" role="tab" aria-selected="${i === 0}" data-slide-to="${i}" aria-label="Photo ${i + 1}: ${esc(s.caption)}"></button>`).join("")}</div>
+      <button class="hero-arrow" type="button" data-slide="1" aria-label="Next photo">${icon("arrow")}</button>
+      <button class="btn btn-sand btn-sm hero-view" type="button" data-gallery-open="current">${icon("photo")}<span>View ${heroSlides.length} photos</span></button>
+    </div>
+  </div>
   <div class="hero-inner">
     ${realBadge(`Real photo · our Traveller on delivery day, ${site.vehicle.deliveredOn}`, "real-badge-inline")}
     <h1 id="hero-title">${words("Discover Koraput.")}<br><em>${words("We’ll take care of the journey.")}</em></h1>
@@ -106,10 +124,24 @@ function render() {
     </div>
   </div>
   <div class="wrap road-track">
-    <svg class="road-svg" aria-hidden="true"><path class="road-base"/><path class="road-dash"/><path class="road-drawn"/></svg>
-    <div class="van" aria-hidden="true">${icon("van")}</div>
+    <svg class="road-svg" aria-hidden="true"><path class="road-base"/><path class="road-edge"/><path class="road-dash"/><path class="road-drawn"/></svg>
+    <div class="van" aria-hidden="true">
+      <svg viewBox="0 0 64 34" class="van-top">
+        <ellipse cx="32" cy="30" rx="26" ry="3" fill="rgba(0,0,0,0.45)"/>
+        <rect x="6" y="8" width="52" height="18" rx="5" fill="#fff"/>
+        <path d="M52 8 h4 a6 6 0 0 1 6 6 v6 a6 6 0 0 1 -6 6 h-4 z" fill="#fff"/>
+        <rect x="10" y="10" width="34" height="14" rx="2" fill="#dbe7f5"/>
+        <g fill="#fff"><rect x="17" y="10" width="2" height="14"/><rect x="24" y="10" width="2" height="14"/><rect x="31" y="10" width="2" height="14"/><rect x="38" y="10" width="2" height="14"/></g>
+        <rect x="46" y="10" width="10" height="14" rx="2" fill="#cfe0f3"/>
+        <rect x="22" y="12" width="10" height="10" rx="2" fill="#e9eef5"/>
+        <rect x="6" y="15" width="52" height="3" fill="#f26a1b"/>
+        <rect x="60" y="11" width="3" height="4" rx="1" fill="#ffd27a"/><rect x="60" y="19" width="3" height="4" rx="1" fill="#ffd27a"/>
+        <rect x="3" y="11" width="3" height="4" rx="1" fill="#e04b4b"/><rect x="3" y="19" width="3" height="4" rx="1" fill="#e04b4b"/>
+        <g fill="#1a1a1a"><rect x="12" y="5" width="8" height="4" rx="1.5"/><rect x="44" y="5" width="8" height="4" rx="1.5"/><rect x="12" y="25" width="8" height="4" rx="1.5"/><rect x="44" y="25" width="8" height="4" rx="1.5"/></g>
+      </svg>
+    </div>
     <article class="stop stop-start">
-      <span class="stop-marker" aria-hidden="true"></span>
+      <span class="stop-marker stop-marker-flag" aria-hidden="true"><i>${icon("pin")}</i></span>
       <div class="stop-body">
         <span class="stop-kind">${icon("pin")}Start</span>
         <h3>Koraput town</h3>
@@ -119,7 +151,7 @@ function render() {
     </article>
     ${journey.map(stop).join("\n")}
     <article class="stop stop-end">
-      <span class="stop-marker" aria-hidden="true"></span>
+      <span class="stop-marker stop-marker-flag" aria-hidden="true"><i>${icon("check")}</i></span>
       <div class="stop-body">
         <span class="stop-kind">${icon("pin")}Back to Koraput</span>
         <h3>Where should we take you?</h3>
@@ -329,7 +361,7 @@ function render() {
       <p class="lede">A brand-new Force Traveller, air conditioned, 17 passenger seats, photographed in Semiliguda on the day it arrived, ${site.vehicle.deliveredOn}. Facts, not adjectives.</p>
     </div>
     <div class="gallery" id="vehicle-gallery">
-      <figure class="gallery-main">
+      <figure class="gallery-main" data-gallery-open="gallery" role="button" tabindex="0" aria-label="Open this photo full screen">
         ${pic("traveller-side", { alt: "The white Ananta Force Traveller seen from the side, showing the full window line", sizes: "(min-width: 900px) 62vw, 100vw", cls: "gallery-img is-active" })}
         ${pic("traveller-front-hill", { alt: "Front of the Ananta Traveller parked on a hillside in Koraput", sizes: "(min-width: 900px) 62vw, 100vw", cls: "gallery-img" })}
         ${pic("traveller-front-garland", { alt: "Front of the Traveller with a marigold garland on delivery day", sizes: "(min-width: 900px) 62vw, 100vw", cls: "gallery-img" })}
@@ -504,6 +536,14 @@ function render() {
   </div>
 </section>
 
+<div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Photo gallery">
+  <button class="lb-close" type="button" aria-label="Close gallery">${icon("close")}</button>
+  <button class="lb-arrow lb-prev" type="button" aria-label="Previous photo">${icon("arrow")}</button>
+  <figure class="lb-figure"><img id="lb-img" alt="" decoding="async"><figcaption><span id="lb-caption"></span><span class="lb-count" id="lb-count"></span></figcaption></figure>
+  <button class="lb-arrow lb-next" type="button" aria-label="Next photo">${icon("arrow")}</button>
+  <div class="lb-thumbs" id="lb-thumbs">${heroSlides.map((s, i) => `<button type="button" data-lb-to="${i}" aria-label="Photo ${i + 1}">${pic(s.photo, { alt: "", sizes: "6rem" })}</button>`).join("")}</div>
+</div>
+<script id="gallery-data" type="application/json">${JSON.stringify(heroSlides.map(s => { const m = require("./photo-manifest.json")[s.photo]; const w = Math.max(...m.sizes); return { src: `assets/photos/${s.photo}-${w}.webp`, fallback: `assets/photos/${s.photo}-960.jpg`, caption: s.caption, alt: s.alt }; }))}</script>
 <script id="site-data" type="application/json">${JSON.stringify({ destinations: dests.map(d => ({ slug: d.slug, name: d.name, icon: d.icon, lat: d.lat, lng: d.lng, kind: d.kind, drive: d.drive, km: d.km, page: d.page || null })), koraput: site.koraput })}</script>`;
 
   const jsonld = [
