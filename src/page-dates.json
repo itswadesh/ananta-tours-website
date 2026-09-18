@@ -154,5 +154,53 @@
  "bn/contact/": {
   "hash": "02e8924b9f55",
   "date": "2026-09-18"
+ },
+ "or/": {
+  "hash": "0f886178d845",
+  "date": "2026-09-18"
+ },
+ "or/koraput-tour/": {
+  "hash": "c1ca61ce3990",
+  "date": "2026-09-18"
+ },
+ "or/koraput-tour-package-from-bhubaneswar/": {
+  "hash": "a5a9d1b863d0",
+  "date": "2026-09-18"
+ },
+ "or/koraput-tour-package-from-kolkata/": {
+  "hash": "21ec5a36eb0d",
+  "date": "2026-09-18"
+ },
+ "te/": {
+  "hash": "139deb3090f0",
+  "date": "2026-09-18"
+ },
+ "te/koraput-tour/": {
+  "hash": "f94f11d15337",
+  "date": "2026-09-18"
+ },
+ "te/koraput-tour-package-from-bhubaneswar/": {
+  "hash": "a90826ff8767",
+  "date": "2026-09-18"
+ },
+ "te/koraput-tour-package-from-kolkata/": {
+  "hash": "29044669822b",
+  "date": "2026-09-18"
+ },
+ "te/koraput-3-day-itinerary/": {
+  "hash": "399f996356a3",
+  "date": "2026-09-18"
+ },
+ "te/koraput-2-day-itinerary/": {
+  "hash": "7025aec10671",
+  "date": "2026-09-18"
+ },
+ "te/traveller-rental-koraput/": {
+  "hash": "1213549164ac",
+  "date": "2026-09-18"
+ },
+ "te/contact/": {
+  "hash": "51b867c86495",
+  "date": "2026-09-18"
  }
 }
