@@ -234,9 +234,18 @@
         ["road", "van"].forEach(id => ScrollTrigger.getById(id)?.kill());
         const st = { trigger: track, start: "top 62%", end: "bottom 62%", scrub: 0.7 };
         gsap.to(drawn, { strokeDashoffset: 0, ease: "none", scrollTrigger: { ...st, id: "road" } });
-        if (van && window.MotionPathPlugin) {
-          gsap.set(van, { x: 0, y: 0 });
-          gsap.to(van, { ease: "none", motionPath: { path: drawn, align: drawn, alignOrigin: [0.5, 0.5], autoRotate: true }, scrollTrigger: { ...st, id: "van" } });
+        if (van) {
+          // The SVG viewBox equals the track's pixel box, so path coordinates map 1:1 to the track.
+          const placeVan = progress => {
+            const L = drawn.getTotalLength();
+            const at = Math.max(0, Math.min(L, progress * L));
+            const p = drawn.getPointAtLength(at);
+            const q = drawn.getPointAtLength(Math.min(L, at + 6));
+            const angle = Math.atan2(q.y - p.y, q.x - p.x) * 180 / Math.PI;
+            van.style.transform = `translate(${p.x}px, ${p.y}px) rotate(${angle}deg)`;
+          };
+          ScrollTrigger.create({ ...st, id: "van", onUpdate: self => placeVan(self.progress), onRefresh: self => placeVan(self.progress) });
+          placeVan(0);
         }
       } else {
         drawn.style.strokeDashoffset = "0";
