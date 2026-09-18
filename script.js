@@ -105,13 +105,28 @@
     const video = $("#hero-video");
     if (video && slowNet) video.remove();
     if (video && !reduce && !slowNet) {
-      const send = fn => video.contentWindow?.postMessage(JSON.stringify({ event: "command", func: fn, args: [] }), "https://www.youtube-nocookie.com");
-      let timer, started = false;
-      const play = () => { send("mute"); send("playVideo"); setTimeout(() => video.classList.add("is-playing"), 500); started = true; };
+      const YT = "https://www.youtube-nocookie.com";
+      let lastState = null;
+      video.src = video.dataset.src + "&origin=" + encodeURIComponent(location.origin);
+      const send = fn => video.contentWindow?.postMessage(JSON.stringify({ event: "command", func: fn, args: [] }), YT);
+      let timer, started = false, wantPlay = false;
+      // Subscribe to player state so the footage only fades in once it is really playing (never a paused frame with a play button).
+      const listen = () => video.contentWindow?.postMessage(JSON.stringify({ event: "listening", id: "hero", channel: "widget" }), YT);
+      video.addEventListener("load", listen); listen();
+      window.addEventListener("message", e => {
+        if (e.origin !== YT || typeof e.data !== "string") return;
+        let d; try { d = JSON.parse(e.data); } catch (err) { return; }
+        const state = d.event === "onStateChange" ? d.info : d.info && typeof d.info.playerState === "number" ? d.info.playerState : null;
+        if (state !== null) lastState = state;
+        if (state === 1 && wantPlay) video.classList.add("is-playing");
+        else if (state === 2 || state === 0 || state === -1) video.classList.remove("is-playing");
+        if (d.event === "onReady" && wantPlay) play();
+      });
+      const play = () => { wantPlay = true; send("mute"); send("playVideo"); started = true; if (lastState === 1) video.classList.add("is-playing"); };
       new IntersectionObserver(([en]) => {
         clearTimeout(timer);
         if (en.isIntersecting && en.intersectionRatio >= 0.4) timer = setTimeout(play, started ? 0 : 3000);
-        else { send("pauseVideo"); video.classList.remove("is-playing"); }
+        else { wantPlay = false; send("pauseVideo"); video.classList.remove("is-playing"); }
       }, { threshold: [0, 0.4] }).observe(hero);
     }
   }
@@ -295,12 +310,12 @@
     window.__anantaMap = () => {
       const map = new google.maps.Map(mapHost, {
         center: { lat: 18.72, lng: 82.62 }, zoom: 9, mapTypeControl: false, streetViewControl: false, fullscreenControl: true,
-        styles: [{ featureType: "poi", stylers: [{ visibility: "off" }] }, { featureType: "water", stylers: [{ color: "#9fbfb3" }] }, { featureType: "landscape", stylers: [{ color: "#e4e9df" }] }]
+        styles: [{ featureType: "poi", stylers: [{ visibility: "off" }] }, { featureType: "water", stylers: [{ color: "#a9c4e8" }] }, { featureType: "landscape", stylers: [{ color: "#f0eee6" }] }]
       });
       const info = new google.maps.InfoWindow();
       const pins = [{ name: "Koraput town", lat: data.koraput.lat, lng: data.koraput.lng, drive: "Start and end" }, ...data.destinations];
       pins.forEach(d => {
-        const m = new google.maps.Marker({ position: { lat: d.lat, lng: d.lng }, map, title: d.name, icon: { path: google.maps.SymbolPath.CIRCLE, scale: 8, fillColor: "#b9522f", fillOpacity: 1, strokeColor: "#e6d6ad", strokeWeight: 2 } });
+        const m = new google.maps.Marker({ position: { lat: d.lat, lng: d.lng }, map, title: d.name, icon: { path: google.maps.SymbolPath.CIRCLE, scale: 8, fillColor: "#d9500d", fillOpacity: 1, strokeColor: "#ffb84d", strokeWeight: 2 } });
         m.addListener("click", () => {
           info.setContent(`<div style="font:14px/1.4 sans-serif;color:#13201c"><strong>${d.name}</strong><br>${d.drive || ""}${d.km ? ` · ${d.km} km` : ""}${d.page ? `<br><a href="${d.page}/">Read the guide</a>` : ""}<br><a href="https://www.google.com/maps/search/?api=1&query=${d.lat}%2C${d.lng}" target="_blank" rel="noopener">Directions</a></div>`);
           info.open({ anchor: m, map });
