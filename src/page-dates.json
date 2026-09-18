@@ -164,11 +164,11 @@
   "date": "2026-09-18"
  },
  "or/koraput-tour-package-from-bhubaneswar/": {
-  "hash": "a5a9d1b863d0",
+  "hash": "e13a2e5c88de",
   "date": "2026-09-18"
  },
  "or/koraput-tour-package-from-kolkata/": {
-  "hash": "21ec5a36eb0d",
+  "hash": "7af7008edba3",
   "date": "2026-09-18"
  },
  "te/": {
@@ -201,6 +201,22 @@
  },
  "te/contact/": {
   "hash": "51b867c86495",
+  "date": "2026-09-18"
+ },
+ "or/koraput-3-day-itinerary/": {
+  "hash": "5e883dd927b7",
+  "date": "2026-09-18"
+ },
+ "or/koraput-2-day-itinerary/": {
+  "hash": "332042cd7a77",
+  "date": "2026-09-18"
+ },
+ "or/traveller-rental-koraput/": {
+  "hash": "afc79286dd2e",
+  "date": "2026-09-18"
+ },
+ "or/contact/": {
+  "hash": "82ef47e132d9",
   "date": "2026-09-18"
  }
 }

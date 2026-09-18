@@ -14,6 +14,7 @@ src/page-dates.json Content hash + date per page, so sitemap <lastmod> only move
 src/i18n/en.js      Every UI string and homepage text (English master)
 src/i18n/index.js   Language registry: English at the root, or/ hi/ bn/ te/ folders, deep-merge fallback
 src/i18n/<code>.js, <code>-pages*.js   Odia, Hindi, Bengali and Telugu translations (dictionary + 7 translated guides each)
+check-i18n.js       Validates a translation against English: node check-i18n.js or|hi|bn|te
 src/home.js         Homepage template (render(L) takes a language context)
 src/article.js      Guide page template (Article + TouristTrip / TouristAttraction schema)
 src/templates.js    Layout, header, footer, <picture> helper, credits page
