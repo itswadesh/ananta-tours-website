@@ -1,6 +1,6 @@
 const site = require("./site");
 const dests = require("./destinations");
-const { esc, pic, icon, layout, ctaCard } = require("./templates");
+const { esc, pic, icon, layout, ctaCard, isOwn, realBadge } = require("./templates");
 
 const byId = Object.fromEntries(dests.map(d => [d.slug, d]));
 const root = "../";
@@ -11,7 +11,7 @@ function block(b) {
     case "h3": return `<h3>${esc(b.text)}</h3>`;
     case "p": return `<p>${b.html}</p>`;
     case "ul": return `<ul>${b.items.map(i => `<li>${i}</li>`).join("")}</ul>`;
-    case "figure": return `<figure><div class="pic-wrap" data-parallax="6">${pic(b.photo, { alt: b.alt || "", sizes: "(min-width: 900px) 60vw, 100vw", root })}</div>${b.caption ? `<figcaption>${b.caption}</figcaption>` : ""}</figure>`;
+    case "figure": return `<figure><div class="pic-wrap" data-parallax="6">${pic(b.photo, { alt: b.alt || "", sizes: "(min-width: 900px) 60vw, 100vw", root })}${isOwn(b.photo) ? realBadge() : ""}</div>${b.caption ? `<figcaption>${b.caption}</figcaption>` : ""}</figure>`;
     case "html": return b.html;
     case "callout": return `<div class="callout">${icon(b.icon || "info")}<span>${b.html}</span></div>`;
     case "days": return `<ol class="day-plan">${b.items.map((d, i) => `<li><b>Day ${i + 1}</b><div><strong>${esc(d.title)}</strong><p>${d.text}</p>${d.stops ? `<div class="stops">${d.stops.map(s => byId[s] ? `<span>${icon(byId[s].icon)}${esc(byId[s].name)}</span>` : `<span>${icon("pin")}${esc(s)}</span>`).join("")}</div>` : ""}</div></li>`).join("")}</ol>`;
@@ -44,6 +44,7 @@ function render(page, allPages) {
   ${pic(page.hero, { alt: page.heroAlt || "", sizes: "100vw", priority: true, root })}
   <div class="wrap">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="${root}">Ananta</a><span>/</span><a href="${root}koraput-tour/">Koraput tour</a><span>/</span><span>${esc(page.short || page.title)}</span></nav>
+    ${isOwn(page.hero) ? realBadge("Real photo · our Traveller, not a stock image", "real-badge-inline") : ""}
     <h1>${esc(page.title)}</h1>
     <p class="lede">${page.lede}</p>
   </div>

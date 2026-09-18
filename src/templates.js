@@ -3,6 +3,10 @@ const { sprite, icon } = require("./icons");
 const manifest = require("./photo-manifest.json");
 const credits = require("./photo-credits.json");
 
+// Photos flagged own:true in the manifest are our own photographs of the real vehicle.
+const isOwn = slug => !!(manifest[slug] && manifest[slug].own);
+const realBadge = (text = "Real photo · our Traveller", cls = "") => `<span class="real-badge${cls ? " " + cls : ""}">${icon("camera")}${esc(text)}</span>`;
+
 const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
 // Responsive <picture> for a photo slug from dist/assets/photos.
@@ -129,6 +133,7 @@ ${isHome ? `<script type="module" src="${root}scene.js"></script>` : ""}
 function ctaCard({ root = "", heading = "Tell us your dates. We'll shape the road ahead.", text = "Send dates, group size and where you start from. We reply with a route, timings and the Traveller price.", message = "" , photo = "koraput-sunrise"}) {
   return `<section class="cta-card" aria-label="Plan on WhatsApp">
   ${pic(photo, { alt: "", sizes: "(min-width: 900px) 50vw, 100vw", root })}
+  ${isOwn(photo) ? realBadge() : ""}
   <div class="cta-card-body">
     <h2>${heading}</h2>
     <p>${text}</p>
@@ -156,4 +161,4 @@ function creditsPage() {
   return layout({ title: `Photo credits | ${site.name}`, description: "Sources and licences for the photographs used on the Ananta Tours & Travels website.", path: "photo-credits/", depth: 1, body });
 }
 
-module.exports = { esc, pic, icon, layout, header, footer, ctaCard, creditsPage, logo };
+module.exports = { esc, pic, icon, layout, header, footer, ctaCard, creditsPage, logo, isOwn, realBadge };

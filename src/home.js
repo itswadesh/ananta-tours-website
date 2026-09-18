@@ -1,6 +1,6 @@
 const site = require("./site");
 const dests = require("./destinations");
-const { esc, pic, icon, layout, ctaCard } = require("./templates");
+const { esc, pic, icon, layout, ctaCard, realBadge } = require("./templates");
 
 const words = text => text.split(" ").map(w => `<span class="hero-word"><span>${esc(w)}</span></span>`).join(" ");
 const enc = s => encodeURIComponent(s).replace(/%20/g, "+");
@@ -104,7 +104,7 @@ function render() {
         <span class="stop-kind">${icon("pin")}Start</span>
         <h3>Koraput town</h3>
         <p>Pickup at your hotel, the railway station or wherever your journey into the hills begins.</p>
-        <div class="stop-vehicle">${pic("traveller-front-garland", { alt: "The Ananta Traveller, ready for pickup", sizes: "12rem" })}<span>The Traveller, on the day it arrived.</span></div>
+        <div class="stop-vehicle">${pic("traveller-front-garland", { alt: "The Ananta Traveller, ready for pickup", sizes: "12rem" })}<span>Our Traveller, photographed on the day it arrived. Real photo.</span></div>
       </div>
     </article>
     ${journey.map(stop).join("\n")}
@@ -254,6 +254,7 @@ function render() {
         ${pic("traveller-front-garland", { alt: "Front of the Traveller with a marigold garland on delivery day", sizes: "(min-width: 900px) 62vw, 100vw", cls: "gallery-img" })}
         ${pic("traveller-rear", { alt: "Rear doors of the Traveller with the emergency exit and contact numbers", sizes: "(min-width: 900px) 62vw, 100vw", cls: "gallery-img" })}
         ${pic("traveller-cabin", { alt: "Inside the Traveller: pushback seats in a 2+1 layout, curtains, overhead rack and AC vents", sizes: "(min-width: 900px) 62vw, 100vw", cls: "gallery-img" })}
+        ${realBadge("Real photo · our Traveller")}
         <figcaption id="gallery-caption">Side view. Registration OD02 DT 9296, all-India permit.</figcaption>
       </figure>
       <div class="gallery-thumbs" role="tablist" aria-label="Vehicle photographs">
@@ -264,6 +265,7 @@ function render() {
         <button type="button" role="tab" aria-selected="false" data-index="3" data-caption="Rear doors with the emergency exit and our numbers.">${pic("traveller-rear", { alt: "Rear", sizes: "12rem" })}<span>Rear</span></button>
       </div>
     </div>
+    <p class="gallery-note">${icon("shield")}<span>These are real, unedited photographs of our own Force Traveller (OD02 DT 9296), taken by us in September 2026. No stock or AI-generated vehicle images are used anywhere on this site.</span></p>
   </div>
   <div class="wrap vehicle-grid">
     <div class="vehicle-copy">
