@@ -20,6 +20,8 @@ Status of every item in [ananta-tours-koraput-seo-strategy.md](ananta-tours-kora
 | Answer-engine surface | `robots.txt` names the major AI crawlers explicitly, `llms.txt` summarises the business, every page and every language |
 | Performance | Three.js terrain now downloads only as that section approaches, the unused MotionPath plugin is gone, images stay responsive WebP with one preloaded hero |
 | Domain switch ready | set `customDomain` in `src/site.js` and the next build rewrites canonicals, hreflang, sitemap, structured data and `llms.txt`, and writes `dist/CNAME` |
+| Titles and descriptions | every page title now fits a search result (keyword first, short `| Ananta Tours` suffix) and every description sits under 160 characters |
+| Hero subheading | the emotional H1 stays; the commercial line under it names group size, vehicle and the main destinations |
 | Languages | English plus Odia, Hindi, Bengali and Telugu, with hreflang and x-default |
 
 ## Needs you before it can ship

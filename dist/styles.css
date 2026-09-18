@@ -586,6 +586,9 @@ body.lb-open { overflow: hidden; }
 
 /* FAQ */
 .faq-grid { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: clamp(2rem, 5vw, 5rem); }
+.page-faq { max-width: 70ch; }
+.page-faq > h2 { margin-bottom: 0.6rem; }
+.faq-lede { margin-bottom: 1.2rem; }
 .faq-list { display: grid; gap: 0.6rem; }
 .faq-list details { border: 1px solid var(--line); border-radius: var(--r); background: #fff; padding: 0 1.1rem; transition: border-color 0.2s; }
 .faq-list details[open] { border-color: var(--orange-line); }

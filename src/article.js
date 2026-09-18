@@ -88,6 +88,11 @@ function render(L, page, allPages, alternates = [], updated = null) {
       ${related.length ? `<div class="aside-links"><h4>${esc(t.keepReading)}</h4>${related.map(p => `<a href="${L.page(p.slug)}">${icon("arrow")}${esc(p.short || p.title)}</a>`).join("")}</div>` : ""}
     </aside>
   </div>
+  ${P.faq ? `<section class="band page-faq" style="padding-top:0" aria-labelledby="page-faq-title">
+    <h2 id="page-faq-title">${esc(P.faqTitle || "Common questions")}</h2>
+    ${P.faqLede ? `<p class="lede faq-lede">${P.faqLede}</p>` : ""}
+    <div class="faq-list">${P.faq.map(([q, a], i) => `<details${i === 0 ? " open" : ""}><summary>${esc(q)}<span>${icon("spark")}</span></summary><p>${a}</p></details>`).join("")}</div>
+  </section>` : ""}
   ${related.length ? `<section class="band" style="padding-top:0" aria-label="${esc(t.relatedAria)}"><div class="related">${related.map(p => relatedCard(L, p)).join("")}</div></section>` : ""}
   <section class="band" style="padding-top:0">
     ${ctaCard(L, { photo: P.ctaPhoto || "koraput-sunrise", message })}
@@ -125,6 +130,13 @@ function render(L, page, allPages, alternates = [], updated = null) {
       { "@type": "ListItem", position: 3, name: P.short || P.title, item: `${site.url}/${L.lang.folder}${P.slug}/` }
     ]
   }];
+
+  if (P.faq) jsonld.push({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    inLanguage: L.code,
+    mainEntity: (P.faqLede ? [[P.faqTitle, P.faqLede]] : []).concat(P.faq).map(([q, a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: String(a).replace(/<[^>]+>/g, "") } }))
+  });
 
   return layout(L, {
     title: `${P.metaTitle || P.title} | ${site.brandShort}`,

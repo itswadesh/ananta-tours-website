@@ -133,7 +133,7 @@ module.exports = [
       { type: "h2", text: "If you can add a night" },
       { type: "p", html: "One extra night turns this into the <a href=\"../koraput-2-day-itinerary/\">2-day plan</a> with Rani Duduma and Nandapur on the second day." }
     ],
-    related: ["koraput-2-day-itinerary", "deomali-tour", "kolab-dam-tour", "koraput-sightseeing"],
+    related: ["koraput-2-day-itinerary", "jagannath-temple-koraput", "deomali-tour", "koraput-traveller-price"],
     message: "Hi Ananta Tours, we would like the 1-day Koraput plan (temple, museum, Kolab, Deomali sunset). Please share availability and the Traveller price."
   },
   {

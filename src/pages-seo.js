@@ -62,6 +62,14 @@ module.exports = [
         "Motion-sickness tablets for anyone who struggles on ghat roads, and a front-row seat for them."
       ] }
     ],
+    faqTitle: "Questions from Vizag groups",
+    faq: [
+      ["How far is Koraput from Visakhapatnam?", "About 200 km by road and five to six hours, either through Araku and the Sunki ghat or the flatter route via Salur and Pottangi."],
+      ["Is Koraput worth it if we have already seen Araku?", "Yes. Araku is a valley town two hours short of Koraput. Koraput district has Odisha's highest peak at Deomali, the 175 m Duduma waterfall, the Gupteswar cave temple and a reservoir at 3,000 ft."],
+      ["Can you pick us up in Visakhapatnam?", "Yes. We can start the trip at Visakhapatnam station, the airport or your hotel and run the whole journey in one vehicle, or meet you at Araku, Koraput Junction or Jeypore Airport."],
+      ["How many days should a Vizag group keep?", "Two to three days in Koraput, plus travel. Three days covers the town, Kolab, Deomali, Rani Duduma and Duduma without a rushed morning."],
+      ["Is there a flight from Visakhapatnam?", "IndiaOne Air flies to Jeypore daily, about 55 minutes, on a 9-seat aircraft with cabin-size baggage only. Jeypore Airport is roughly 40 minutes from Koraput town."]
+    ],
     related: ["koraput-3-day-itinerary", "17-seater-traveller-koraput", "duduma-waterfall-tour", "koraput-traveller-price"],
     message: "Hi Ananta Tours, we are planning a Koraput trip from Visakhapatnam. Please share the itinerary, pickup and the 17-seater Traveller price."
   },
@@ -259,6 +267,16 @@ module.exports = [
         "Places you want to include, or just say how many days you have."
       ] },
       { type: "callout", icon: "shield", html: "No payment is requested until the itinerary, price and availability are confirmed in writing. Only then do we share the UPI details and a booking reference, privately on WhatsApp." }
+    ],
+    faqTitle: "How much does a 17-seater Traveller cost in Koraput?",
+    faqLede: "It is quoted per trip, for the whole vehicle, not per seat. The figure depends on where we pick you up, how far the route runs, how many days you keep the Traveller and whether it stays out overnight. Send your dates, group size and pickup point on WhatsApp and you usually have a written price the same day.",
+    faq: [
+      ["Is the price per person or for the whole vehicle?", "For the whole vehicle. Seventeen people or eleven, the Traveller costs the same for the same route, which is why groups work out cheaper per head than hiring several cars."],
+      ["What is included in the quote?", "The 17-seater AC Traveller, an experienced local driver, fuel, tolls, parking and permits for the agreed route, plus trip planning before you travel and support on WhatsApp while you are here."],
+      ["What is not included?", "Meals, entry and camera tickets, hotels for your group, and guide fees where a site has its own guides. Places you add on the day are priced before we drive to them."],
+      ["Do you charge for the driver's night halt?", "If the vehicle stays out overnight, the driver's stay and allowance are part of the quote and are named there. Nothing is added afterwards."],
+      ["When do I pay?", "Only after the itinerary, price and availability are confirmed in writing. We then share the UPI details and a booking reference privately on WhatsApp."],
+      ["Is there a rate card per kilometre?", "No. A Bhubaneswar group met at Koraput Junction and a Visakhapatnam group collected from their doorstep are different trips in the same vehicle, so we quote each one rather than publish a figure that would be wrong for most people."]
     ],
     related: ["17-seater-traveller-koraput", "traveller-rental-koraput", "koraput-3-day-itinerary", "koraput-tour"],
     asideText: "Send your dates, group size and pickup point. We reply with the route, the timings and one written price for the whole vehicle.",

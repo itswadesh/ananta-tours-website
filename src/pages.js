@@ -175,6 +175,15 @@ module.exports = [
       { type: "h2", text: "How the quote works" },
       { type: "p", html: "We quote per trip for the agreed route and days, not per kilometre, so there are no surprises at the end. The <a href=\"../koraput-traveller-price/\">price page</a> explains what moves the figure up or down. The quote lists what is included. You pay a booking advance only after the itinerary, price and availability are confirmed, using the UPI QR we share privately." }
     ],
+    faqTitle: "Questions about the vehicle",
+    faq: [
+      ["How many people fit in the Traveller?", "Seventeen passengers plus the driver. With one small bag each, seventeen is comfortable; with large suitcases, twelve to fourteen travellers is more realistic."],
+      ["Is it air conditioned?", "Yes, throughout the cabin, with vents along the ceiling. It matters most on the long ghat sections in the afternoon."],
+      ["How old is the vehicle?", "It is new. We bought it in September 2026 and every photograph on this site is of that vehicle, registration OD02 DT 9296, on an all-India permit."],
+      ["What is the seating layout?", "Pushback seats with armrests, two on the left of the aisle and one on the right, with a bench at the back. The seat map on the homepage shows the numbering."],
+      ["Do you pick up from the railway station or the airport?", "Yes. Koraput Junction, Damanjodi, Jeypore, Araku, Rayagada and the smaller halts, plus Vizianagaram and Visakhapatnam on request, and Jeypore Airport for IndiaOne Air flights."],
+      ["Can we hire it for several days, or outside Koraput?", "Yes. Multi-day trips are quoted as a block, and we can start from Visakhapatnam, Rayagada or Bhubaneswar and run the whole trip in one vehicle."]
+    ],
     related: ["koraput-traveller-price", "traveller-rental-koraput", "koraput-3-day-itinerary", "koraput-tour"],
     message: "Hi Ananta Tours, I would like to know the 17-seater Traveller availability and price for a Koraput trip. Our dates and group size: "
   },
@@ -323,7 +332,7 @@ module.exports = [
       ] },
       { type: "figure", photo: "deomali-peak", alt: "Green Deomali peak against a hazy sky", caption: "Deomali from the approach road." }
     ],
-    related: ["koraput-3-day-itinerary", "koraput-2-day-itinerary", "kolab-dam-tour", "koraput-sightseeing"],
+    related: ["koraput-3-day-itinerary", "koraput-2-day-itinerary", "17-seater-traveller-koraput", "koraput-traveller-price"],
     message: "Hi Ananta Tours, we would like a Deomali trip as part of a Koraput tour. Please suggest timings (sunrise or sunset) and share the 17-seater Traveller price."
   },
   {
@@ -355,7 +364,7 @@ module.exports = [
       { type: "ul", items: ["Leave Koraput by 7 am with breakfast packed.", "Duduma viewpoints by mid-morning, an hour or two there.", "Onukadelli market if it is Thursday; otherwise the Machkund valley and lunch.", "Back in Koraput by evening; the road is slow after dark."] },
       { type: "callout", icon: "luggage", html: "Carry water, snacks and cash. Food stops are few and simple on this road." }
     ],
-    related: ["koraput-3-day-itinerary", "gupteswar-tour", "deomali-tour", "koraput-sightseeing"],
+    related: ["koraput-3-day-itinerary", "gupteswar-tour", "17-seater-traveller-koraput", "koraput-traveller-price"],
     message: "Hi Ananta Tours, we would like a Duduma Waterfall day as part of a Koraput tour. Please share the plan and the 17-seater Traveller price."
   },
   {
@@ -385,7 +394,7 @@ module.exports = [
       { type: "h2", text: "Fitting it in" },
       { type: "p", html: "Gupteswar is west of Koraput, past Jeypore, so it pairs with Upper Kolab and Jeypore town on the return rather than with Deomali. It is the natural fourth day in the <a href=\"../koraput-tour-package-from-kolkata/\">4-day plan</a>, or a swap for Duduma in the <a href=\"../koraput-3-day-itinerary/\">3-day plan</a>." }
     ],
-    related: ["kolab-dam-tour", "koraput-3-day-itinerary", "duduma-waterfall-tour", "koraput-sightseeing"],
+    related: ["koraput-4-day-itinerary", "duduma-waterfall-tour", "17-seater-traveller-koraput", "koraput-traveller-price"],
     message: "Hi Ananta Tours, we would like to include Gupteswar cave temple in a Koraput tour. Please share the plan and the 17-seater Traveller price."
   },
   {
@@ -419,7 +428,7 @@ module.exports = [
       ] },
       { type: "callout", icon: "info", html: "Boating and garden entry depend on the season and local notices. We check on the day." }
     ],
-    related: ["koraput-2-day-itinerary", "gupteswar-tour", "koraput-tour", "koraput-sightseeing"],
+    related: ["koraput-2-day-itinerary", "jagannath-temple-koraput", "17-seater-traveller-koraput", "koraput-traveller-price"],
     message: "Hi Ananta Tours, we would like to include Upper Kolab in a Koraput tour. Please share the plan and the 17-seater Traveller price."
   }
 ].concat(require("./pages-extra"), require("./pages-seo"));
