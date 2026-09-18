@@ -33,7 +33,7 @@ Preview locally with any static server, for example `npx serve dist`. Add `?moti
 
 ## Before launch
 
-1. Add the WhatsApp business number to `WHATSAPP_NUMBER` at the top of `dist/script.js` (digits only, with country code).
+1. WhatsApp business number is set in `WHATSAPP_NUMBER` at the top of `dist/script.js` (+91 7008865395, also the PhonePe number). Change it there if it ever moves.
 2. Set the final public URL in `src/site.js` and rebuild; it feeds canonical links, Open Graph tags and the sitemap.
 3. Confirm the vehicle make, model and variant, then add real photographs of it to the Traveller section and `/17-seater-traveller-koraput/`.
 4. Add a photograph of the driver and support team in the "You're not travelling alone" section.

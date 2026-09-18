@@ -1,7 +1,7 @@
 /* Ananta Tours & Travels — interactions
    Smooth scroll (Lenis), scroll-driven road (GSAP), planner, seat map, micro-interactions. */
 (() => {
-  const WHATSAPP_NUMBER = ""; // Add the confirmed business number with country code, digits only, e.g. "919876543210".
+  const WHATSAPP_NUMBER = "917008865395"; // Business number (also the PhonePe/UPI number), country code + digits.
 
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
