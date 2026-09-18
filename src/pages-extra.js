@@ -33,6 +33,7 @@ module.exports = [
       { type: "callout", icon: "rupee", html: "We do not publish a rate card because a Deomali day and a Duduma day cost differently. Send dates, group size and route and you get a written price the same day." },
       { type: "h2", text: "Pickup and drop" },
       { type: "ul", items: [
+        "<strong>Railway stations:</strong> Koraput Junction, Damanjodi, Jeypore, Araku, Rayagada and the smaller halts, plus Vizianagaram and Visakhapatnam on request. The <a href=\"../#stations\">full station list</a> has drive times from our base.",
         "<strong>Koraput town:</strong> railway station, bus stand or your hotel.",
         "<strong>Jeypore:</strong> town, bus stand or the airport when flights operate.",
         "<strong>Semiliguda:</strong> our base, on the highway between Koraput and Sunabeda.",
@@ -195,7 +196,7 @@ module.exports = [
       { type: "p", html: `${c.address.street}, ${c.address.locality}, Dist. ${c.address.district}, ${c.address.region} ${c.address.postalCode}. Semiliguda sits on the highway between Koraput town and Sunabeda, about twenty minutes from Koraput railway station and on the road to Deomali.` },
       { type: "html", html: `<div class="map-frame map-frame-sm"><iframe src="https://maps.google.com/maps?q=${encodeURIComponent(c.address.locality + ", " + c.address.district + ", " + c.address.region)}&z=14&output=embed" title="Map of Semiliguda, Koraput" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>` },
       { type: "h2", text: "What to send for a quick quote" },
-      { type: "ul", items: ["Travel dates, or the month if dates are open.", "Number of travellers and rough luggage.", "Where you arrive: Koraput station, Jeypore, Visakhapatnam or by road.", "Places you want to include, or just say how many days you have."] },
+      { type: "ul", items: ["Travel dates, or the month if dates are open.", "Number of travellers and rough luggage.", "Where you arrive: your train number and station (see the <a href=\"../#stations\">stations we serve</a>), Jeypore airport, or by road.", "Places you want to include, or just say how many days you have."] },
       { type: "callout", icon: "shield", html: "No payment is requested until the itinerary, price and availability are confirmed in writing on WhatsApp." }
     ],
     related: ["koraput-tour", "traveller-rental-koraput", "group-tour-koraput"],

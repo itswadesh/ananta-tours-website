@@ -72,6 +72,7 @@ function footer(root) {
       <a href="${root}traveller-rental-koraput/">Traveller rental</a>
       <a href="${root}group-tour-koraput/">Group tours</a>
       <a href="${root}#map">Map of stops</a>
+      <a href="${root}#stations">Station pickup</a>
       <a href="${root}contact/">Contact</a>
       <button class="link-btn js-whatsapp" type="button">WhatsApp us</button>
       <a href="${root}photo-credits/">Photo credits</a>
@@ -92,7 +93,7 @@ function layout({ title, description, path = "", depth = 0, body, jsonld = [], p
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}">
-<meta name="theme-color" content="#0d1f4d">
+<meta name="theme-color" content="#ffffff">
 <link rel="canonical" href="${canonical}">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="${esc(site.name)}">
@@ -106,7 +107,7 @@ function layout({ title, description, path = "", depth = 0, body, jsonld = [], p
 <link rel="apple-touch-icon" sizes="180x180" href="${root}assets/icon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..600,50;1,9..144,300..600,50&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
 ${preloadHero ? `<link rel="preload" as="image" href="${root}assets/photos/hero-1600.webp" imagesrcset="${manifest.hero.sizes.map(w => `${root}assets/photos/hero-${w}.webp ${w}w`).join(", ")}" imagesizes="100vw" fetchpriority="high">` : ""}
 <link rel="stylesheet" href="${root}styles.css">
 ${jsonld.map(j => `<script type="application/ld+json">${JSON.stringify(j)}</script>`).join("\n")}

@@ -58,7 +58,7 @@ module.exports = [
       { icon: "train", label: "Overnight train", value: "about 13 hours" },
       { icon: "road", label: "By road", value: "about 500 km, 10–12 h" },
       { icon: "calendar", label: "Days to keep", value: "2 to 3, plus travel" },
-      { icon: "pin", label: "Pickup", value: "Koraput station or hotel" }
+      { icon: "pin", label: "Pickup", value: "Koraput Jn, Damanjodi or hotel" }
     ],
     blocks: [
       { type: "h2", text: "Getting to Koraput" },
@@ -96,7 +96,7 @@ module.exports = [
       { icon: "train", label: "Direct train", value: "about a day" },
       { icon: "wind", label: "Via Visakhapatnam", value: "flight + 5–6 h" },
       { icon: "calendar", label: "Days to keep", value: "3 to 4, plus travel" },
-      { icon: "pin", label: "Pickup", value: "Koraput station or Vizag" }
+      { icon: "pin", label: "Pickup", value: "Koraput Jn, Rayagada or Vizag" }
     ],
     blocks: [
       { type: "h2", text: "Getting to Koraput from Kolkata" },

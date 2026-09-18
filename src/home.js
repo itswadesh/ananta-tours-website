@@ -1,5 +1,6 @@
 const site = require("./site");
 const dests = require("./destinations");
+const stations = require("./stations");
 const { esc, pic, icon, layout, ctaCard, realBadge } = require("./templates");
 
 const words = text => text.split(" ").map(w => `<span class="hero-word"><span>${esc(w)}</span></span>`).join(" ");
@@ -74,12 +75,13 @@ function render() {
       <span>${icon("snowflake")}<strong>Air conditioned</strong></span>
       <span>${icon("users")}<strong>Local driver</strong>&nbsp;&amp; support</span>
       <span>${icon("compass")}<strong>Guided tours</strong></span>
+      <span>${icon("train")}<strong>Station pickup</strong>&nbsp;&amp; drop</span>
     </div>
   </div>
   <a class="scroll-cue" href="#intro" aria-label="Scroll to the next section">${icon("arrow")}</a>
 </section>
 
-<section class="band band-mist" id="intro" aria-labelledby="intro-title">
+<section class="band band-white" id="intro" aria-labelledby="intro-title">
   <div class="wrap intro">
     <h2 id="intro-title">One group, one vehicle, one unhurried Koraput.</h2>
     <p>For families, friends, pilgrim groups and small teams arriving from Bhubaneswar, Kolkata or further away. We plan the route around your arrival, drive you between the hills, waterfalls and temples, and stay reachable the whole way.</p>
@@ -87,7 +89,7 @@ function render() {
   </div>
 </section>
 
-<section class="journey band-forest" id="journey" aria-labelledby="journey-title">
+<section class="journey band-dark" id="journey" aria-labelledby="journey-title">
   <div class="journey-title">
     <canvas id="terrain" aria-hidden="true"></canvas>
     <div class="wrap">
@@ -123,7 +125,7 @@ function render() {
   </div>
 </section>
 
-<section class="band band-paper" id="itineraries" aria-labelledby="itineraries-title">
+<section class="band band-grey" id="itineraries" aria-labelledby="itineraries-title">
   <div class="wrap">
     <div class="section-head">
       <h2 id="itineraries-title">How many days do you have?</h2>
@@ -138,7 +140,7 @@ function render() {
   </div>
 </section>
 
-<section class="band band-mist" id="planner" aria-labelledby="planner-title">
+<section class="band band-white" id="planner" aria-labelledby="planner-title">
   <div class="wrap planner-grid">
     <div class="planner-copy">
       <h2 id="planner-title">Build my Koraput trip</h2>
@@ -196,7 +198,7 @@ function render() {
   </div>
 </section>
 
-<section class="band band-paper" id="destinations" aria-labelledby="destinations-title">
+<section class="band band-grey" id="destinations" aria-labelledby="destinations-title">
   <div class="wrap">
     <div class="section-head">
       <h2 id="destinations-title">Places worth the drive</h2>
@@ -208,7 +210,7 @@ function render() {
   </div>
 </section>
 
-<section class="band band-mist" id="together" aria-labelledby="together-title">
+<section class="band band-white" id="together" aria-labelledby="together-title">
   <div class="wrap">
     <div class="section-head">
       <h2 id="together-title">One group. One vehicle. One trip.</h2>
@@ -241,7 +243,7 @@ function render() {
   </div>
 </section>
 
-<section class="band band-forest" id="traveller" aria-labelledby="vehicle-title">
+<section class="band band-grey" id="traveller" aria-labelledby="vehicle-title">
   <div class="wrap">
     <div class="section-head">
       <h2 id="vehicle-title">Your vehicle for Koraput</h2>
@@ -288,7 +290,7 @@ function render() {
   </div>
 </section>
 
-<section class="band band-mist" id="team" aria-labelledby="team-title">
+<section class="band band-white" id="team" aria-labelledby="team-title">
   <div class="wrap team-grid">
     <figure class="team-photo" data-parallax="6">
       ${pic("koraput-sunrise", { alt: "Sunrise through forest silhouettes in Koraput", sizes: "(min-width: 900px) 45vw, 100vw" })}
@@ -307,7 +309,7 @@ function render() {
   </div>
 </section>
 
-<section class="band band-paper" id="booking" aria-labelledby="booking-title">
+<section class="band band-grey" id="booking" aria-labelledby="booking-title">
   <div class="wrap">
     <div class="section-head">
       <h2 id="booking-title">Plan first. Pay after confirmation.</h2>
@@ -322,7 +324,7 @@ function render() {
   </div>
 </section>
 
-<section class="band band-forest" id="map" aria-labelledby="map-title">
+<section class="band band-white" id="map" aria-labelledby="map-title">
   <div class="wrap">
     <div class="section-head">
       <h2 id="map-title">Every stop, pinned</h2>
@@ -345,7 +347,7 @@ function render() {
   </div>
 </section>
 
-<section class="band band-mist" id="origins" aria-labelledby="origins-title">
+<section class="band band-grey" id="origins" aria-labelledby="origins-title">
   <div class="wrap">
     <div class="section-head">
       <h2 id="origins-title">Start from where you are</h2>
@@ -374,7 +376,33 @@ function render() {
   </div>
 </section>
 
-<section class="band band-paper" id="faq" aria-labelledby="faq-title">
+<section class="band band-white" id="stations" aria-labelledby="stations-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="stations-title">Railway station pickup and drop</h2>
+      <p class="lede">Tell us your train and we meet it. Drive times are from our base in Semiliguda; Koraput town is about 20 minutes further west.</p>
+    </div>
+    <div class="station-grid">
+      ${stations.main.map(s => `<article class="station-card">
+        <div class="station-top">${icon("train")}<span class="station-code">${esc(s.code)}</span></div>
+        <h3>${esc(s.name)}</h3>
+        <p>${esc(s.trains)}</p>
+        <div class="station-meta"><span>${icon("clock")}${esc(s.drive)} from Semiliguda</span><span>${icon("road")}about ${s.kmBase} km</span></div>
+        <a href="https://www.google.com/maps/search/?api=1&query=${s.lat}%2C${s.lng}" target="_blank" rel="noopener noreferrer">Open in Maps ${icon("arrow-up-right")}</a>
+      </article>`).join("")}
+    </div>
+    <details class="station-halts">
+      <summary>Smaller halts we also serve (passenger trains) <span>${icon("spark")}</span></summary>
+      <p>Stops on the Koraput–Rayagada line and both directions of the Kirandul line. Only passenger and DMU trains stop here and timings change, so send us your train number and we confirm.</p>
+      <ul class="halt-list">
+        ${stations.halts.map(h => `<li><b>${esc(h.name)}<code>${esc(h.code)}</code></b><small>${esc(h.drive)} · ${esc(h.line)}</small></li>`).join("")}
+      </ul>
+    </details>
+    <p class="station-note">${icon("info")}<span>Shimiliguda station (SMLG) on the Araku line in Andhra Pradesh is a different place from our Semiliguda. For Koraput, book to Koraput Junction (KRPU).</span></p>
+  </div>
+</section>
+
+<section class="band band-grey" id="faq" aria-labelledby="faq-title">
   <div class="wrap faq-grid">
     <div class="section-head">
       <h2 id="faq-title">Before you write to us</h2>
@@ -383,14 +411,14 @@ function render() {
     <div class="faq-list">
       <details open><summary>How many people can travel together?<span>${icon("spark")}</span></summary><p>Up to 17 passengers in one Traveller. Tell us your luggage needs and we confirm the seating plan before booking.</p></details>
       <details><summary>Do you plan the whole itinerary?<span>${icon("spark")}</span></summary><p>Yes. Share dates, arrival point, group size and interests. We suggest a route matched to your days, with sensible timings for sunrise stops and long drives.</p></details>
-      <details><summary>Do you pick up from the railway station or airport?<span>${icon("spark")}</span></summary><p>We plan the Koraput-area pickup around your arrival. Send your train, flight or road plan and we time the vehicle to it.</p></details>
+      <details><summary>Do you pick up from the railway station or airport?<span>${icon("spark")}</span></summary><p>Yes. We meet trains at Koraput Junction, Damanjodi, Jeypore, Araku, Rayagada and, on request, Vizianagaram and Visakhapatnam, plus the smaller halts <a href="#stations">listed above</a>. Send your train number and we time the vehicle to it. Jeypore airport pickups when flights operate.</p></details>
       <details><summary>When do I pay?<span>${icon("spark")}</span></summary><p>Only after the itinerary, price and availability are confirmed. The UPI QR and booking reference are shared privately on WhatsApp.</p></details>
       <details><summary>Which months are best?<span>${icon("spark")}</span></summary><p>October to February is cool and clear. September to December has the fullest waterfalls. Monsoon months are green but some roads slow down.</p></details>
     </div>
   </div>
 </section>
 
-<section class="band band-mist">
+<section class="band band-grey">
   <div class="wrap">
     ${ctaCard({ photo: "traveller-front-hill", heading: "Tell us your dates. We'll shape the road ahead.", text: "Usually easiest: dates, number of travellers and where you arrive from. We reply with a route, timings and the Traveller price." })}
   </div>
