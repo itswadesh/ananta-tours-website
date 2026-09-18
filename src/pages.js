@@ -141,14 +141,15 @@ module.exports = [
       { type: "h2", text: "Why one Traveller instead of three cars" },
       { type: "p", html: "For a group of 10 to 17, a single vehicle keeps the route, the stops and the timing simple. No repeated phone calls, no split luggage, no waiting for the last car at every viewpoint. Everyone hears the same explanation at the same place, which is most of the fun of a group trip." },
       { type: "h2", text: "What is confirmed" },
-      { type: "ul", items: ["A Force Traveller with an all-India permit, registration OD02 DT 9296.", "Seventeen passenger seats plus the driver.", "Air conditioning throughout the cabin.", "Bought new in September 2026, serviced on schedule.", "An experienced local driver and a support contact on WhatsApp for the whole trip."] },
+      { type: "ul", items: ["A Force Traveller with an all-India permit, registration OD02 DT 9296.", "Seventeen pushback passenger seats with armrests, two on the left and one on the right of the aisle.", "Air conditioning throughout the cabin, with vents along the ceiling.", "Curtains on every window and an overhead rack for small bags.", "Bought new in September 2026, serviced on schedule.", "An experienced local driver and a support contact on WhatsApp for the whole trip."] },
+      { type: "figure", photo: "traveller-cabin", alt: "Inside the Traveller: rows of pushback seats, curtains, overhead rack and ceiling AC vents", caption: "Inside: 2+1 pushback seats, curtains and the overhead rack." },
       { type: "figure", photo: "traveller-front-hill", alt: "Front of the Traveller parked on a red-soil hillside in Koraput", caption: "On a Koraput hillside in its first week." },
       { type: "h2", text: "What is still to come" },
-      { type: "p", html: "The exact variant and the manufacturer's specification sheet, plus photographs of the cabin, seats, legroom, AC vents and luggage space. Every picture on this page is our own vehicle; we will not use stock or generated images of a Traveller. Ask us on WhatsApp and we will tell you exactly what has been confirmed on the day you write." },
+      { type: "p", html: "The exact variant and the manufacturer's specification sheet, plus a photograph of the rear luggage space. Every picture on this page is our own vehicle; we will not use stock or generated images of a Traveller. Ask us on WhatsApp and we will tell you exactly what has been confirmed on the day you write." },
       { type: "figure", photo: "traveller-rear", alt: "Rear doors of the Traveller with the emergency exit and contact numbers", caption: "Rear doors, emergency exit and our numbers." },
       { type: "h2", text: "Seats and luggage" },
       { type: "ul", items: [
-        "The layout is 2+1 seating in rows with a back bench, indicative until the variant is confirmed. Tap the seat map on the <a href=\"../#traveller\">homepage</a> to see it.",
+        "Seats are 2+1 across: pairs on the left, singles on the right, with a back bench. Every seat reclines and has an armrest. Tap the seat map on the <a href=\"../#traveller\">homepage</a> to see the numbering.",
         "With 17 people and one small bag each, everything fits. With large suitcases, 12 to 14 travellers is more comfortable. Tell us your luggage and we advise honestly.",
         "Travellers who get car-sick should take the front rows and a window."
       ] },

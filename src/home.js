@@ -253,10 +253,12 @@ function render() {
         ${pic("traveller-front-hill", { alt: "Front of the Ananta Traveller parked on a hillside in Koraput", sizes: "(min-width: 900px) 62vw, 100vw", cls: "gallery-img" })}
         ${pic("traveller-front-garland", { alt: "Front of the Traveller with a marigold garland on delivery day", sizes: "(min-width: 900px) 62vw, 100vw", cls: "gallery-img" })}
         ${pic("traveller-rear", { alt: "Rear doors of the Traveller with the emergency exit and contact numbers", sizes: "(min-width: 900px) 62vw, 100vw", cls: "gallery-img" })}
+        ${pic("traveller-cabin", { alt: "Inside the Traveller: pushback seats in a 2+1 layout, curtains, overhead rack and AC vents", sizes: "(min-width: 900px) 62vw, 100vw", cls: "gallery-img" })}
         <figcaption id="gallery-caption">Side view. Registration OD02 DT 9296, all-India permit.</figcaption>
       </figure>
       <div class="gallery-thumbs" role="tablist" aria-label="Vehicle photographs">
         <button type="button" role="tab" aria-selected="true" data-index="0" data-caption="Side view. Registration OD02 DT 9296, all-India permit.">${pic("traveller-side", { alt: "Side view", sizes: "12rem" })}<span>Side</span></button>
+        <button type="button" role="tab" aria-selected="false" data-index="4" data-caption="Inside: pushback seats with armrests, 2+1 across, curtains on every window, overhead rack, AC vents.">${pic("traveller-cabin", { alt: "Cabin and seats", sizes: "12rem" })}<span>Cabin</span></button>
         <button type="button" role="tab" aria-selected="false" data-index="1" data-caption="On a Koraput hillside, first week out.">${pic("traveller-front-hill", { alt: "Front, on a hillside", sizes: "12rem" })}<span>On the hills</span></button>
         <button type="button" role="tab" aria-selected="false" data-index="2" data-caption="Delivery day, September 2026.">${pic("traveller-front-garland", { alt: "Front, delivery day", sizes: "12rem" })}<span>Delivery day</span></button>
         <button type="button" role="tab" aria-selected="false" data-index="3" data-caption="Rear doors with the emergency exit and our numbers.">${pic("traveller-rear", { alt: "Rear", sizes: "12rem" })}<span>Rear</span></button>
@@ -273,7 +275,7 @@ function render() {
         <div class="fact">${icon("wheel")}<div><strong>Experienced local driver</strong><small>Knows the roads, the timings and the stops</small></div></div>
         <div class="fact">${icon("users")}<div><strong>Tour support available</strong><small>Support staff and guided-tour assistance</small></div></div>
       </div>
-      <p class="vehicle-note">${icon("camera")}<span>Every photograph here is our own vehicle, never a stock Traveller. Cabin, seat and luggage-space photographs are next.</span></p>
+      <p class="vehicle-note">${icon("camera")}<span>Every photograph here is our own vehicle, never a stock Traveller. Pushback seats with armrests, curtains on every window and an overhead rack for small bags; luggage-space photographs are next.</span></p>
       <a class="text-link" href="17-seater-traveller-koraput/">More about the Traveller ${icon("arrow")}</a>
     </div>
     <div class="seat-stage" aria-label="Interactive seat layout">

@@ -382,5 +382,14 @@
    960
   ],
   "own": true
+ },
+ "traveller-cabin": {
+  "w": 1530,
+  "h": 1530,
+  "sizes": [
+   480,
+   960
+  ],
+  "own": true
  }
 }

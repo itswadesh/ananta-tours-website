@@ -307,7 +307,7 @@ p { text-wrap: pretty; }
 .gallery-main .gallery-img img { object-position: center 38%; }
 .gallery-main .gallery-img.is-active { opacity: 1; transform: none; }
 .gallery-main figcaption { position: absolute; left: 1rem; bottom: 1rem; padding: 0.55rem 0.9rem; border-radius: 0.8rem; background: rgba(7, 38, 32, 0.72); color: #fff; font-size: 0.85rem; backdrop-filter: blur(8px); }
-.gallery-thumbs { display: grid; grid-template-rows: repeat(4, 1fr); gap: 0.6rem; }
+.gallery-thumbs { display: grid; grid-template-rows: repeat(5, 1fr); gap: 0.6rem; }
 .gallery-thumbs button { display: grid; grid-template-columns: 4.6rem 1fr; align-items: center; gap: 0.7rem; padding: 0.4rem; border-radius: 0.9rem; border: 1px solid var(--line-dark); background: rgba(255, 255, 255, 0.04); text-align: left; font-size: 0.9rem; color: rgba(255, 255, 255, 0.8); transition: background-color 0.25s, border-color 0.25s, transform 0.3s var(--ease-out); }
 .gallery-thumbs button:hover { background: rgba(255, 255, 255, 0.09); transform: translateX(3px); }
 .gallery-thumbs button[aria-selected="true"] { border-color: var(--sand); background: rgba(230, 214, 173, 0.12); color: #fff; }
@@ -516,7 +516,7 @@ p { text-wrap: pretty; }
   .fact-grid { grid-template-columns: 1fr 1fr; }
   .seatmap { --tilt: 46deg; --turn: -20deg; }
   .gallery { grid-template-columns: 1fr; }
-  .gallery-thumbs { grid-template-rows: none; grid-template-columns: repeat(4, 1fr); }
+  .gallery-thumbs { grid-template-rows: none; grid-template-columns: repeat(5, 1fr); }
   .gallery-thumbs button { grid-template-columns: 1fr; gap: 0.3rem; font-size: 0.8rem; text-align: center; }
   .gallery-thumbs button:hover { transform: translateY(-2px); }
   .brand-lg img { width: 7rem; }

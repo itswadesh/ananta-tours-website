@@ -86,8 +86,9 @@ module.exports = [
       { type: "h2", text: "How a group day runs" },
       { type: "p", html: "Departure is fixed the evening before. Breakfast is on the road on early days (Deomali) and in town on easy days. We stop every 60 to 90 minutes on ghat roads. Lunch is at a known place on the route, booked ahead for large groups where possible. Long days end before dark; short days leave time for Kolab or the town temple in the evening. See the <a href=\"../koraput-3-day-itinerary/\">3-day plan</a> for a real example." },
       { type: "h2", text: "Seating for a group" },
+      { type: "figure", photo: "traveller-cabin", alt: "Inside the Traveller: pushback seats in a 2+1 layout with curtains and an overhead rack", caption: "Pushback seats, two on the left and one on the right of the aisle." },
       { type: "ul", items: [
-        "Rows of 2+1 with a back bench of four, indicative until the variant is confirmed. Elders and anyone prone to car-sickness sit in the front rows.",
+        "Rows of 2+1 pushback seats with armrests and a back bench of four. Elders and anyone prone to car-sickness sit in the front rows.",
         "Seventeen travellers with hand luggage is comfortable. For big suitcases, 12 to 14 people is the honest number.",
         "Children count as passengers; there are no extra fold-down seats."
       ] },
