@@ -148,19 +148,21 @@ main { padding-top: var(--header-h); }
 .hero-dots button { width: 0.6rem; height: 0.6rem; border-radius: 50%; background: rgba(255, 255, 255, 0.45); transition: width 0.3s var(--ease-out), background-color 0.2s; }
 .hero-dots button[aria-selected="true"] { width: 1.6rem; border-radius: 0.3rem; background: var(--orange); }
 .hero-view { margin-left: 0.4rem; }
-.lightbox { position: fixed; inset: 0; z-index: 100; background: rgba(0, 0, 0, 0.95); display: grid; grid-template-rows: 1fr auto; align-items: center; justify-items: center; padding: 3.5rem 1rem 1rem; animation: lbfade 0.25s ease; }
+.lightbox { position: fixed; inset: 0; z-index: 100; background: #000; animation: lbfade 0.25s ease; }
+.lightbox[hidden] { display: none; }
 @keyframes lbfade { from { opacity: 0; } }
-.lb-figure { margin: 0; display: grid; gap: 0.8rem; justify-items: center; max-width: 100%; }
-.lb-figure img { max-width: min(92vw, 90rem); max-height: 72vh; width: auto; height: auto; object-fit: contain; border-radius: var(--r); box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.9); background: #111; }
-.lb-figure figcaption { display: flex; flex-wrap: wrap; gap: 0.6rem 1.2rem; justify-content: center; align-items: center; color: rgba(255, 255, 255, 0.85); font-size: 0.95rem; text-align: center; }
+.lb-figure { position: absolute; inset: 0; margin: 0; }
+.lb-figure img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; object-position: center; background: #000; animation: lbzoom 0.6s var(--ease-out); }
+@keyframes lbzoom { from { transform: scale(1.03); opacity: 0.6; } }
+.lb-figure figcaption { position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; padding: 7rem var(--gutter) 6.2rem; display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; align-items: center; color: #fff; font-family: var(--serif); font-style: italic; font-size: 1.05rem; background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.55) 45%, rgba(0, 0, 0, 0.9)); pointer-events: none; }
 .lb-count { color: var(--orange); font-weight: 700; }
-.lb-close { position: absolute; top: 1rem; right: 1rem; width: 2.8rem; height: 2.8rem; display: grid; place-items: center; border-radius: 50%; background: rgba(255, 255, 255, 0.1); color: #fff; border: 1px solid rgba(255, 255, 255, 0.3); }
+.lb-close { position: absolute; z-index: 3; top: 1rem; right: 1rem; width: 2.8rem; height: 2.8rem; display: grid; place-items: center; border-radius: 50%; background: rgba(255, 255, 255, 0.1); color: #fff; border: 1px solid rgba(255, 255, 255, 0.3); }
 .lb-close:hover { background: var(--orange); border-color: var(--orange); }
-.lb-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 3rem; height: 3rem; display: grid; place-items: center; border-radius: 50%; background: rgba(255, 255, 255, 0.1); color: #fff; border: 1px solid rgba(255, 255, 255, 0.3); }
+.lb-arrow { position: absolute; z-index: 3; top: 50%; transform: translateY(-50%); width: 3rem; height: 3rem; display: grid; place-items: center; border-radius: 50%; background: rgba(255, 255, 255, 0.1); color: #fff; border: 1px solid rgba(255, 255, 255, 0.3); }
 .lb-arrow:hover { background: var(--orange); border-color: var(--orange); }
 .lb-prev { left: 1rem; } .lb-prev .ic { transform: rotate(180deg); } .lb-next { right: 1rem; }
-.lb-thumbs { display: flex; gap: 0.5rem; padding: 0.8rem 0 0; overflow-x: auto; max-width: 100%; }
-.lb-thumbs button { width: 5rem; aspect-ratio: 4 / 3; border-radius: 0.5rem; overflow: hidden; border: 2px solid transparent; opacity: 0.6; transition: opacity 0.2s, border-color 0.2s; flex: none; }
+.lb-thumbs { position: absolute; left: 0; right: 0; bottom: 1rem; z-index: 3; display: flex; gap: 0.5rem; justify-content: center; padding: 0 1rem; overflow-x: auto; }
+.lb-thumbs button { width: 4.6rem; aspect-ratio: 4 / 3; border-radius: 0.5rem; overflow: hidden; border: 2px solid rgba(255, 255, 255, 0.4); opacity: 0.75; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6); transition: opacity 0.2s, border-color 0.2s; flex: none; }
 .lb-thumbs button[aria-current="true"] { opacity: 1; border-color: var(--orange); }
 .lb-thumbs .pic { height: 100%; }
 .gallery-main[data-gallery-open] { cursor: zoom-in; }
