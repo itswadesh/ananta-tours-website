@@ -363,6 +363,10 @@ p { text-wrap: pretty; }
 .footer-grid { width: min(var(--wrap), 100%); margin-inline: auto; display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 2.5rem; }
 .footer-brand { display: grid; gap: 1rem; max-width: 24rem; }
 .footer-brand p { font-size: 0.95rem; color: rgba(255, 255, 255, 0.66); }
+.footer-contact { font-style: normal; display: grid; gap: 0.45rem; font-size: 0.92rem; color: rgba(255, 255, 255, 0.78); }
+.footer-contact > span { display: flex; gap: 0.55rem; align-items: flex-start; }
+.footer-contact .ic { color: var(--sand); margin-top: 0.15rem; }
+.footer-contact a { text-decoration: underline; text-underline-offset: 0.2em; }
 .footer-col { display: grid; gap: 0.55rem; align-content: start; font-size: 0.95rem; }
 .footer-col h4 { color: var(--sand); margin-bottom: 0.3rem; }
 .footer-col a, .footer-col button { opacity: 0.8; width: fit-content; }
