@@ -130,7 +130,7 @@ module.exports = [
     kind: "The vehicle", icon: "van",
     hero: "traveller-side", heroAlt: "The white Ananta Force Traveller from the side, freshly delivered",
     ctaPhoto: "traveller-front-garland",
-    lede: "One vehicle for the whole group: a Force Traveller bought new in September 2026 and driven by someone who knows these roads. This page shows the real vehicle and says what is confirmed, what is still to come, and how to think about seats and luggage.",
+    lede: "One vehicle for the whole group: a Force Traveller bought new in September 2026 and driven by someone who knows these roads. This page shows the real vehicle, what is confirmed, and how to think about seats and luggage.",
     facts: [
       { icon: "seat", label: "Passenger seats", value: "17" },
       { icon: "snowflake", label: "Cabin", value: "Air conditioned" },
@@ -144,8 +144,7 @@ module.exports = [
       { type: "ul", items: ["A Force Traveller with an all-India permit, registration OD02 DT 9296.", "Seventeen pushback passenger seats with armrests, two on the left and one on the right of the aisle.", "Air conditioning throughout the cabin, with vents along the ceiling.", "Curtains on every window and an overhead rack for small bags.", "Bought new in September 2026, serviced on schedule.", "An experienced local driver and a support contact on WhatsApp for the whole trip."] },
       { type: "figure", photo: "traveller-cabin", alt: "Inside the Traveller: rows of pushback seats, curtains, overhead rack and ceiling AC vents", caption: "Inside: 2+1 pushback seats, curtains and the overhead rack." },
       { type: "figure", photo: "traveller-front-hill", alt: "Front of the Traveller parked on a red-soil hillside in Koraput", caption: "On a Koraput hillside in its first week." },
-      { type: "h2", text: "What is still to come" },
-      { type: "p", html: "The exact variant and the manufacturer's specification sheet, plus a photograph of the rear luggage space. Every picture on this page is our own vehicle; we will not use stock or generated images of a Traveller. Ask us on WhatsApp and we will tell you exactly what has been confirmed on the day you write." },
+      { type: "callout", icon: "camera", html: "Every picture on this page is our own vehicle. We do not use stock or generated images of a Traveller. Ask us on WhatsApp for any detail you want to see before booking." },
       { type: "figure", photo: "traveller-rear", alt: "Rear doors of the Traveller with the emergency exit and contact numbers", caption: "Rear doors, emergency exit and our numbers." },
       { type: "h2", text: "Seats and luggage" },
       { type: "ul", items: [

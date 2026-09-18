@@ -390,7 +390,7 @@ function render() {
         <div class="fact">${icon("wheel")}<div><strong>Experienced local driver</strong><small>Knows the roads, the timings and the stops</small></div></div>
         <div class="fact">${icon("users")}<div><strong>Tour support available</strong><small>Support staff and guided-tour assistance</small></div></div>
       </div>
-      <p class="vehicle-note">${icon("camera")}<span>Every photograph here is our own vehicle, never a stock Traveller. Pushback seats with armrests, curtains on every window and an overhead rack for small bags; luggage-space photographs are next.</span></p>
+      <p class="vehicle-note">${icon("camera")}<span>Every photograph here is our own vehicle, never a stock Traveller. Pushback seats with armrests, curtains on every window and an overhead rack for small bags.</span></p>
       <a class="text-link" href="17-seater-traveller-koraput/">More about the Traveller ${icon("arrow")}</a>
     </div>
     <div class="seat-stage" aria-label="Interactive seat layout">
@@ -406,7 +406,7 @@ function render() {
   <div class="wrap team-grid">
     <figure class="team-photo" data-parallax="6">
       ${pic("koraput-sunrise", { alt: "Sunrise through forest silhouettes in Koraput", sizes: "(min-width: 900px) 45vw, 100vw" })}
-      <figcaption>${icon("camera")}Photographs of the driver and support team will be added here. This is a Koraput forest sunrise.</figcaption>
+      <figcaption>${icon("sunrise")}Sunrise through the forest on the Koraput highlands.</figcaption>
     </figure>
     <div class="team-copy">
       <h2 id="team-title">You're not travelling alone.</h2>

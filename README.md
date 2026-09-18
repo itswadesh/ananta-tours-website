@@ -35,8 +35,7 @@ Preview locally with any static server, for example `npx serve dist`. Add `?moti
 
 1. Contact details (WhatsApp +91 79787 07236, phones, Semiliguda address) live in `src/site.js` under `contact`; the WhatsApp buttons read the number from there at build time.
 2. Set the final public URL in `src/site.js` and rebuild; it feeds canonical links, Open Graph tags and the sitemap.
-3. Confirm the vehicle make, model and variant, then add real photographs of it to the Traveller section and `/17-seater-traveller-koraput/`.
-4. Add a photograph of the driver and support team in the "You're not travelling alone" section.
+3. Vehicle photographs (exterior and cabin) are in place; add a rear luggage-space photo and a team photo whenever available (`src/own-photos/`, then rerun the image step).
 5. Optional: create a Google Maps browser key restricted to the domain and put it in `GOOGLE_MAPS_API_KEY` in `dist/script.js` for a fully interactive pinned map. Without a key the section uses Google's keyless route embed plus "Open in Maps" links for every stop.
 6. Re-check distances, drive times and train timetables in `src/destinations.js` and `src/pages.js` against current conditions.
 
