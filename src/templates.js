@@ -78,12 +78,12 @@ function footer(root) {
       <a href="${root}photo-credits/">Photo credits</a>
     </div>
   </div>
-  <p class="footer-fine">© ${site.year} ${esc(site.name)}. Trip plans may change with weather, road access and local conditions. Distances and times are approximate. Hero footage: <a href="${site.heroVideoCredit.url}" target="_blank" rel="noopener noreferrer">${esc(site.heroVideoCredit.title)}</a> on YouTube. Photographs by Wikimedia Commons contributors, <a href="${root}photo-credits/">credited here</a>.</p>
+  <p class="footer-fine">© ${site.year} ${esc(site.name)}. Trip plans may change with weather, road access and local conditions. Distances and times are approximate. Vehicle photographs are our own. Landscape photographs by Wikimedia Commons contributors, <a href="${root}photo-credits/">credited here</a>.</p>
 </footer>`;
 }
 
 // Full document. `depth` is 0 for the homepage and 1 for /slug/ pages.
-function layout({ title, description, path = "", depth = 0, body, jsonld = [], preloadHero = false, isHome = false, ogImage = "assets/photos/hero-1600.webp" }) {
+function layout({ title, description, path = "", depth = 0, body, jsonld = [], preloadHero = false, heroPhoto = "hero", isHome = false, ogImage = "assets/photos/hero-1600.webp" }) {
   const root = depth ? "../" : "";
   const canonical = `${site.url}/${path}`;
   return `<!doctype html>
@@ -108,7 +108,7 @@ function layout({ title, description, path = "", depth = 0, body, jsonld = [], p
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
-${preloadHero ? `<link rel="preload" as="image" href="${root}assets/photos/hero-1600.webp" imagesrcset="${manifest.hero.sizes.map(w => `${root}assets/photos/hero-${w}.webp ${w}w`).join(", ")}" imagesizes="100vw" fetchpriority="high">` : ""}
+${preloadHero ? `<link rel="preload" as="image" href="${root}assets/photos/${heroPhoto}-960.jpg" imagesrcset="${manifest[heroPhoto].sizes.map(w => `${root}assets/photos/${heroPhoto}-${w}.webp ${w}w`).join(", ")}" imagesizes="100vw" fetchpriority="high">` : ""}
 <link rel="stylesheet" href="${root}styles.css">
 ${jsonld.map(j => `<script type="application/ld+json">${JSON.stringify(j)}</script>`).join("\n")}
 </head>
@@ -158,7 +158,6 @@ function creditsPage() {
     <p>Every landscape and place photograph on this site is a real photograph of Koraput district, shared by its photographer on Wikimedia Commons under a Creative Commons licence. We crop and resize them for the web and change nothing else. Photographs of the Ananta Traveller and the logo are our own.</p>
   </header>
   <ul class="credit-list">${rows}</ul>
-  <p>Hero footage: <a href="${site.heroVideoCredit.url}" target="_blank" rel="noopener noreferrer">${esc(site.heroVideoCredit.title)}</a>, embedded from YouTube with the creator's player.</p>
 </article>`;
   return layout({ title: `Photo credits | ${site.name}`, description: "Sources and licences for the photographs used on the Ananta Tours & Travels website.", path: "photo-credits/", depth: 1, body });
 }

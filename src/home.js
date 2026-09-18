@@ -58,11 +58,11 @@ function render() {
   const body = `
 <section class="hero" aria-labelledby="hero-title">
   <div class="hero-media">
-    ${pic("hero", { alt: "Clouds drifting over the Koraput highlands near Deomali", sizes: "100vw", priority: true })}
-    <iframe id="hero-video" data-src="https://www.youtube-nocookie.com/embed/${site.heroVideoId}?enablejsapi=1&autoplay=1&mute=1&controls=0&loop=1&playlist=${site.heroVideoId}&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3&start=20" title="Real Deomali and Koraput travel footage" allow="autoplay; encrypted-media" referrerpolicy="strict-origin-when-cross-origin" aria-hidden="true" tabindex="-1" loading="lazy"></iframe>
+    ${pic("traveller-front-garland", { alt: "Our Force Traveller with a marigold garland on the day it was delivered, September 2026", sizes: "100vw", priority: true })}
   </div>
   <div class="hero-shade" aria-hidden="true"></div>
   <div class="hero-inner">
+    ${realBadge("Real photo · our Traveller on delivery day, September 2026", "real-badge-inline")}
     <h1 id="hero-title">${words("Discover Koraput.")}<br><em>${words("We’ll take care of the journey.")}</em></h1>
     <p class="hero-copy">Travel through the mountains, waterfalls and hidden landscapes of Koraput in our brand-new 17-seater AC Traveller, with a friendly local driver, support staff and guided-tour assistance.</p>
     <div class="hero-actions">
@@ -460,6 +460,8 @@ function render() {
     body,
     jsonld,
     preloadHero: true,
+    heroPhoto: "traveller-front-garland",
+    ogImage: "assets/photos/traveller-front-garland-960.jpg",
     isHome: true
   });
 }
