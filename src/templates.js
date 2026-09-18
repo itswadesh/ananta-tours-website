@@ -91,7 +91,7 @@ function layout({ title, description, path = "", depth = 0, body, jsonld = [], p
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}">
-<meta name="theme-color" content="#0e3a31">
+<meta name="theme-color" content="#0d1f4d">
 <link rel="canonical" href="${canonical}">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="${esc(site.name)}">

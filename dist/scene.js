@@ -17,15 +17,15 @@ function init(canvas) {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
 
   const scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(0x0e3a31, 0.026);
+  scene.fog = new THREE.FogExp2(0x0d1f4d, 0.026);
 
   const camera = new THREE.PerspectiveCamera(46, 1, 0.1, 200);
   camera.position.set(0, 7.5, 26);
   camera.lookAt(0, 1.5, 0);
 
   // Hemisphere for the sky/ground tint, one low sun for long sunrise shadows.
-  scene.add(new THREE.HemisphereLight(0xe3ecdf, 0x0b3129, 0.95));
-  const sun = new THREE.DirectionalLight(0xffe0b0, 1.35);
+  scene.add(new THREE.HemisphereLight(0xe3e8f5, 0x0a1a40, 0.95));
+  const sun = new THREE.DirectionalLight(0xffb060, 1.35);
   sun.position.set(-18, 9, -6);
   scene.add(sun);
 
@@ -35,7 +35,7 @@ function init(canvas) {
   geo.rotateX(-Math.PI / 2);
   const pos = geo.attributes.position;
   const colors = new Float32Array(pos.count * 3);
-  const cLow = new THREE.Color(0x0b3129), cMid = new THREE.Color(0x2b6a52), cHigh = new THREE.Color(0x8fa77f), cPeak = new THREE.Color(0xe6d6ad);
+  const cLow = new THREE.Color(0x0a1a40), cMid = new THREE.Color(0x2e7a48), cHigh = new THREE.Color(0x8fbf6a), cPeak = new THREE.Color(0xffb84d);
   const tmp = new THREE.Color();
   let maxH = 0;
   const heights = new Float32Array(pos.count);
@@ -66,7 +66,7 @@ function init(canvas) {
   // A thin drifting mist layer.
   const mistGeo = new THREE.PlaneGeometry(size * 1.4, size * 1.4);
   mistGeo.rotateX(-Math.PI / 2);
-  const mist = new THREE.Mesh(mistGeo, new THREE.MeshBasicMaterial({ color: 0xcfd9cf, transparent: true, opacity: 0.08, depthWrite: false }));
+  const mist = new THREE.Mesh(mistGeo, new THREE.MeshBasicMaterial({ color: 0xd6dcea, transparent: true, opacity: 0.08, depthWrite: false }));
   mist.position.y = 2.2;
   scene.add(mist);
 

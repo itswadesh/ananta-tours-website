@@ -58,7 +58,7 @@ function render() {
 <section class="hero" aria-labelledby="hero-title">
   <div class="hero-media">
     ${pic("hero", { alt: "Clouds drifting over the Koraput highlands near Deomali", sizes: "100vw", priority: true })}
-    <iframe id="hero-video" src="https://www.youtube-nocookie.com/embed/${site.heroVideoId}?enablejsapi=1&autoplay=0&mute=1&controls=0&loop=1&playlist=${site.heroVideoId}&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3&origin=${encodeURIComponent(site.url)}" title="Real Deomali and Koraput travel footage" allow="autoplay; encrypted-media" referrerpolicy="strict-origin-when-cross-origin" aria-hidden="true" tabindex="-1" loading="lazy"></iframe>
+    <iframe id="hero-video" data-src="https://www.youtube-nocookie.com/embed/${site.heroVideoId}?enablejsapi=1&autoplay=1&mute=1&controls=0&loop=1&playlist=${site.heroVideoId}&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3&start=20" title="Real Deomali and Koraput travel footage" allow="autoplay; encrypted-media" referrerpolicy="strict-origin-when-cross-origin" aria-hidden="true" tabindex="-1" loading="lazy"></iframe>
   </div>
   <div class="hero-shade" aria-hidden="true"></div>
   <div class="hero-inner">
