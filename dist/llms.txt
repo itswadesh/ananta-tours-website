@@ -8,7 +8,7 @@ Key facts:
 - Pickups: Koraput Junction (KRPU), Damanjodi, Jeypore, Araku, Rayagada, Vizianagaram and Visakhapatnam stations; Jeypore Airport (IndiaOne Air); Koraput bus stand.
 - Pricing: per trip, quoted in writing on WhatsApp for the agreed route and days.
 - Contact: WhatsApp +91 79787 07236, phone +91 76098 35466 / +91 82609 03443, email saramanihembram434@gmail.com, Kalinga Nagar, Semiliguda, Koraput 764036, Odisha.
-- Languages: English (https://itswadesh.github.io/ananta-tours-website/), .
+- Languages: English (https://itswadesh.github.io/ananta-tours-website/), हिन्दी (https://itswadesh.github.io/ananta-tours-website/hi/), বাংলা (https://itswadesh.github.io/ananta-tours-website/bn/).
 
 ## Planning guides
 - [Koraput tour: how to plan it](https://itswadesh.github.io/ananta-tours-website/koraput-tour/): What Koraput is like, how many days to keep, how to reach it and how a 17-seater Traveller trip works. A plain planning guide from a local team.
@@ -27,6 +27,11 @@ Key facts:
 - [Koraput in 1 day](https://itswadesh.github.io/ananta-tours-website/koraput-1-day-itinerary/): A realistic one-day Koraput plan: Sabara Srikhetra and the Tribal Museum in the morning, Upper Kolab before lunch and Deomali for sunset.
 - [Koraput in 4 days](https://itswadesh.github.io/ananta-tours-website/koraput-4-day-itinerary/): A four-day Koraput itinerary covering all three directions: the town and Kolab, Deomali and Rani Duduma, Duduma Waterfall, then Gupteswar cave temple and the Maliguda railway.
 - [Contact Ananta Tours & Travels](https://itswadesh.github.io/ananta-tours-website/contact/): Reach Ananta Tours & Travels in Semiliguda, Koraput: WhatsApp +91 79787 07236, phone +91 76098 35466 or +91 82609 03443, email saramanihembram434@gmail.com, Kalinga Nagar, Semiliguda 764036.
+- [Koraput tour from Visakhapatnam](https://itswadesh.github.io/ananta-tours-website/koraput-tour-package-from-visakhapatnam/): How groups reach Koraput from Visakhapatnam by road, train or the Jeypore flight, where Araku fits, and a 3-day plan in a 17-seater AC Traveller with pickup.
+- [Talamali and Putsil: a day on the Koraput plateau](https://itswadesh.github.io/ananta-tours-website/talamali-koraput/): Talamali, Putsil and the Semiliguda–Pottangi highlands: what the drive is really like, when to go, why we check the road first, and how a group day works.
+- [Kalyamali: an offbeat hill day in Koraput](https://itswadesh.github.io/ananta-tours-website/kalyamali-koraput/): Kalyamali, also spelled Kaliamali: an open hilltop in the Semiliguda–Pottangi highlands, what the drive and the last climb are like, and when a group should go.
+- [Sabara Srikhetra: the Jagannath temple in Koraput](https://itswadesh.github.io/ananta-tours-website/jagannath-temple-koraput/): Sabara Srikhetra, the Jagannath temple in Koraput town: what it is, why it is open to every visitor, when to go, how long to keep and what else sits nearby.
+- [What a Koraput Traveller trip costs](https://itswadesh.github.io/ananta-tours-website/koraput-traveller-price/): How a 17-seater AC Traveller is priced in Koraput: what the quote includes, what moves it, tolls, parking and night halt, and how to get an exact figure on WhatsApp.
 
 ## Destinations (drive time from Koraput town)
 - Deomali (Mountain): Odisha's highest peak at 1,672 m. Open grassland on top, valleys on every side, and a road that climbs almost to the summit. About 2 h, about 70 km.

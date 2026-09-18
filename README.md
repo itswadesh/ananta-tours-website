@@ -9,7 +9,8 @@ Positioning: **Experience Koraput in Comfort**. Koraput sells the trip; the vehi
 build.js            Generates dist/ from src/ (no dependencies: `node build.js`)
 src/site.js         Name, public URL, vehicle facts, contact details, nav
 src/destinations.js Ten places with coordinates, photos, drive times
-src/pages.js, src/pages-extra.js   The sixteen planning guides (content only)
+src/pages.js, src/pages-extra.js, src/pages-seo.js   The twenty-one guides (content only)
+src/page-dates.json Content hash + date per page, so sitemap <lastmod> only moves on real change
 src/i18n/en.js      Every UI string and homepage text (English master)
 src/i18n/index.js   Language registry: English at the root, or/ hi/ bn/ te/ folders, deep-merge fallback
 src/i18n/<code>.js, <code>-pages*.js   Odia, Hindi, Bengali and Telugu translations (dictionary + 7 translated guides each)
@@ -37,6 +38,17 @@ Search and answer engines: `robots.txt` explicitly allows the major AI crawlers,
 3. Commit `dist/` together with `src/`.
 
 Preview locally with any static server, for example `npx serve dist`. Animations run by default; add `?still` to the URL to switch decorative animation off.
+
+## Custom domain
+
+The site is built for one canonical host. To move it to a branded domain (`anantatourskoraput.com` is the recommendation in `docs/ananta-tours-koraput-seo-strategy.md`):
+
+1. Point the domain at GitHub Pages: apex `A` records to 185.199.108–111.153, or a `CNAME` for `www` to `itswadesh.github.io`.
+2. Set `customDomain: "anantatourskoraput.com"` in `src/site.js`.
+3. `node build.js && node deploy.js`. The build writes `dist/CNAME` and every canonical, hreflang, sitemap, structured-data and `llms.txt` URL follows the new host.
+4. In the repository settings, tick **Enforce HTTPS** once GitHub has issued the certificate, then add the domain in Google Search Console and submit the sitemap.
+
+`docs/seo-strategy-implementation.md` tracks the rest of the SEO plan, including the parts that need the business owner rather than code.
 
 ## Before launch
 

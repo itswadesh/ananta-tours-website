@@ -3,6 +3,7 @@ const { sprite, icon } = require("./icons");
 const manifest = require("./photo-manifest.json");
 const credits = require("./photo-credits.json");
 const { languages, fill } = require("./i18n");
+const allPages = require("./pages");
 
 const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
@@ -51,7 +52,14 @@ function header(L, alternates) {
 
 function footer(L, alternates) {
   const t = L.t.ui.footer, c = site.contact;
-  const link = slug => `<a href="${L.page(slug)}">${esc(t.links[slug])}</a>`;
+  // A new page does not need a dictionary entry: fall back to its own (translated) short title.
+  const label = slug => {
+    if (t.links[slug]) return t.links[slug];
+    const tr = L.lang.pages[slug] || {};
+    const p = allPages.find(x => x.slug === slug) || {};
+    return tr.short || tr.title || p.short || p.title || slug;
+  };
+  const link = slug => `<a href="${L.page(slug)}">${esc(label(slug))}</a>`;
   return `<footer class="site-footer">
   <div class="footer-grid">
     <div class="footer-brand">
@@ -67,15 +75,15 @@ function footer(L, alternates) {
     </div>
     <div class="footer-col">
       <h4>${esc(t.plan)}</h4>
-      ${["koraput-tour", "koraput-1-day-itinerary", "koraput-2-day-itinerary", "koraput-3-day-itinerary", "koraput-4-day-itinerary", "koraput-tour-package-from-bhubaneswar", "koraput-tour-package-from-kolkata"].map(link).join("\n      ")}
+      ${["koraput-tour", "koraput-1-day-itinerary", "koraput-2-day-itinerary", "koraput-3-day-itinerary", "koraput-4-day-itinerary", "koraput-traveller-price"].map(link).join("\n      ")}
     </div>
     <div class="footer-col">
       <h4>${esc(t.places)}</h4>
-      ${["koraput-sightseeing", "deomali-tour", "duduma-waterfall-tour", "gupteswar-tour", "kolab-dam-tour"].map(link).join("\n      ")}
+      ${["koraput-sightseeing", "deomali-tour", "duduma-waterfall-tour", "gupteswar-tour", "kolab-dam-tour", "jagannath-temple-koraput", "talamali-koraput", "kalyamali-koraput"].map(link).join("\n      ")}
     </div>
     <div class="footer-col">
       <h4>${esc(t.ananta)}</h4>
-      ${["17-seater-traveller-koraput", "traveller-rental-koraput", "group-tour-koraput"].map(link).join("\n      ")}
+      ${["17-seater-traveller-koraput", "traveller-rental-koraput", "group-tour-koraput", "koraput-tour-package-from-bhubaneswar", "koraput-tour-package-from-kolkata", "koraput-tour-package-from-visakhapatnam"].map(link).join("\n      ")}
       <a href="${L.home}#map">${esc(t.links.map)}</a>
       <a href="${L.home}#stations">${esc(t.links.stations)}</a>
       ${link("contact")}
@@ -143,10 +151,8 @@ ${footer(L, alternates)}
 <script id="ui-strings" type="application/json">${JSON.stringify(strings || L.t.strings)}</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/MotionPathPlugin.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js" defer></script>
 <script src="${root}script.js" defer></script>
-${isHome ? `<script type="module" src="${root}scene.js"></script>` : ""}
 </body>
 </html>`;
 }

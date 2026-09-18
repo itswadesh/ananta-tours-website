@@ -39,7 +39,7 @@ const heroPhotos = ["traveller-front-garland", "traveller-side", "traveller-fron
 const galleryKeys = ["side", "cabin", "hill", "garland", "rear"];
 const galleryPhotos = { side: "traveller-side", cabin: "traveller-cabin", hill: "traveller-front-hill", garland: "traveller-front-garland", rear: "traveller-rear" };
 
-function render(L, alternates = []) {
+function render(L, alternates = [], updated = null) {
   const H = L.t.home, D = L.t.destinations, S = L.t.stations, N = L.t.stationNames, T = L.t.transport, dates = L.t.dates, U = L.t.ui;
   const f = fill;
   const P = (slug, opts = {}) => pic(slug, { ...opts, root: L.root });
@@ -97,6 +97,15 @@ function render(L, alternates = []) {
   const itin = [["koraput-1-day-itinerary", 1], ["koraput-2-day-itinerary", 2], ["koraput-3-day-itinerary", 3], ["koraput-4-day-itinerary", 4]];
   const factIcons = ["van", "seat", "snowflake", "shield", "wheel", "users"], roleIcons = ["wheel", "chat", "compass"];
   const journey = dests.filter(d => d.journey);
+  const priceIcons = ["pin", "road", "calendar", "sunrise"];
+  // Published starting fares appear only when the business has confirmed real figures.
+  const ratesTable = () => {
+    const r = site.rates;
+    if (!r || !r.items || !r.items.length) return "";
+    return `<h3 class="rates-heading">${esc(H.price.ratesHeading)}</h3>
+        <div class="rate-table"><table><thead><tr><th scope="col">${esc(H.price.ratesTrip)}</th><th scope="col">${esc(H.price.ratesLength)}</th><th scope="col">${esc(H.price.ratesFrom)}</th></tr></thead><tbody>${r.items.map(i => `<tr><th scope="row">${esc(i.name)}<small>${esc(i.route)}</small></th><td>${esc(i.days)}</td><td><b>${esc(r.currency)}${i.from.toLocaleString("en-IN")}</b></td></tr>`).join("")}</tbody></table></div>
+        <p class="rates-note">${esc(f(H.price.ratesNote, { date: r.updated }))}</p>`;
+  };
 
   const body = `
 <section class="hero" aria-labelledby="hero-title">
@@ -377,6 +386,34 @@ function render(L, alternates = []) {
   </div>
 </section>
 
+<section class="band band-white" id="prices" aria-labelledby="prices-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="prices-title">${esc(H.price.h2)}</h2>
+      <p class="lede">${esc(H.price.lede)}</p>
+    </div>
+    <div class="price-grid">
+      <div class="price-copy">
+        <ul class="price-drivers">
+          ${H.price.drivers.map(([a, b], i) => `<li>${icon(priceIcons[i])}<div><strong>${esc(a)}</strong><small>${esc(b)}</small></div></li>`).join("\n          ")}
+        </ul>
+        ${ratesTable()}
+        <div class="price-lists">
+          <div class="price-list price-in"><h3>${icon("check")}${esc(H.price.includedLabel)}</h3><ul>${H.price.included.map(i => `<li>${esc(i)}</li>`).join("")}</ul></div>
+          <div class="price-list price-out"><h3>${icon("info")}${esc(H.price.excludedLabel)}</h3><ul>${H.price.excluded.map(i => `<li>${esc(i)}</li>`).join("")}</ul></div>
+        </div>
+        <a class="text-link" href="${L.page("koraput-traveller-price")}">${esc(H.price.more)} ${icon("arrow")}</a>
+      </div>
+      <aside class="quote-card">
+        <h3>${icon("chat")}${esc(H.price.cardTitle)}</h3>
+        <ol>${H.price.cardLines.map(l => `<li>${esc(l)}</li>`).join("")}</ol>
+        <button class="btn btn-earth js-whatsapp" type="button">${icon("whatsapp")}<span>${esc(H.price.cta)}</span></button>
+        <p class="quote-note">${icon("shield")}<span>${esc(H.price.note)}</span></p>
+      </aside>
+    </div>
+  </div>
+</section>
+
 <section class="band band-white" id="team" aria-labelledby="team-title">
   <div class="wrap team-grid">
     <figure class="team-photo" data-parallax="6">
@@ -492,9 +529,9 @@ function render(L, alternates = []) {
         <ul class="bus-list">
           ${T.buses.map(b => `<li><strong>${esc(b.from)}</strong><span>${esc(b.text)}</span></li>`).join("")}
         </ul>
-        <p class="transport-note">${esc(f(H.stations.busNote, { checked: dates.checked }))}</p>
       </article>
     </div>
+    <p class="station-note station-verified">${icon("clock")}<span>${esc(f(H.stations.busNote, { checked: dates.checked }))}</span></p>
   </div>
 </section>
 
@@ -560,7 +597,8 @@ function render(L, alternates = []) {
       url: site.url,
       name: site.name,
       inLanguage: ["en", "or", "hi", "bn", "te"],
-      publisher: { "@id": `${site.url}/#organization` }
+      publisher: { "@id": `${site.url}/#organization` },
+      dateModified: updated || new Date().toISOString().slice(0, 10)
     },
     {
       "@context": "https://schema.org",

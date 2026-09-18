@@ -75,7 +75,8 @@ module.exports = [
     photo: "sabara-temple",
     blurb: "Koraput's Jagannath temple, open to everyone and rooted in the region's tribal traditions.",
     km: 2, drive: "In town",
-    best: "Morning, before the day's drive."
+    best: "Morning, before the day's drive.",
+    page: "jagannath-temple-koraput"
   },
   {
     slug: "tribal-museum",

@@ -43,7 +43,7 @@ function relatedCard(L, p) {
 }
 
 // `page` is the English page object; `L.lang.pages[slug]` (if present) overrides its text fields.
-function render(L, page, allPages, alternates = []) {
+function render(L, page, allPages, alternates = [], updated = null) {
   const t = L.t.ui.article;
   const tr = L.lang.pages[page.slug] || {};
   const P = { ...page, ...tr };
@@ -53,9 +53,9 @@ function render(L, page, allPages, alternates = []) {
   }).filter(Boolean);
   const message = P.message || fill(t.defaultMessage, { title: P.short || P.title });
   const root = L.root;
-  const today = new Date().toISOString().slice(0, 10);
+  const today = updated || new Date().toISOString().slice(0, 10);
   let updatedLabel;
-  try { updatedLabel = new Date().toLocaleDateString({ en: "en-IN", or: "or-IN", hi: "hi-IN", bn: "bn-IN", te: "te-IN" }[L.code] || "en-IN", { month: "long", year: "numeric" }); } catch (e) { updatedLabel = today; }
+  try { updatedLabel = new Date(today + "T00:00:00").toLocaleDateString({ en: "en-IN", or: "or-IN", hi: "hi-IN", bn: "bn-IN", te: "te-IN" }[L.code] || "en-IN", { day: "numeric", month: "long", year: "numeric" }); } catch (e) { updatedLabel = today; }
   const daysBlock = P.blocks.find(b => b.type === "days" && b.items.some(d => d.stops));
   const attraction = dests.find(d => d.page === P.slug);
   const dname = s => (L.t.destinations[s] && L.t.destinations[s].name) || (byId[s] && byId[s].name) || s;

@@ -41,7 +41,7 @@ module.exports = [
         "Mobile coverage drops in the valleys. Download offline maps and tell people at home."
       ] }
     ],
-    related: ["koraput-3-day-itinerary", "koraput-2-day-itinerary", "koraput-sightseeing", "17-seater-traveller-koraput"],
+    related: ["koraput-3-day-itinerary", "koraput-traveller-price", "koraput-sightseeing", "17-seater-traveller-koraput"],
     message: "Hi Ananta Tours, we are planning a Koraput trip. Please help us with an itinerary and the 17-seater Traveller price."
   },
   {
@@ -80,7 +80,7 @@ module.exports = [
       { type: "h2", text: "What to carry" },
       { type: "ul", items: ["A jacket, even in October. Deomali is windy and cold at dawn.", "Cash for small markets and entry tickets.", "Water and snacks for the Duduma day; food stops are far apart.", "Offline maps. Coverage drops in the valleys."] }
     ],
-    related: ["koraput-3-day-itinerary", "koraput-tour", "deomali-tour", "koraput-tour-package-from-kolkata"],
+    related: ["koraput-3-day-itinerary", "17-seater-traveller-koraput", "deomali-tour", "koraput-traveller-price"],
     message: "Hi Ananta Tours, we are planning a Koraput trip from Bhubaneswar. Please help us with the itinerary, station pickup and the 17-seater Traveller price."
   },
   {
@@ -119,7 +119,7 @@ module.exports = [
       { type: "h2", text: "What to carry" },
       { type: "ul", items: ["Warm layers from November to February; mornings are near 10 °C on the hills.", "Comfortable shoes for the Gupteswar steps and waterfall paths.", "Cash for markets, tickets and small eateries.", "A power bank for the long train day."] }
     ],
-    related: ["koraput-tour", "koraput-3-day-itinerary", "duduma-waterfall-tour", "koraput-tour-package-from-bhubaneswar"],
+    related: ["koraput-3-day-itinerary", "17-seater-traveller-koraput", "duduma-waterfall-tour", "koraput-traveller-price"],
     message: "Hi Ananta Tours, we are planning a Koraput trip from Kolkata. Please help us with the itinerary, arrival pickup and the 17-seater Traveller price."
   },
   {
@@ -136,7 +136,9 @@ module.exports = [
       { icon: "seat", label: "Passenger seats", value: "17" },
       { icon: "snowflake", label: "Cabin", value: "Air conditioned" },
       { icon: "van", label: "Make", value: "Force Traveller, new Sept 2026" },
-      { icon: "users", label: "Crew", value: "Driver + support" }
+      { icon: "users", label: "Crew", value: "Driver + support" },
+      { icon: "luggage", label: "Luggage", value: "17 small bags, or 12–14 with cases" },
+      { icon: "shield", label: "Permit", value: "All-India, OD02 DT 9296" }
     ],
     blocks: [
       { type: "h2", text: "Why one Traveller instead of three cars" },
@@ -155,10 +157,25 @@ module.exports = [
       ] },
       { type: "h2", text: "Hill-road notes" },
       { type: "p", html: "Koraput's roads climb and wind. The Deomali road is tarred to the top with a steep final stretch; the Duduma road has long open sections and a few slow village bends. We plan the day so that long ghat drives happen in daylight, with stops every 60 to 90 minutes." },
+      { type: "h2", text: "Where we pick up, and how far we go" },
+      { type: "ul", items: [
+        "<strong>Local:</strong> Koraput town, the railway station, Semiliguda and Jeypore, at your hotel or at the door.",
+        "<strong>Stations:</strong> Koraput Junction, Damanjodi, Jeypore, Araku, Rayagada and the smaller halts, plus Vizianagaram and Visakhapatnam on request. The <a href=\"../#stations\">pickup section</a> lists drive times from our base.",
+        "<strong>Airport:</strong> Jeypore Airport for IndiaOne Air flights from Bhubaneswar and Visakhapatnam, about 40 minutes from Koraput town.",
+        "<strong>Outstation:</strong> we can start from Visakhapatnam, Rayagada or Bhubaneswar and run the whole trip in one vehicle.",
+        "<strong>Where it goes:</strong> Deomali, Duduma and Machkund, Gupteswar, Upper Kolab, Rani Duduma, Nandapur, Maliguda, Onukadelli and the town sights. Offbeat hill tops such as <a href=\"../talamali-koraput/\">Talamali</a> depend on the road that week."
+      ] },
+      { type: "h2", text: "Tolls, parking and night halts" },
+      { type: "ul", items: [
+        "Fuel, tolls, parking and permits for the agreed route are inside the quoted figure.",
+        "If the vehicle stays out overnight, the driver's stay and allowance are in the quote and named there.",
+        "Places added on the day are priced before we drive to them, never after.",
+        "Multi-day trips are quoted as a block, which usually works out lower per day than separate day trips."
+      ] },
       { type: "h2", text: "How the quote works" },
-      { type: "p", html: "We quote per trip for the agreed route and days, not per kilometre, so there are no surprises at the end. The quote lists what is included. You pay a booking advance only after the itinerary, price and availability are confirmed, using the UPI QR we share privately." }
+      { type: "p", html: "We quote per trip for the agreed route and days, not per kilometre, so there are no surprises at the end. The <a href=\"../koraput-traveller-price/\">price page</a> explains what moves the figure up or down. The quote lists what is included. You pay a booking advance only after the itinerary, price and availability are confirmed, using the UPI QR we share privately." }
     ],
-    related: ["koraput-tour", "koraput-3-day-itinerary", "koraput-tour-package-from-bhubaneswar", "koraput-tour-package-from-kolkata"],
+    related: ["koraput-traveller-price", "traveller-rental-koraput", "koraput-3-day-itinerary", "koraput-tour"],
     message: "Hi Ananta Tours, I would like to know the 17-seater Traveller availability and price for a Koraput trip. Our dates and group size: "
   },
   {
@@ -191,7 +208,7 @@ module.exports = [
       { type: "h2", text: "Upper Kolab Reservoir", id: "kolab" },
       { type: "p", html: "A gravity dam, a terraced garden and a wide reservoir at about 3,000 ft, 20 km from town on the Jeypore road. The easy evening stop. <a href=\"../kolab-dam-tour/\">Full Kolab guide.</a>" },
       { type: "h2", text: "Sabara Srikhetra", id: "sabara-srikhetra" },
-      { type: "p", html: "Koraput's Jagannath temple, in town. It is built around the idea that Jagannath belongs to everyone, with roots in the region's tribal traditions, and the shrine is open to all visitors. A calm half hour in the morning." },
+      { type: "p", html: "Koraput's Jagannath temple, in town. It is built around the idea that Jagannath belongs to everyone, with roots in the region's tribal traditions, and the shrine is open to all visitors. A calm half hour in the morning. <a href=\"../jagannath-temple-koraput/\">Full temple guide.</a>" },
       { type: "figure", photo: "sabara-front", alt: "White temple front of Sabara Srikhetra with a decorated chariot", caption: "Sabara Srikhetra, Koraput town." },
       { type: "h2", text: "Tribal Museum", id: "tribal-museum" },
       { type: "p", html: "On the highway at the edge of town: reconstructed homes, textiles, tools, musical instruments and wall art of Koraput's Adivasi communities. An hour here makes the rest of the drive make sense. Check opening days locally." },
@@ -203,9 +220,9 @@ module.exports = [
       { type: "h2", text: "Onukadelli", id: "onukadelli" },
       { type: "p", html: "A weekly market near Duduma, on Thursdays, where Bonda and other communities come to trade. It is a working market, not a show. We visit quietly, buy something, and photograph people only when they agree." },
       { type: "h2", text: "Offbeat: Talamali, Kaliamali, Dudhari", id: "offbeat" },
-      { type: "p", html: "Three places local groups ask about that we do not put on a first-visit plan without checking the road that week. <strong>Talamali</strong> and <strong>Kaliamali</strong> are open highland tops in the Semiliguda–Pottangi hills with long views and rough final approaches. <strong>Dudhari</strong> is a smaller waterfall whose access changes with the season. If you want one of them, ask us on WhatsApp and we will tell you honestly whether the Traveller can get there that week." }
+      { type: "p", html: "Three places local groups ask about that we do not put on a first-visit plan without checking the road that week. <a href=\"../talamali-koraput/\"><strong>Talamali</strong></a> and <a href=\"../kalyamali-koraput/\"><strong>Kaliamali</strong></a> are open highland tops in the Semiliguda–Pottangi hills with long views and rough final approaches. <strong>Dudhari</strong> is a smaller waterfall whose access changes with the season. If you want one of them, ask us on WhatsApp and we will tell you honestly whether the Traveller can get there that week." }
     ],
-    related: ["deomali-tour", "duduma-waterfall-tour", "gupteswar-tour", "kolab-dam-tour"],
+    related: ["deomali-tour", "duduma-waterfall-tour", "jagannath-temple-koraput", "talamali-koraput"],
     message: "Hi Ananta Tours, we are planning Koraput sightseeing. Please suggest a route and share the 17-seater Traveller price."
   },
   {
@@ -405,4 +422,4 @@ module.exports = [
     related: ["koraput-2-day-itinerary", "gupteswar-tour", "koraput-tour", "koraput-sightseeing"],
     message: "Hi Ananta Tours, we would like to include Upper Kolab in a Koraput tour. Please share the plan and the 17-seater Traveller price."
   }
-].concat(require("./pages-extra"));
+].concat(require("./pages-extra"), require("./pages-seo"));

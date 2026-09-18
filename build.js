@@ -2,6 +2,7 @@
 // English at the root; other languages in their own folders with hreflang links between versions.
 const fs = require("fs");
 const path = require("path");
+const crypto = require("crypto");
 const site = require("./src/site");
 const pages = require("./src/pages");
 const { languages, context } = require("./src/i18n");
@@ -11,6 +12,18 @@ const article = require("./src/article");
 
 const dist = path.join(__dirname, "dist");
 let count = 0;
+
+// Honest <lastmod>: a page's date only moves when its own content changes. The hash of the
+// source that produced the page is kept in src/page-dates.json and compared on every build.
+const datesFile = path.join(__dirname, "src", "page-dates.json");
+const today = new Date().toISOString().slice(0, 10);
+let dates = {};
+try { dates = JSON.parse(fs.readFileSync(datesFile, "utf8")); } catch (e) { dates = {}; }
+function lastmod(key, source) {
+  const hash = crypto.createHash("md5").update(JSON.stringify(source)).digest("hex").slice(0, 12);
+  if (!dates[key] || dates[key].hash !== hash) dates[key] = { hash, date: today };
+  return dates[key].date;
+}
 
 function write(rel, content) {
   const file = path.join(dist, rel);
@@ -41,8 +54,9 @@ for (const lang of languages) {
   {
     const L = context(lang, depthHome);
     const alts = withHref(alternatesFor("", l => true), L, "");
-    write(`${lang.folder}index.html`, home.render(L, alts));
-    if (lang.index) sitemap.push({ loc: url(lang, ""), alts: alternatesFor("", l => true), priority: "1.0" });
+    const updated = lastmod(lang.folder, [lang.t.home, lang.t.destinations, lang.t.stations, lang.t.transport, require("./src/destinations"), require("./src/stations"), require("./src/transport"), site.vehicle, site.contact, site.rates]);
+    write(`${lang.folder}index.html`, home.render(L, alts, updated));
+    if (lang.index) sitemap.push({ loc: url(lang, ""), alts: alternatesFor("", l => true), priority: "1.0", lastmod: updated });
   }
   // Guides: English has all; other languages only the translated ones
   for (const p of pages) {
@@ -50,21 +64,21 @@ for (const lang of languages) {
     const L = context(lang, depthHome + 1);
     const has = l => l.code === "en" || !!l.pages[p.slug];
     const alts = withHref(alternatesFor(p.slug + "/", has), L, p.slug + "/");
-    write(`${lang.folder}${p.slug}/index.html`, article.render(L, p, pages, alts));
-    if (lang.index) sitemap.push({ loc: url(lang, p.slug + "/"), alts: alternatesFor(p.slug + "/", has), priority: "0.8" });
+    const updated = lastmod(lang.folder + p.slug + "/", [p, lang.pages[p.slug] || null, lang.t.ui.article]);
+    write(`${lang.folder}${p.slug}/index.html`, article.render(L, p, pages, alts, updated));
+    if (lang.index) sitemap.push({ loc: url(lang, p.slug + "/"), alts: alternatesFor(p.slug + "/", has), priority: "0.8", lastmod: updated });
   }
 }
 // Credits page (English only, linked from every language)
 {
   const L = context(languages[0], 1);
   write("photo-credits/index.html", creditsPage(L, withHref(alternatesFor("photo-credits/", l => l.code === "en"), L, "photo-credits/")));
-  sitemap.push({ loc: url(languages[0], "photo-credits/"), alts: [], priority: "0.3" });
+  sitemap.push({ loc: url(languages[0], "photo-credits/"), alts: [], priority: "0.3", lastmod: lastmod("photo-credits/", require("./src/photo-credits.json")) });
 }
 
-const today = new Date().toISOString().slice(0, 10);
 write("sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-${sitemap.map(u => `  <url><loc>${u.loc}</loc><lastmod>${today}</lastmod><priority>${u.priority}</priority>${u.alts.map(a => `<xhtml:link rel="alternate" hreflang="${a.code}" href="${a.url}"/>`).join("")}${u.alts.length ? `<xhtml:link rel="alternate" hreflang="x-default" href="${u.alts.find(a => a.code === "en").url}"/>` : ""}</url>`).join("\n")}
+${sitemap.map(u => `  <url><loc>${u.loc}</loc><lastmod>${u.lastmod}</lastmod><priority>${u.priority}</priority>${u.alts.map(a => `<xhtml:link rel="alternate" hreflang="${a.code}" href="${a.url}"/>`).join("")}${u.alts.length ? `<xhtml:link rel="alternate" hreflang="x-default" href="${u.alts.find(a => a.code === "en").url}"/>` : ""}</url>`).join("\n")}
 </urlset>
 `);
 // Search and AI crawlers are all welcome; the explicit list makes that unambiguous for GEO / LLM citation.
@@ -96,4 +110,7 @@ ${require("./src/destinations").map(d => `- ${d.name} (${d.kind}): ${d.blurb} ${
 All vehicle photographs are the business's own; landscape photographs are Creative Commons images from Wikimedia Commons, credited at ${site.url}/photo-credits/. No stock or AI-generated images are used.
 `);
 write(".nojekyll", "");
+// GitHub Pages serves the site at the custom domain once this file is present.
+if (site.customDomain) write("CNAME", site.customDomain + "\n");
+fs.writeFileSync(datesFile, JSON.stringify(dates, null, 1) + "\n");
 console.log(`wrote ${count} files (${languages.map(l => l.code).join(", ")}), ${sitemap.length} sitemap entries`);

@@ -5,9 +5,9 @@ module.exports = {
   name: "English",
   htmlLang: "en",
   // Dates written out in this language (the vehicle facts are the same in every language).
-  dates: { deliveredOn: "4 September 2026", purchased: "September 2026", checked: "September 2026" },
+  dates: { deliveredOn: "4 September 2026", purchased: "September 2026", checked: "18 September 2026" },
   ui: {
-    nav: { road: "The road", itineraries: "Itineraries", destinations: "Destinations", traveller: "Traveller", map: "Map", planTrip: "Plan a trip" },
+    nav: { road: "The road", itineraries: "Itineraries", destinations: "Destinations", traveller: "Traveller", prices: "Prices", map: "Map", planTrip: "Plan a trip" },
     menuOpen: "Open menu",
     whatsappAria: "WhatsApp {number}",
     language: "Language",
@@ -25,13 +25,13 @@ module.exports = {
       fine: "Trip plans may change with weather, road access and local conditions. Distances and times are approximate. Vehicle photographs are our own. Landscape photographs by Wikimedia Commons contributors,",
       creditedHere: "credited here"
     },
-    cta: { heading: "Tell us your dates. We'll shape the road ahead.", text: "Send dates, group size and where you start from. We reply with a route, timings and the Traveller price.", planOnWhatsApp: "Plan on WhatsApp", buildMyTrip: "Build my trip", aria: "Plan on WhatsApp" },
+    cta: { heading: "Tell us your dates. We'll shape the road ahead.", text: "Send dates, group size and where you start from. We reply with a route, timings and the Traveller price.", planOnWhatsApp: "Get trip cost on WhatsApp", buildMyTrip: "Build my trip", aria: "Get trip cost on WhatsApp" },
     // Units used to localise drive times such as "About 1 h 10 min" and "In town".
     units: { about: "About", h: "h", min: "min", inTown: "In town" },
     lines: { "Koraput–Rayagada": "Koraput–Rayagada", "Kirandul line, south": "Kirandul line, south", "Kirandul line, north": "Kirandul line, north" },
     realPhoto: "Real photo · our Traveller",
     realPhotoNotStock: "Real photo · our Traveller, not a stock image",
-    article: { home: "Ananta", tour: "Koraput tour", planThis: "Plan this with Ananta", asideText: "Tell us your dates and group size. We reply with timings, the route and the Traveller price.", whatsappAnanta: "WhatsApp Ananta", keepReading: "Keep reading", read: "Read", relatedAria: "Related guides", estimatedTimes: "Estimated times", day: "Day {n}", guide: "Guide", updated: "Updated {date}", defaultMessage: "Hi Ananta Tours, I am planning a Koraput trip and read your page about {title}. Please help me with the itinerary and 17-seater Traveller availability." },
+    article: { home: "Ananta", tour: "Koraput tour", planThis: "Plan this with Ananta", asideText: "Tell us your dates and group size. We reply with timings, the route and the Traveller price.", whatsappAnanta: "Check availability and price", keepReading: "Keep reading", read: "Read", relatedAria: "Related guides", estimatedTimes: "Estimated times", day: "Day {n}", guide: "Guide", updated: "Updated {date}", defaultMessage: "Hi Ananta Tours, I am planning a Koraput trip and read your page about {title}. Please help me with the itinerary and 17-seater Traveller availability." },
     credits: { title: "Photo credits", description: "Sources and licences for the photographs used on the Ananta Tours & Travels website.", intro: "Every landscape and place photograph on this site is a real photograph of Koraput district, shared by its photographer on Wikimedia Commons under a Creative Commons licence. We crop and resize them for the web and change nothing else. Photographs of the Ananta Traveller and the logo are our own.", by: "by", via: "via Wikimedia Commons. Cropped and resized. Used as" }
   },
   strings: {
@@ -43,7 +43,7 @@ module.exports = {
     around: " around {date}",
     waPlanner: "Hi Ananta Tours, we are {people} people travelling from {origin} and planning a {days}-day Koraput trip{when}. Suggested route: {route}.{must} Please send an itinerary, availability and the Traveller price.",
     waPlaces: " Places we want to include: {places}.",
-    waDefault: "Hi Ananta Tours, I am planning a Koraput trip. Please help me with the itinerary and 17-seater Traveller availability.",
+    waDefault: "Hi Ananta Tours, I am planning a Koraput trip.\n\nTravel dates:\nNumber of people:\nPickup location:\nNumber of days:\nPlaces we want to visit:\n\nPlease share Traveller availability and the total trip cost.",
     waOrigin: "Hi Ananta Tours, I am planning a Koraput trip from {origin}. Please help me with the itinerary and 17-seater Traveller availability.",
     pending: "Business number pending. WhatsApp will ask you to choose a contact.",
     seat: "Seat {n}", frontRow: "front row, beside the driver", backBench: "back bench", row: "row {n}", window: "window", aisle: "aisle", middle: "middle", seatWord: "seat",
@@ -52,13 +52,13 @@ module.exports = {
     copied: "Copied"
   },
   home: {
-    title: "Ananta Tours & Travels | Koraput Trip Planning, Sightseeing and a 17-Seater AC Traveller for Groups",
-    description: "Plan a Koraput trip: tourist places, 1 to 4 day itineraries, tours from Bhubaneswar and Kolkata, and one 17-seater AC Traveller with a local driver and support staff for your group. Enquire on WhatsApp.",
+    title: "Koraput Tour Packages & 17-Seater Traveller | Ananta Tours",
+    description: "Plan a 2–4 day Koraput group tour to Deomali, Duduma, Gupteswar and Kolab in a 17-seater AC Traveller with local pickup, driver and trip support.",
     jsonDescription: "Koraput sightseeing journeys for families and groups in a new 17-seater AC Traveller with a local driver, support staff and guided-tour assistance.",
     hero: {
       badge: "Real photo · our Traveller on delivery day, {date}",
       h1a: "Discover Koraput.", h1b: "We’ll take care of the journey.",
-      copy: "Travel through the mountains, waterfalls and hidden landscapes of Koraput in our brand-new 17-seater AC Traveller, with a friendly local driver, support staff and guided-tour assistance.",
+      copy: "Private Koraput tours for groups of 10 to 17 people. Deomali, Duduma, Gupteswar, Talamali and Putsil in one new AC Traveller, with a local driver and trip support.",
       plan: "Plan my Koraput trip",
       proof: { newLabel: "New", purchased: "· purchased {date}", seats: "{n} seats", ac: "Air conditioned", driver: "Local driver", support: "& support", guided: "Guided tours", station: "Station pickup", drop: "& drop" },
       openGallery: "Open the photo gallery", sliderAria: "Photo slider", prev: "Previous photo", next: "Next photo", photoN: "Photo {n}: {caption}", view: "View {n} photos", scrollCue: "Scroll to the next section",
@@ -99,6 +99,28 @@ module.exports = {
       facts: [["Force Traveller", "Purchased new, {date}"], ["17 passenger seats", "Your whole group in one vehicle"], ["Air conditioned", "Comfort on long ghat sections"], ["All-India permit", "Serviced on schedule, checked before every trip"], ["Experienced local driver", "Knows the roads, the timings and the stops"], ["Tour support available", "Support staff and guided-tour assistance"]],
       note: "Every photograph here is our own vehicle, never a stock Traveller. Pushback seats with armrests, curtains on every window and an overhead rack for small bags.",
       more: "More about the Traveller", seatsAria: "Interactive seat layout", seatsTap: "seats · tap one", seatInfo: "Tap a seat. Pushback seats in 2+1 rows with a back bench, as in the cabin photo.", legend: ["Passenger seat", "Selected", "Driver"]
+    },
+    price: {
+      h2: "What a Koraput trip costs",
+      lede: "One written price for the whole vehicle, never per seat, and never before you have seen the route. This is what moves the figure.",
+      drivers: [
+        ["Where we pick you up", "Koraput, Semiliguda and Jeypore are local. Rayagada, Araku, Visakhapatnam or Bhubaneswar mean the Traveller comes to you first."],
+        ["How far the route runs", "An evening at Kolab and a full day at Duduma are not the same drive."],
+        ["How many days", "Multi-day trips are quoted as a block, which usually works out lower per day."],
+        ["Night halts and early starts", "If the vehicle stays out overnight, the driver's stay is in the quote and named there."]
+      ],
+      includedLabel: "In every quote",
+      included: ["The 17-seater AC Traveller", "Driver, fuel, tolls and parking", "Planning before, support during"],
+      excludedLabel: "Not included",
+      excluded: ["Meals and entry tickets", "Hotels for your group", "Places added on the day, priced first"],
+      cardTitle: "Get an exact price in five lines",
+      cardLines: ["Travel dates", "Number of travellers", "Pickup point", "Days in Koraput", "Places you want to include"],
+      cta: "Get trip cost on WhatsApp",
+      more: "How the fare is worked out",
+      note: "No payment is requested until the itinerary, price and availability are confirmed in writing.",
+      ratesHeading: "Starting fares",
+      ratesNote: "For the whole 17-seater, not per person. Last updated {date}.",
+      ratesTrip: "Trip", ratesLength: "Length", ratesFrom: "From"
     },
     team: { photoAlt: "Sunrise through forest silhouettes in Koraput", caption: "Sunrise through the forest on the Koraput highlands.", h2: "You're not travelling alone.", quote: "Friendly local team. No confusion in an unfamiliar place.", p: "From pickup to sightseeing and return, our team stays available to help with routes, stops, local information and unexpected changes during your journey.", roles: [["Local driver", "Knows the ghat roads, the sunrise timings and where to stop for a good meal."], ["Support staff", "On WhatsApp through your trip for timings, changes and questions."], ["Guided-tour assistance", "Someone to explain what you are seeing, whenever you want it."]] },
     booking: { h2: "Plan first. Pay after confirmation.", lede: "The order never changes, so you always know what you are paying for.", steps: [["Share your trip", "Dates, group size and where you will arrive from. WhatsApp is easiest."], ["Confirm itinerary and price", "We send the route, timings and the Traveller price. You know what is included before you decide."], ["Pay a booking advance", "The official UPI QR and a booking reference come privately on WhatsApp, with confirmation of the amount."]], note: "No payment is requested before your itinerary, price and availability are confirmed." },
