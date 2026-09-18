@@ -22,15 +22,19 @@
   let lenis = null;
   if (hasGsap) gsap.registerPlugin(ScrollTrigger);
 
-  // The low-poly terrain pulls in Three.js (~600 KB). Load it only as the section approaches.
+  // The low-poly terrain pulls in Three.js (~600 KB). Fetch it only once that section is close.
   const terrainCanvas = $("#terrain");
-  if (terrainCanvas && "IntersectionObserver" in window) {
-    const io = new IntersectionObserver(entries => {
-      if (!entries.some(e => e.isIntersecting)) return;
-      io.disconnect();
-      import("./scene.js").catch(() => terrainCanvas.remove());
-    }, { rootMargin: "700px 0px" });
-    io.observe(terrainCanvas);
+  if (terrainCanvas) {
+    let sceneAsked = false;
+    const nearTerrain = () => terrainCanvas.getBoundingClientRect().top < window.innerHeight + 700;
+    const checkTerrain = () => {
+      if (sceneAsked || !nearTerrain()) return;
+      sceneAsked = true;
+      window.removeEventListener("scroll", checkTerrain);
+      import("./scene.js").catch(() => {});
+    };
+    window.addEventListener("scroll", checkTerrain, { passive: true });
+    checkTerrain();
   }
   // Smooth scrolling and scroll-linked effects stay on even under reduced motion; only autonomous animation is gated by `reduce`.
   if (window.Lenis) {
@@ -119,36 +123,6 @@
         .from(".scroll-cue", { opacity: 0, duration: 0.6 }, 1.4);
       gsap.to(".hero-media", { yPercent: 16, ease: "none", scrollTrigger: { trigger: hero, start: "top top", end: "bottom top", scrub: true } });
       gsap.to(".hero-inner", { y: -50, opacity: 0.25, ease: "none", scrollTrigger: { trigger: hero, start: "40% top", end: "bottom top", scrub: true } });
-    }
-    // Real footage only after the visitor has settled on the hero for ~3 s, never on slow or data-saver connections.
-    const conn = navigator.connection || {};
-    const slowNet = !!conn.saveData || /(^|[^4-9])[23]g$/.test(conn.effectiveType || "");
-    const video = $("#hero-video");
-    if (video && slowNet) video.remove();
-    if (video && !reduce && !slowNet) {
-      const YT = "https://www.youtube-nocookie.com";
-      let lastState = null;
-      video.src = video.dataset.src + "&origin=" + encodeURIComponent(location.origin);
-      const send = fn => video.contentWindow?.postMessage(JSON.stringify({ event: "command", func: fn, args: [] }), YT);
-      let timer, started = false, wantPlay = false;
-      // Subscribe to player state so the footage only fades in once it is really playing (never a paused frame with a play button).
-      const listen = () => video.contentWindow?.postMessage(JSON.stringify({ event: "listening", id: "hero", channel: "widget" }), YT);
-      video.addEventListener("load", listen); listen();
-      window.addEventListener("message", e => {
-        if (e.origin !== YT || typeof e.data !== "string") return;
-        let d; try { d = JSON.parse(e.data); } catch (err) { return; }
-        const state = d.event === "onStateChange" ? d.info : d.info && typeof d.info.playerState === "number" ? d.info.playerState : null;
-        if (state !== null) lastState = state;
-        if (state === 1 && wantPlay) video.classList.add("is-playing");
-        else if (state === 2 || state === 0 || state === -1) video.classList.remove("is-playing");
-        if (d.event === "onReady" && wantPlay) play();
-      });
-      const play = () => { wantPlay = true; send("mute"); send("playVideo"); started = true; if (lastState === 1) video.classList.add("is-playing"); };
-      new IntersectionObserver(([en]) => {
-        clearTimeout(timer);
-        if (en.isIntersecting && en.intersectionRatio >= 0.4) timer = setTimeout(play, started ? 0 : 3000);
-        else { wantPlay = false; send("pauseVideo"); video.classList.remove("is-playing"); }
-      }, { threshold: [0, 0.4] }).observe(hero);
     }
   }
 

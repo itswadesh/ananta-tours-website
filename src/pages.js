@@ -137,8 +137,8 @@ module.exports = [
       { icon: "snowflake", label: "Cabin", value: "Air conditioned" },
       { icon: "van", label: "Make", value: "Force Traveller, new Sept 2026" },
       { icon: "users", label: "Crew", value: "Driver + support" },
-      { icon: "luggage", label: "Luggage", value: "17 small bags, or 12–14 with cases" },
-      { icon: "shield", label: "Permit", value: "All-India, OD02 DT 9296" }
+      { icon: "luggage", label: "Luggage", value: "17 bags, or 12–14 cases" },
+      { icon: "shield", label: "Registration", value: "OD02 DT 9296" }
     ],
     blocks: [
       { type: "h2", text: "Why one Traveller instead of three cars" },
