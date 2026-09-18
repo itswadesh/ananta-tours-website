@@ -22,6 +22,7 @@ Status of every item in [ananta-tours-koraput-seo-strategy.md](ananta-tours-kora
 | Domain switch ready | set `customDomain` in `src/site.js` and the next build rewrites canonicals, hreflang, sitemap, structured data and `llms.txt`, and writes `dist/CNAME` |
 | Titles and descriptions | every page title now fits a search result (keyword first, short `| Ananta Tours` suffix) and every description sits under 160 characters |
 | Hero subheading | the emotional H1 stays; the commercial line under it names group size, vehicle and the main destinations |
+| Question-shaped answers | the price, vehicle and Visakhapatnam pages carry FAQ blocks published as FAQPage, so the exact wording people search appears as a heading with the answer under it |
 | Languages | English plus Odia, Hindi, Bengali and Telugu, with hreflang and x-default |
 
 ## Needs you before it can ship
@@ -29,7 +30,19 @@ Status of every item in [ananta-tours-koraput-seo-strategy.md](ananta-tours-kora
 1. **Buy the domain.** `anantatourskoraput.com` is the strategy's recommendation. Point it at GitHub Pages (four A records for apex, or a CNAME for `www`), then set `customDomain: "anantatourskoraput.com"` in `src/site.js`, run `node build.js` and `node deploy.js`. Nothing else changes.
 2. **Google Search Console.** Add the domain, submit `sitemap.xml`, then request indexing for the homepage, the vehicle page, the three origin pages, the price page, Deomali, Duduma and Gupteswar.
 3. **Google Business Profile.** This is worth more than any further blog post. Name, phone, the new website, Koraput service area, categories, and photographs: front, side, interior, luggage space, the vehicle at Deomali and Duduma, the driver, real groups.
-4. **Starting rates.** Fill `site.rates` in `src/site.js` with real figures and the price page and homepage render a rate table automatically. Nothing is invented for you: until you supply numbers, the page explains the method instead.
+4. **Starting rates.** Fill `site.rates` in `src/site.js` with real figures and the price page and homepage render a rate table automatically. Nothing is invented for you: until you supply numbers, the page explains the method instead. The shape:
+
+    ```js
+    rates: {
+      currency: "₹",
+      updated: "September 2026",
+      items: [
+        { name: "Deomali day trip", route: "Koraput or Semiliguda, return", days: "1 day", from: 0 },
+        { name: "Duduma and Machkund", route: "Koraput, return", days: "1 day", from: 0 },
+        { name: "Three-day Koraput tour", route: "Town, Kolab, Deomali, Duduma", days: "3 days", from: 0 }
+      ]
+    },
+    ```
 5. **Driver and team proof.** Send a driver photo, name, years driving and languages, plus a team or group photo, and the trust block goes in.
 6. **Reviews.** Ask real customers after their trip. No review goes on this site unless a real person wrote it.
 
