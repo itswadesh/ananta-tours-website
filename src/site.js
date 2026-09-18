@@ -12,6 +12,7 @@ module.exports = {
   contact: {
     whatsapp: "917978707236",             // digits with country code, used by every WhatsApp button
     whatsappDisplay: "+91 79787 07236",
+    email: "saramanihembram434@gmail.com",
     phones: [
       { display: "+91 76098 35466", tel: "+917609835466" },
       { display: "+91 82609 03443", tel: "+918260903443" }

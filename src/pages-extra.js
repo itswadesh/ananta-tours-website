@@ -177,7 +177,7 @@ module.exports = [
     title: "Contact Ananta Tours & Travels",
     short: "Contact",
     metaTitle: "Contact Ananta Tours & Travels, Semiliguda, Koraput",
-    description: `Reach Ananta Tours & Travels in Semiliguda, Koraput: WhatsApp ${c.whatsappDisplay}, phone ${c.phones.map(p => p.display).join(" or ")}, ${c.address.street}, ${c.address.locality} ${c.address.postalCode}.`,
+    description: `Reach Ananta Tours & Travels in Semiliguda, Koraput: WhatsApp ${c.whatsappDisplay}, phone ${c.phones.map(p => p.display).join(" or ")}, email ${c.email}, ${c.address.street}, ${c.address.locality} ${c.address.postalCode}.`,
     kind: "Contact", icon: "phone",
     hero: "koraput-mist", heroAlt: "Mist over a temple and hills near Koraput town",
     ctaPhoto: "traveller-front-hill",
@@ -186,11 +186,11 @@ module.exports = [
       { icon: "whatsapp", label: "WhatsApp", value: c.whatsappDisplay },
       { icon: "phone", label: "Phone", value: c.phones[0].display },
       { icon: "phone", label: "Phone", value: c.phones[1].display },
-      { icon: "pin", label: "Based in", value: `${c.address.locality}, Koraput` }
+      { icon: "chat", label: "Email", value: c.email }
     ],
     blocks: [
       { type: "h2", text: "Write to us" },
-      { type: "p", html: `WhatsApp <a href="https://wa.me/${c.whatsapp}" target="_blank" rel="noopener noreferrer">${c.whatsappDisplay}</a> with your dates, group size and where you start from. You get a route and a written price, usually the same day. Calls: <a href="tel:${c.phones[0].tel}">${c.phones[0].display}</a> or <a href="tel:${c.phones[1].tel}">${c.phones[1].display}</a>.` },
+      { type: "p", html: `WhatsApp <a href="https://wa.me/${c.whatsapp}" target="_blank" rel="noopener noreferrer">${c.whatsappDisplay}</a> with your dates, group size and where you start from. You get a route and a written price, usually the same day. Calls: <a href="tel:${c.phones[0].tel}">${c.phones[0].display}</a> or <a href="tel:${c.phones[1].tel}">${c.phones[1].display}</a>. Email, for documents and quotes you want in writing: <a href="mailto:${c.email}">${c.email}</a>.` },
       { type: "h2", text: "Where we are" },
       { type: "p", html: `${c.address.street}, ${c.address.locality}, Dist. ${c.address.district}, ${c.address.region} ${c.address.postalCode}. Semiliguda sits on the highway between Koraput town and Sunabeda, about twenty minutes from Koraput railway station and on the road to Deomali.` },
       { type: "html", html: `<div class="map-frame map-frame-sm"><iframe src="https://maps.google.com/maps?q=${encodeURIComponent(c.address.locality + ", " + c.address.district + ", " + c.address.region)}&z=14&output=embed" title="Map of Semiliguda, Koraput" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>` },

@@ -407,6 +407,7 @@ function render() {
       url: site.url,
       areaServed: ["Koraput", "Odisha"],
       telephone: site.contact.phones[0].tel,
+      email: site.contact.email,
       address: { "@type": "PostalAddress", streetAddress: site.contact.address.street, addressLocality: site.contact.address.locality, addressRegion: site.contact.address.region, postalCode: site.contact.address.postalCode, addressCountry: "IN" },
       contactPoint: [{ "@type": "ContactPoint", contactType: "reservations", telephone: "+" + site.contact.whatsapp, availableLanguage: ["en", "or", "hi"] }],
       priceRange: "₹₹",

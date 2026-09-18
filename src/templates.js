@@ -45,6 +45,7 @@ function footer(root) {
         <span>${icon("pin")}<span>${esc(site.contact.address.street)}, ${esc(site.contact.address.locality)}, Dist. ${esc(site.contact.address.district)}, ${esc(site.contact.address.region)} ${esc(site.contact.address.postalCode)}</span></span>
         <span>${icon("whatsapp")}<a href="https://wa.me/${site.contact.whatsapp}" target="_blank" rel="noopener noreferrer">${esc(site.contact.whatsappDisplay)}</a> on WhatsApp</span>
         ${site.contact.phones.map(p => `<span>${icon("phone")}<a href="tel:${p.tel}">${esc(p.display)}</a></span>`).join("")}
+        <span>${icon("chat")}<a href="mailto:${site.contact.email}">${esc(site.contact.email)}</a></span>
       </address>
     </div>
     <div class="footer-col">
