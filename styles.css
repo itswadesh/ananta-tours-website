@@ -113,7 +113,8 @@ p { text-wrap: pretty; }
 }
 .site-header.is-scrolled { background: rgba(7, 38, 32, 0.78); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08); padding-block: 0.6rem; }
 .brand { display: inline-flex; align-items: center; gap: 0.7rem; }
-.brand-mark { width: 2.4rem; height: 2.4rem; color: var(--sand); }
+.brand-mark { width: 3.2rem; height: 3.2rem; object-fit: contain; flex: none; }
+.brand-lg img { width: 9rem; height: auto; }
 .brand-text { display: grid; line-height: 1; }
 .brand-text strong { font-family: var(--serif); font-weight: 500; font-size: 1.3rem; letter-spacing: -0.01em; }
 .brand-text small { margin-top: 0.22rem; font-size: 0.66rem; letter-spacing: 0.08em; opacity: 0.8; }
@@ -259,6 +260,20 @@ p { text-wrap: pretty; }
 .dest-featured .pic { aspect-ratio: auto; height: 100%; min-height: 18rem; }
 
 /* Traveller */
+.gallery { display: grid; grid-template-columns: 1fr 15rem; gap: 1rem; margin-bottom: clamp(2.5rem, 5vw, 4.5rem); }
+.gallery-main { position: relative; margin: 0; border-radius: var(--r); overflow: hidden; aspect-ratio: 4 / 3; background: var(--forest-deep); }
+.gallery-main .gallery-img { position: absolute; inset: 0; opacity: 0; transform: scale(1.03); transition: opacity 0.6s var(--ease-out), transform 1s var(--ease-out); }
+.gallery-main .gallery-img img { object-position: center 38%; }
+.gallery-main .gallery-img.is-active { opacity: 1; transform: none; }
+.gallery-main figcaption { position: absolute; left: 1rem; bottom: 1rem; padding: 0.55rem 0.9rem; border-radius: 0.8rem; background: rgba(7, 38, 32, 0.72); color: #fff; font-size: 0.85rem; backdrop-filter: blur(8px); }
+.gallery-thumbs { display: grid; grid-template-rows: repeat(4, 1fr); gap: 0.6rem; }
+.gallery-thumbs button { display: grid; grid-template-columns: 4.6rem 1fr; align-items: center; gap: 0.7rem; padding: 0.4rem; border-radius: 0.9rem; border: 1px solid var(--line-dark); background: rgba(255, 255, 255, 0.04); text-align: left; font-size: 0.9rem; color: rgba(255, 255, 255, 0.8); transition: background-color 0.25s, border-color 0.25s, transform 0.3s var(--ease-out); }
+.gallery-thumbs button:hover { background: rgba(255, 255, 255, 0.09); transform: translateX(3px); }
+.gallery-thumbs button[aria-selected="true"] { border-color: var(--sand); background: rgba(230, 214, 173, 0.12); color: #fff; }
+.gallery-thumbs .pic { aspect-ratio: 1; border-radius: 0.6rem; overflow: hidden; }
+.stop-vehicle { display: flex; align-items: center; gap: 0.8rem; margin-top: 0.6rem; font-size: 0.88rem; color: rgba(255, 255, 255, 0.72); }
+.stop-start .stop-vehicle { justify-content: center; }
+.stop-vehicle .pic { width: 5.5rem; aspect-ratio: 1; border-radius: 0.8rem; overflow: hidden; flex: none; }
 .vehicle-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 6vw, 6rem); align-items: center; }
 .vehicle-copy { display: grid; gap: 1.4rem; }
 .fact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 1.5rem; margin-top: 0.5rem; }
@@ -378,7 +393,7 @@ p { text-wrap: pretty; }
 .article-hero { position: relative; min-height: 72svh; display: grid; align-items: end; color: #fff; background: var(--forest-deep); overflow: hidden; }
 .article-hero .pic { position: absolute; inset: 0; }
 .article-hero .pic img { transform: scale(1.1); will-change: transform; }
-.article-hero::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7, 38, 32, 0.5), rgba(7, 38, 32, 0.05) 35%, rgba(7, 38, 32, 0.9)); }
+.article-hero::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7, 38, 32, 0.5), rgba(7, 38, 32, 0.05) 35%, rgba(7, 38, 32, 0.9)), linear-gradient(90deg, rgba(7, 38, 32, 0.6), rgba(7, 38, 32, 0) 65%); }
 .article-hero .wrap { position: relative; z-index: 1; padding: 9rem 0 2.5rem; display: grid; gap: 1rem; }
 .crumbs { display: flex; flex-wrap: wrap; gap: 0.5rem; font-size: 0.9rem; color: rgba(255, 255, 255, 0.75); }
 .crumbs a:hover { color: #fff; }
@@ -456,6 +471,11 @@ p { text-wrap: pretty; }
   .dest-featured .pic { aspect-ratio: 4 / 3; min-height: 0; }
   .fact-grid { grid-template-columns: 1fr 1fr; }
   .seatmap { --tilt: 46deg; --turn: -20deg; }
+  .gallery { grid-template-columns: 1fr; }
+  .gallery-thumbs { grid-template-rows: none; grid-template-columns: repeat(4, 1fr); }
+  .gallery-thumbs button { grid-template-columns: 1fr; gap: 0.3rem; font-size: 0.8rem; text-align: center; }
+  .gallery-thumbs button:hover { transform: translateY(-2px); }
+  .brand-lg img { width: 7rem; }
   .team-photo { aspect-ratio: 4 / 3; }
   .cta-card .pic { min-height: 14rem; }
 }
