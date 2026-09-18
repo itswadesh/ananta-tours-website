@@ -17,7 +17,8 @@
   /* ---------- Smooth scrolling ---------- */
   let lenis = null;
   if (hasGsap) gsap.registerPlugin(ScrollTrigger, window.MotionPathPlugin || {});
-  if (window.Lenis && !reduce) {
+  // Smooth scrolling and scroll-linked effects stay on even under reduced motion; only autonomous animation is gated by `reduce`.
+  if (window.Lenis) {
     lenis = new Lenis({ lerp: 0.09, smoothWheel: true, wheelMultiplier: 0.95 });
     if (hasGsap) {
       lenis.on("scroll", ScrollTrigger.update);
@@ -29,8 +30,8 @@
     }
   }
   function scrollToEl(el) {
-    if (lenis) lenis.scrollTo(el, { offset: -72, duration: 1.4 });
-    else el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    if (lenis) lenis.scrollTo(el, { offset: -76, duration: 1.4, easing: t => 1 - Math.pow(1 - t, 3) });
+    else el.scrollIntoView({ behavior: "smooth", block: "start" });
   }
   document.addEventListener("click", e => {
     const a = e.target.closest('a[href*="#"]');
@@ -44,6 +45,11 @@
     scrollToEl(el);
     history.pushState(null, "", url.hash);
   });
+
+  if (location.hash && location.hash.length > 1) {
+    const target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    if (target) { if ("scrollRestoration" in history) history.scrollRestoration = "manual"; window.scrollTo(0, 0); setTimeout(() => scrollToEl(target), 120); }
+  }
 
   /* ---------- Header, progress bar, mobile nav ---------- */
   const header = $(".site-header");
@@ -131,8 +137,8 @@
     }
   }
 
-  /* ---------- Parallax for framed photos ---------- */
-  if (hasGsap && !reduce) {
+  /* ---------- Parallax for framed photos (scroll-linked) ---------- */
+  if (hasGsap) {
     $$("[data-parallax]").forEach(box => {
       const img = box.querySelector("img");
       if (!img) return;
@@ -168,7 +174,7 @@
       const len = drawn.getTotalLength();
       drawn.style.strokeDasharray = `${len}`;
       drawn.style.strokeDashoffset = `${len}`;
-      if (hasGsap && !reduce) {
+      if (hasGsap) {
         ["road", "van"].forEach(id => ScrollTrigger.getById(id)?.kill());
         const st = { trigger: track, start: "top 62%", end: "bottom 62%", scrub: 0.7 };
         gsap.to(drawn, { strokeDashoffset: 0, ease: "none", scrollTrigger: { ...st, id: "road" } });
@@ -181,12 +187,12 @@
       }
       built = true;
     }
-    if (hasGsap && !reduce) {
+    if (hasGsap) {
       $$(".stop", track).forEach(stop => {
         const marker = stop.querySelector(".stop-marker");
         if (marker) ScrollTrigger.create({ trigger: marker, start: "center 62%", toggleClass: { targets: stop, className: "is-passed" } });
         const parts = $$(".stop-body > *", stop);
-        if (parts.length) gsap.from(parts, { y: 28, opacity: 0, duration: 0.9, stagger: 0.08, ease: "power3.out", scrollTrigger: { trigger: stop, start: "top 78%", once: true } });
+        if (parts.length && !reduce) gsap.from(parts, { y: 28, opacity: 0, duration: 0.9, stagger: 0.08, ease: "power3.out", scrollTrigger: { trigger: stop, start: "top 78%", once: true } });
       });
     }
     const rebuild = () => { buildRoad(); if (hasGsap) ScrollTrigger.refresh(); };
@@ -266,6 +272,21 @@
     });
   }
 
+  /* ---------- One group, one vehicle: entrance once it scrolls into view ---------- */
+  const together = $("#together");
+  if (together && hasGsap && !reduce) {
+    const tl = gsap.timeline({ scrollTrigger: { trigger: together, start: "top 70%", once: true }, defaults: { ease: "power3.out" } });
+    tl.from($(".scene-cars .car", together), { x: -60, opacity: 0, duration: 0.8, stagger: 0.12 }, 0)
+      .from($(".compare-bad .compare-list li", together), { y: 16, opacity: 0, duration: 0.5, stagger: 0.08 }, 0.3)
+      .from($(".compare-vs", together), { scale: 0, duration: 0.5, ease: "back.out(2)" }, 0.5)
+      .from($(".scene-van .van-unit", together), { x: -260, opacity: 0, duration: 1.1, ease: "power4.out" }, 0.4)
+      .from($(".scene-van .person", together), { scale: 0, opacity: 0, duration: 0.35, stagger: 0.03, ease: "back.out(3)" }, 1.0)
+      .from($(".scene-van .people-pill", together), { scale: 0.6, opacity: 0, duration: 0.45, ease: "back.out(2)" }, 1.4)
+      .from($(".scene-van .check-badge", together), { scale: 0, duration: 0.5, ease: "back.out(2.5)" }, 1.55)
+      .from($(".compare-good .compare-list li", together), { y: 16, opacity: 0, duration: 0.5, stagger: 0.08 }, 1.0)
+      .from($(".compare-stats li", together), { y: 14, opacity: 0, duration: 0.5, stagger: 0.08 }, 1.4);
+  }
+
   /* ---------- Vehicle gallery ---------- */
   const gallery = $("#vehicle-gallery");
   if (gallery) {
@@ -286,10 +307,10 @@
     const info = $("#seat-info");
     seatmap.innerHTML = rows.map((row, ri) => `<div class="seat-row">${row.map((s, ci) => {
       if (s === "") return `<span class="aisle" aria-hidden="true"></span>`;
-      if (s === "D") return `<span class="seat driver" title="Driver">D</span>`;
+      if (s === "D") return `<span class="seat driver" title="Driver"><span class="seat-back">D</span><span class="seat-cushion"></span></span>`;
       const side = ri === 5 ? (ci === 0 || ci === 3 ? "window" : "middle") : (ci === 0 || ci === 3 ? "window" : "aisle");
       const rowName = ri === 0 ? "front row, beside the driver" : ri === 5 ? "back bench" : `row ${ri + 1}`;
-      return `<button class="seat" type="button" data-seat="${s}" data-desc="Seat ${s} · ${rowName} · ${side} seat" aria-label="Seat ${s}, ${rowName}, ${side}">${s}</button>`;
+      return `<button class="seat" type="button" data-seat="${s}" data-desc="Seat ${s} · ${rowName} · ${side} seat" aria-label="Seat ${s}, ${rowName}, ${side}"><span class="seat-back">${s}</span><span class="seat-cushion"></span></button>`;
     }).join("")}</div>`).join("");
     seatmap.addEventListener("click", e => {
       const seat = e.target.closest(".seat[data-seat]");
