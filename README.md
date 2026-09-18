@@ -7,11 +7,14 @@ Positioning: **Experience Koraput in Comfort**. Koraput sells the trip; the vehi
 
 ```
 build.js            Generates dist/ from src/ (no dependencies: `node build.js`)
-src/site.js         Name, public URL, hero video id, nav
+src/site.js         Name, public URL, vehicle facts, contact details, nav
 src/destinations.js Ten places with coordinates, photos, drive times
-src/pages.js        The eleven planning guides (content only)
-src/home.js         Homepage template
-src/article.js      Guide page template
+src/pages.js, src/pages-extra.js   The sixteen planning guides (content only)
+src/i18n/en.js      Every UI string and homepage text (English master)
+src/i18n/index.js   Language registry: English at the root, or/ hi/ bn/ te/ folders, deep-merge fallback
+src/i18n/<code>.js, <code>-pages*.js   Odia, Hindi, Bengali and Telugu translations (dictionary + 7 translated guides each)
+src/home.js         Homepage template (render(L) takes a language context)
+src/article.js      Guide page template (Article + TouristTrip / TouristAttraction schema)
 src/templates.js    Layout, header, footer, <picture> helper, credits page
 src/icons.js        Inline SVG icon set
 src/photo-credits.json / photo-manifest.json   Attribution and sizes for dist/assets/photos
@@ -21,7 +24,11 @@ dist/script.js      Smooth scroll, the scroll-driven road, planner, seat map, ma
 dist/scene.js       Three.js low-poly terrain behind "17 seats. One incredible Koraput."
 ```
 
-Pages: `/`, `/koraput-tour/`, `/koraput-tour-package-from-bhubaneswar/`, `/koraput-tour-package-from-kolkata/`, `/17-seater-traveller-koraput/`, `/koraput-sightseeing/`, `/koraput-3-day-itinerary/`, `/koraput-2-day-itinerary/`, `/deomali-tour/`, `/duduma-waterfall-tour/`, `/gupteswar-tour/`, `/kolab-dam-tour/`, `/photo-credits/`.
+Pages (English, at the root): `/`, `/koraput-tour/`, `/koraput-tour-package-from-bhubaneswar/`, `/koraput-tour-package-from-kolkata/`, `/17-seater-traveller-koraput/`, `/koraput-sightseeing/`, `/koraput-3-day-itinerary/`, `/koraput-2-day-itinerary/`, `/deomali-tour/`, `/duduma-waterfall-tour/`, `/gupteswar-tour/`, `/kolab-dam-tour/`, `/traveller-rental-koraput/`, `/group-tour-koraput/`, `/koraput-1-day-itinerary/`, `/koraput-4-day-itinerary/`, `/contact/`, `/photo-credits/`.
+
+Languages: the same homepage plus seven translated guides live under `/or/` (Odia), `/hi/` (Hindi), `/bn/` (Bengali) and `/te/` (Telugu). Every page carries `hreflang` links to its other versions and `x-default` pointing at English; the sitemap repeats them. Untranslated guides link back to the English page. Translations are model-generated first drafts pending a native-speaker review; set `index: false` on a language in `src/i18n/index.js` to publish it with `noindex` while it is being reviewed.
+
+Search and answer engines: `robots.txt` explicitly allows the major AI crawlers, `llms.txt` summarises the business and every page, and each page has JSON-LD (TravelAgency, WebSite, FAQPage, ItemList of TouristAttraction on the homepage; Article, BreadcrumbList and TouristTrip on itineraries).
 
 ## Editing
 
@@ -41,7 +48,7 @@ Preview locally with any static server, for example `npx serve dist`. Animations
 
 ## Photos and footage
 
-All landscape and place photographs are real photographs of Koraput district from Wikimedia Commons under Creative Commons licences, resized for the web. Each one is credited on `/photo-credits/` (generated from `src/photo-credits.json`). Do not replace them with stock or AI-generated imagery. The hero plays real Deomali footage from YouTube (credited in the footer) over a still photograph.
+All landscape and place photographs are real photographs of Koraput district from Wikimedia Commons under Creative Commons licences, resized for the web. Each one is credited on `/photo-credits/` (generated from `src/photo-credits.json`). Do not replace them with stock or AI-generated imagery. The hero is a slider of our own vehicle photographs.
 
 ## Deploying to GitHub Pages
 

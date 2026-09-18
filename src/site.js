@@ -24,12 +24,13 @@ module.exports = {
     purchased: "September 2026",
     deliveredOn: "4 September 2026"
   },
+  // Labels come from the language dictionaries (ui.nav) keyed by `key`.
   nav: [
-    { href: "#journey", label: "The road" },
-    { href: "#itineraries", label: "Itineraries" },
-    { href: "#destinations", label: "Destinations" },
-    { href: "#traveller", label: "Traveller" },
-    { href: "#map", label: "Map" }
+    { href: "#journey", key: "road" },
+    { href: "#itineraries", key: "itineraries" },
+    { href: "#destinations", key: "destinations" },
+    { href: "#traveller", key: "traveller" },
+    { href: "#map", key: "map" }
   ],
   // Coordinates of Koraput town centre, used as the start of the map route.
   koraput: { lat: 18.812, lng: 82.71 }

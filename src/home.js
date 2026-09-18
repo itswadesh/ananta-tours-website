@@ -2,11 +2,10 @@ const site = require("./site");
 const dests = require("./destinations");
 const stations = require("./stations");
 const transport = require("./transport");
-const { esc, pic, icon, layout, ctaCard, realBadge } = require("./templates");
+const manifest = require("./photo-manifest.json");
+const { esc, pic, icon, layout, ctaCard, realBadge, fill } = require("./templates");
 
-const words = text => text.split(" ").map(w => `<span class="hero-word"><span>${esc(w)}</span></span>`).join(" ");
 const enc = s => encodeURIComponent(s).replace(/%20/g, "+");
-const byId = Object.fromEntries(dests.map(d => [d.slug, d]));
 
 // Place names Google resolves reliably for the keyless route embed (max 9 stops).
 const mapNames = {
@@ -23,7 +22,7 @@ const mapNames = {
 const embedUrl = `https://www.google.com/maps?saddr=${enc("Koraput, Odisha")}&daddr=${Object.values(mapNames).map(enc).join("+to:")}&output=embed`;
 const mapsLink = d => `https://www.google.com/maps/search/?api=1&query=${d.lat}%2C${d.lng}`;
 
-// "Leave 07:00 → arrive about HH:MM" from the approximate drive time.
+// "Leave 07:00 → arrive about HH:MM" from the (English) approximate drive time.
 function etaFrom(drive, startMin = 7 * 60) {
   const m = /([\d.]+)\s*h/.exec(drive), n = /([\d.]+)\s*min/.exec(drive);
   let mins = 0;
@@ -34,94 +33,118 @@ function etaFrom(drive, startMin = 7 * 60) {
   return `${String(Math.floor(t / 60)).padStart(2, "0")}:${String(t % 60).padStart(2, "0")}`;
 }
 
-function stop(d, i) {
-  // Photo alternates sides; the road marker sits under the photo edge so the road weaves without crossing text.
-  const x = i % 2 === 0 ? 56 : 44;
-  return `<article class="stop" id="stop-${d.slug}" style="--mx:${x}%">
+// Hero slider order; the lightbox uses the same order.
+const heroPhotos = ["traveller-front-garland", "traveller-side", "traveller-front-hill", "traveller-cabin", "traveller-rear"];
+// Vehicle gallery order; thumbnails follow it. Each entry knows its lightbox index.
+const galleryKeys = ["side", "cabin", "hill", "garland", "rear"];
+const galleryPhotos = { side: "traveller-side", cabin: "traveller-cabin", hill: "traveller-front-hill", garland: "traveller-front-garland", rear: "traveller-rear" };
+
+function render(L, alternates = []) {
+  const H = L.t.home, D = L.t.destinations, S = L.t.stations, N = L.t.stationNames, T = L.t.transport, dates = L.t.dates, U = L.t.ui;
+  const f = fill;
+  const P = (slug, opts = {}) => pic(slug, { ...opts, root: L.root });
+  const words = text => text.split(" ").map(w => `<span class="hero-word"><span>${esc(w)}</span></span>`).join(" ");
+  const td = d => ({ ...d, ...(D[d.slug] || {}) });
+  // Localise "About 1 h 10 min" style strings.
+  const dur = s => /^in town$/i.test(s) ? U.units.inTown : s.replace(/\bAbout\b/, U.units.about).replace(/(\d)\s*h\b/g, `$1 ${U.units.h}`).replace(/(\d)\s*min\b/g, `$1 ${U.units.min}`);
+
+  const heroSlides = heroPhotos.map((photo, i) => ({ photo, alt: H.hero.slides[i].alt, caption: f(H.hero.slides[i].caption, { date: dates.deliveredOn }) }));
+  const gal = galleryKeys.map(k => ({ photo: galleryPhotos[k], alt: H.traveller.alts[k], caption: f(H.traveller.captions[k], { date: dates.deliveredOn }), label: H.traveller.thumbs[k], lb: heroPhotos.indexOf(galleryPhotos[k]) }));
+
+  function stop(d, i) {
+    const t = td(d), x = i % 2 === 0 ? 56 : 44, eta = etaFrom(d.drive);
+    return `<article class="stop" id="stop-${d.slug}" style="--mx:${x}%">
   <span class="stop-marker" aria-hidden="true"><i>${i + 1}</i></span>
-  <div class="stop-media" data-parallax="7">${pic(d.photo, { alt: `${d.name}, Koraput`, sizes: "(min-width: 900px) 45vw, 100vw" })}</div>
+  <div class="stop-media" data-parallax="7">${P(d.photo, { alt: f(H.journey.photoAlt, { name: t.name }), sizes: "(min-width: 900px) 45vw, 100vw" })}</div>
   <div class="stop-body">
-    <span class="stop-kind">${icon(d.icon)}${esc(d.kind)}</span>
-    <h3>${esc(d.name)}</h3>
-    <p>${esc(d.blurb)}</p>
-    <div class="stop-meta"><span>${icon("clock")}${esc(d.drive)} from Koraput</span><span>${icon("road")}About ${d.km} km</span>${etaFrom(d.drive) ? `<span>${icon("sunrise")}Leave 07:00, arrive about ${etaFrom(d.drive)}</span>` : ""}</div>
-    ${d.page ? `<a class="text-link" href="${d.page}/">Plan a ${esc(d.name)} day ${icon("arrow")}</a>` : ""}
+    <span class="stop-kind">${icon(d.icon)}${esc(t.kind)}</span>
+    <h3>${esc(t.name)}</h3>
+    <p>${esc(t.blurb)}</p>
+    <div class="stop-meta"><span>${icon("clock")}${esc(f(H.journey.fromKoraput, { drive: t.drive }))}</span><span>${icon("road")}${esc(f(H.journey.aboutKm, { km: d.km }))}</span>${eta ? `<span>${icon("sunrise")}${esc(f(H.journey.leaveArrive, { time: eta }))}</span>` : ""}</div>
+    ${d.page ? `<a class="text-link" href="${L.page(d.page)}">${esc(f(H.journey.planDay, { name: t.name }))} ${icon("arrow")}</a>` : ""}
   </div>
 </article>`;
-}
+  }
 
-function destCard(d, featured) {
-  const href = d.page ? `${d.page}/` : `koraput-sightseeing/#${d.slug}`;
-  return `<article class="dest-card tilt${featured ? " dest-featured" : ""}">
-  ${pic(d.photo, { alt: `${d.name}, Koraput`, sizes: featured ? "(min-width: 900px) 40vw, 100vw" : "(min-width: 1100px) 25vw, (min-width: 600px) 50vw, 100vw" })}
+  function destCard(d, featured) {
+    const t = td(d);
+    const href = d.page ? L.page(d.page) : `${L.page("koraput-sightseeing")}#${d.slug}`;
+    return `<article class="dest-card tilt${featured ? " dest-featured" : ""}">
+  ${P(d.photo, { alt: f(H.journey.photoAlt, { name: t.name }), sizes: featured ? "(min-width: 900px) 40vw, 100vw" : "(min-width: 1100px) 25vw, (min-width: 600px) 50vw, 100vw" })}
   <div class="dest-body">
-    <span class="dest-kind">${icon(d.icon)}${esc(d.kind)}</span>
-    <h3>${esc(d.name)}</h3>
-    <p>${esc(d.blurb)}</p>
-    <div class="dest-meta"><span>${icon("clock")}${esc(d.drive)}</span><span>${icon("road")}${d.km} km</span></div>
-    <span class="dest-more">${d.page ? "Read the guide" : "Where it fits"} ${icon("arrow")}</span>
+    <span class="dest-kind">${icon(d.icon)}${esc(t.kind)}</span>
+    <h3>${esc(t.name)}</h3>
+    <p>${esc(t.blurb)}</p>
+    <div class="dest-meta"><span>${icon("clock")}${esc(t.drive)}</span><span>${icon("road")}${d.km} km</span></div>
+    <span class="dest-more">${esc(d.page ? H.destinations.readGuide : H.destinations.whereItFits)} ${icon("arrow")}</span>
   </div>
-  <a class="card-link" href="${href}"><span>${esc(d.name)}</span></a>
+  <a class="card-link" href="${href}"><span>${esc(t.name)}</span></a>
 </article>`;
-}
+  }
 
-const heroSlides = [
-  { photo: "traveller-front-garland", alt: "Our Force Traveller with a marigold garland on delivery day", caption: `Delivery day, ${site.vehicle.deliveredOn}. Real photo of our Traveller.` },
-  { photo: "traveller-side", alt: "Side view of our Force Traveller", caption: "Side view. Registration OD02 DT 9296, all-India permit." },
-  { photo: "traveller-front-hill", alt: "Front of our Traveller on a Koraput hillside", caption: "On a Koraput hillside in its first week." },
-  { photo: "traveller-cabin", alt: "Inside the Traveller: pushback seats in a 2+1 layout", caption: "Inside: 2+1 pushback seats, curtains, overhead rack, AC vents." },
-  { photo: "traveller-rear", alt: "Rear doors of our Traveller", caption: "Rear doors, emergency exit and our numbers." }
-];
-
-function render() {
+  const car = (x, n) => `<g class="car" style="--x:${x}px">
+          <rect x="6" y="14" width="58" height="20" rx="7" fill="#d7dbe3"/>
+          <path d="M18 14 L26 3 H48 L56 14 Z" fill="#c2c8d2"/>
+          <rect x="28" y="5" width="18" height="8" rx="2" fill="#eef2f7"/>
+          <rect x="6" y="30" width="58" height="4" rx="2" fill="#b7bdc8"/>
+          <circle cx="20" cy="34" r="6" fill="#2a2a2a"/><circle cx="20" cy="34" r="2.4" fill="#9aa0aa"/>
+          <circle cx="50" cy="34" r="6" fill="#2a2a2a"/><circle cx="50" cy="34" r="2.4" fill="#9aa0aa"/>
+          <text x="35" y="26" text-anchor="middle" font-size="9" font-weight="700" fill="#3b4250">${n}</text>
+        </g>`;
+  const bubble = (cls, x, y, w, text) => `<g class="bubble ${cls}" style="--x:${x}px;--y:${y}px"><rect x="0" y="0" width="${w}" height="26" rx="8" fill="#fff" stroke="#e3e6ec"/><path d="M${Math.round(w / 3)} 26 l6 8 l4 -8" fill="#fff" stroke="#e3e6ec"/><text x="${w / 2}" y="18" text-anchor="middle" font-size="11" font-weight="700" fill="#c93b3b">${esc(text)}</text></g>`;
+  const people = (() => { const out = []; for (const cy of [49, 58]) for (let x = 78; x <= (cy === 49 ? 198 : 183); x += 15) out.push(`<circle class="person" cx="${x}" cy="${cy}" r="3.2" fill="#f26a1b"/>`); return out.join(""); })();
+  const cmpIcons = ["users", "phone", "luggage", "chat"], goodIcons = ["pin", "wheel", "luggage", "users"], statIcons = ["van", "wheel", "phone", "luggage"];
+  const itin = [["koraput-1-day-itinerary", 1], ["koraput-2-day-itinerary", 2], ["koraput-3-day-itinerary", 3], ["koraput-4-day-itinerary", 4]];
+  const factIcons = ["van", "seat", "snowflake", "shield", "wheel", "users"], roleIcons = ["wheel", "chat", "compass"];
   const journey = dests.filter(d => d.journey);
+
   const body = `
 <section class="hero" aria-labelledby="hero-title">
   <div class="hero-media" id="hero-slider">
-    ${heroSlides.map((s, i) => pic(s.photo, { alt: s.alt, sizes: "100vw", priority: i === 0, cls: "hero-slide" + (i === 0 ? " is-active" : "") })).join("\n    ")}
+    ${heroSlides.map((s, i) => P(s.photo, { alt: s.alt, sizes: "100vw", priority: i === 0, cls: "hero-slide" + (i === 0 ? " is-active" : "") })).join("\n    ")}
   </div>
   <div class="hero-shade" aria-hidden="true"></div>
-  <button class="hero-open" type="button" aria-label="Open the photo gallery" data-gallery-open="0"></button>
-  <div class="hero-ui" aria-label="Photo slider">
+  <button class="hero-open" type="button" aria-label="${esc(H.hero.openGallery)}" data-gallery-open="0"></button>
+  <div class="hero-ui" aria-label="${esc(H.hero.sliderAria)}">
     <p class="hero-slide-caption" id="hero-slide-caption">${esc(heroSlides[0].caption)}</p>
     <div class="hero-ui-row">
-      <button class="hero-arrow" type="button" data-slide="-1" aria-label="Previous photo">${icon("arrow")}</button>
-      <div class="hero-dots" role="tablist">${heroSlides.map((s, i) => `<button type="button" role="tab" aria-selected="${i === 0}" data-slide-to="${i}" aria-label="Photo ${i + 1}: ${esc(s.caption)}"></button>`).join("")}</div>
-      <button class="hero-arrow" type="button" data-slide="1" aria-label="Next photo">${icon("arrow")}</button>
-      <button class="btn btn-sand btn-sm hero-view" type="button" data-gallery-open="current">${icon("photo")}<span>View ${heroSlides.length} photos</span></button>
+      <button class="hero-arrow" type="button" data-slide="-1" aria-label="${esc(H.hero.prev)}">${icon("arrow")}</button>
+      <div class="hero-dots" role="tablist">${heroSlides.map((s, i) => `<button type="button" role="tab" aria-selected="${i === 0}" data-slide-to="${i}" aria-label="${esc(f(H.hero.photoN, { n: i + 1, caption: s.caption }))}"></button>`).join("")}</div>
+      <button class="hero-arrow" type="button" data-slide="1" aria-label="${esc(H.hero.next)}">${icon("arrow")}</button>
+      <button class="btn btn-sand btn-sm hero-view" type="button" data-gallery-open="current">${icon("photo")}<span>${esc(f(H.hero.view, { n: heroSlides.length }))}</span></button>
     </div>
   </div>
   <div class="hero-inner">
-    ${realBadge(`Real photo · our Traveller on delivery day, ${site.vehicle.deliveredOn}`, "real-badge-inline")}
-    <h1 id="hero-title">${words("Discover Koraput.")}<br><em>${words("We’ll take care of the journey.")}</em></h1>
-    <p class="hero-copy">Travel through the mountains, waterfalls and hidden landscapes of Koraput in our brand-new 17-seater AC Traveller, with a friendly local driver, support staff and guided-tour assistance.</p>
+    ${realBadge(f(H.hero.badge, { date: dates.deliveredOn }), "real-badge-inline")}
+    <h1 id="hero-title">${words(H.hero.h1a)}<br><em>${words(H.hero.h1b)}</em></h1>
+    <p class="hero-copy">${esc(H.hero.copy)}</p>
     <div class="hero-actions">
-      <a class="btn btn-earth magnetic" href="#planner">${icon("route")}<span>Plan my Koraput trip</span></a>
+      <a class="btn btn-earth magnetic" href="#planner">${icon("route")}<span>${esc(H.hero.plan)}</span></a>
       <a class="btn btn-ghost magnetic" href="tel:+${site.contact.whatsapp}">${icon("phone")}<span>${esc(site.contact.whatsappDisplay)}</span></a>
     </div>
-    <div class="hero-proof" aria-label="Service facts">
-      <span>${icon("spark")}<strong>New</strong>&nbsp;· purchased ${site.vehicle.purchased}</span>
-      <span>${icon("seat")}<strong>${site.vehicle.seats} seats</strong></span>
-      <span>${icon("snowflake")}<strong>Air conditioned</strong></span>
-      <span>${icon("users")}<strong>Local driver</strong>&nbsp;&amp; support</span>
-      <span>${icon("compass")}<strong>Guided tours</strong></span>
-      <span>${icon("train")}<strong>Station pickup</strong>&nbsp;&amp; drop</span>
+    <div class="hero-proof">
+      <span>${icon("spark")}<strong>${esc(H.hero.proof.newLabel)}</strong>&nbsp;${esc(f(H.hero.proof.purchased, { date: dates.purchased }))}</span>
+      <span>${icon("seat")}<strong>${esc(f(H.hero.proof.seats, { n: site.vehicle.seats }))}</strong></span>
+      <span>${icon("snowflake")}<strong>${esc(H.hero.proof.ac)}</strong></span>
+      <span>${icon("users")}<strong>${esc(H.hero.proof.driver)}</strong>&nbsp;${esc(H.hero.proof.support)}</span>
+      <span>${icon("compass")}<strong>${esc(H.hero.proof.guided)}</strong></span>
+      <span>${icon("train")}<strong>${esc(H.hero.proof.station)}</strong>&nbsp;${esc(H.hero.proof.drop)}</span>
     </div>
   </div>
-  <a class="scroll-cue" href="#intro" aria-label="Scroll to the next section">${icon("arrow")}</a>
+  <a class="scroll-cue" href="#intro" aria-label="${esc(H.hero.scrollCue)}">${icon("arrow")}</a>
 </section>
 
 <section class="band band-white" id="intro" aria-labelledby="intro-title">
   <div class="wrap intro">
-    <h2 id="intro-title">One group, one vehicle, one unhurried Koraput.</h2>
-    <p>For families, friends, pilgrim groups and small teams arriving from Bhubaneswar, Kolkata or further away. We plan the route around your arrival, drive you between the hills, waterfalls and temples, and stay reachable the whole way.</p>
+    <h2 id="intro-title">${esc(H.intro.h2)}</h2>
+    <p>${esc(H.intro.p)}</p>
   </div>
   <figure class="cinematic" data-parallax="9">
     <span class="bar bar-top" aria-hidden="true"></span>
-    ${pic("koraput-valley", { alt: "Green valley near Sunabeda in the monsoon, Koraput district", sizes: "100vw" })}
+    ${P("koraput-valley", { alt: H.intro.photoAlt, sizes: "100vw" })}
     <figcaption>
-      <strong>Monsoon valley near Sunabeda, on the road to Deomali.</strong>
-      <span>${icon("pin")}Koraput district · about 20 minutes from our base</span>
+      <strong>${esc(H.intro.caption)}</strong>
+      <span>${icon("pin")}${esc(H.intro.captionSub)}</span>
     </figcaption>
     <span class="bar bar-bottom" aria-hidden="true"></span>
   </figure>
@@ -131,8 +154,8 @@ function render() {
   <div class="journey-title">
     <canvas id="terrain" aria-hidden="true"></canvas>
     <div class="wrap">
-      <h2 id="journey-title">17 seats. <strong>One incredible Koraput.</strong></h2>
-      <p>Scroll the road. Every stop is one photograph, one sentence and how long the drive takes from Koraput town.</p>
+      <h2 id="journey-title">${esc(H.journey.h2a)} <strong>${esc(H.journey.h2b)}</strong></h2>
+      <p>${esc(H.journey.p)}</p>
     </div>
   </div>
   <div class="wrap road-track">
@@ -155,22 +178,22 @@ function render() {
     <article class="stop stop-start">
       <span class="stop-marker stop-marker-flag" aria-hidden="true"><i>${icon("pin")}</i></span>
       <div class="stop-body">
-        <span class="stop-kind">${icon("pin")}Start</span>
-        <h3>Koraput town</h3>
-        <p>Pickup at your hotel, the railway station or wherever your journey into the hills begins.</p>
-        <div class="stop-vehicle">${pic("traveller-front-garland", { alt: "The Ananta Traveller, ready for pickup", sizes: "12rem" })}<span>Our Traveller, photographed on the day it arrived, ${site.vehicle.deliveredOn}. Real photo.</span></div>
+        <span class="stop-kind">${icon("pin")}${esc(H.journey.start)}</span>
+        <h3>${esc(H.journey.startTitle)}</h3>
+        <p>${esc(H.journey.startP)}</p>
+        <div class="stop-vehicle">${P("traveller-front-garland", { alt: H.journey.vehicleAlt, sizes: "12rem" })}<span>${esc(f(H.journey.vehicleCaption, { date: dates.deliveredOn }))}</span></div>
       </div>
     </article>
     ${journey.map(stop).join("\n")}
     <article class="stop stop-end">
       <span class="stop-marker stop-marker-flag" aria-hidden="true"><i>${icon("check")}</i></span>
       <div class="stop-body">
-        <span class="stop-kind">${icon("pin")}Back to Koraput</span>
-        <h3>Where should we take you?</h3>
-        <p>Pick your days and group size and we will shape the road around them.</p>
+        <span class="stop-kind">${icon("pin")}${esc(H.journey.end)}</span>
+        <h3>${esc(H.journey.endTitle)}</h3>
+        <p>${esc(H.journey.endP)}</p>
         <div class="btn-row" style="justify-content:center">
-          <a class="btn btn-sand" href="#planner">${icon("route")}<span>Build my trip</span></a>
-          <button class="btn btn-ghost js-whatsapp" type="button">${icon("whatsapp")}<span>WhatsApp Ananta</span></button>
+          <a class="btn btn-sand" href="#planner">${icon("route")}<span>${esc(H.journey.buildTrip)}</span></a>
+          <button class="btn btn-ghost js-whatsapp" type="button">${icon("whatsapp")}<span>${esc(H.journey.whatsappAnanta)}</span></button>
         </div>
       </div>
     </article>
@@ -180,14 +203,11 @@ function render() {
 <section class="band band-grey" id="itineraries" aria-labelledby="itineraries-title">
   <div class="wrap">
     <div class="section-head">
-      <h2 id="itineraries-title">How many days do you have?</h2>
-      <p class="lede">Four realistic plans, each one a page with timings, stops and what to skip. Pick the closest and we adjust it to your group.</p>
+      <h2 id="itineraries-title">${esc(H.itineraries.h2)}</h2>
+      <p class="lede">${esc(H.itineraries.lede)}</p>
     </div>
     <div class="itin-grid">
-      <a class="itin-card" href="koraput-1-day-itinerary/"><b>1</b><span class="itin-day">day</span><strong>Temple, museum, Kolab, Deomali sunset</strong><small>Long but doable from a night in town.</small><span class="itin-more">See the plan ${icon("arrow")}</span></a>
-      <a class="itin-card" href="koraput-2-day-itinerary/"><b>2</b><span class="itin-day">days</span><strong>Town and Kolab, then Deomali and Rani Duduma</strong><small>The weekend version.</small><span class="itin-more">See the plan ${icon("arrow")}</span></a>
-      <a class="itin-card is-featured" href="koraput-3-day-itinerary/"><b>3</b><span class="itin-day">days</span><strong>Adds Duduma Waterfall and the Machkund valley</strong><small>The sweet spot for most groups.</small><span class="itin-more">See the plan ${icon("arrow")}</span></a>
-      <a class="itin-card" href="koraput-4-day-itinerary/"><b>4</b><span class="itin-day">days</span><strong>Adds Gupteswar cave temple and the Maliguda railway</strong><small>Every direction, nothing rushed.</small><span class="itin-more">See the plan ${icon("arrow")}</span></a>
+      ${itin.map(([slug, n], i) => `<a class="itin-card${n === 3 ? " is-featured" : ""}" href="${L.page(slug)}"><b>${n}</b><span class="itin-day">${esc(n === 1 ? H.itineraries.dayOne : H.itineraries.days)}</span><strong>${esc(H.itineraries.cards[i].title)}</strong><small>${esc(H.itineraries.cards[i].sub)}</small><span class="itin-more">${esc(H.itineraries.seePlan)} ${icon("arrow")}</span></a>`).join("\n      ")}
     </div>
   </div>
 </section>
@@ -195,26 +215,21 @@ function render() {
 <section class="band band-white" id="planner" aria-labelledby="planner-title">
   <div class="wrap planner-grid">
     <div class="planner-copy">
-      <h2 id="planner-title">Build my Koraput trip</h2>
-      <p class="lede">Three choices. We suggest the stops, then send you to WhatsApp with the enquiry already written.</p>
+      <h2 id="planner-title">${esc(H.planner.h2)}</h2>
+      <p class="lede">${esc(H.planner.lede)}</p>
       <ul>
-        <li>${icon("check")}No forms, no account, no payment yet</li>
-        <li>${icon("check")}A route matched to your days</li>
-        <li>${icon("check")}Price shared after we confirm the details</li>
+        ${H.planner.bullets.map(b => `<li>${icon("check")}${esc(b)}</li>`).join("\n        ")}
       </ul>
     </div>
     <form class="planner" id="trip-form">
       <fieldset>
-        <legend>${icon("pin")}Where are you travelling from?</legend>
+        <legend>${icon("pin")}${esc(H.planner.from)}</legend>
         <div class="chips">
-          <label class="chip"><input type="radio" name="origin" value="Bhubaneswar" checked><span>Bhubaneswar</span></label>
-          <label class="chip"><input type="radio" name="origin" value="Kolkata"><span>Kolkata</span></label>
-          <label class="chip"><input type="radio" name="origin" value="Visakhapatnam"><span>Visakhapatnam</span></label>
-          <label class="chip"><input type="radio" name="origin" value="another city"><span>Somewhere else</span></label>
+          ${H.planner.origins.map((o, i) => `<label class="chip"><input type="radio" name="origin" value="${esc(H.planner.originValues[i])}"${i === 0 ? " checked" : ""}><span>${esc(o)}</span></label>`).join("\n          ")}
         </div>
       </fieldset>
       <fieldset>
-        <legend>${icon("users")}How many people?</legend>
+        <legend>${icon("users")}${esc(H.planner.people)}</legend>
         <div class="chips">
           <label class="chip"><input type="radio" name="people" value="2–5"><span>2–5</span></label>
           <label class="chip"><input type="radio" name="people" value="6–10" checked><span>6–10</span></label>
@@ -222,30 +237,27 @@ function render() {
         </div>
       </fieldset>
       <fieldset>
-        <legend>${icon("calendar")}How many days in Koraput?</legend>
+        <legend>${icon("calendar")}${esc(H.planner.days)}</legend>
         <div class="chips">
-          <label class="chip"><input type="radio" name="days" value="1"><span>1 day</span></label>
-          <label class="chip"><input type="radio" name="days" value="2"><span>2 days</span></label>
-          <label class="chip"><input type="radio" name="days" value="3" checked><span>3 days</span></label>
-          <label class="chip"><input type="radio" name="days" value="4"><span>4+ days</span></label>
+          ${H.planner.dayChips.map((c, i) => `<label class="chip"><input type="radio" name="days" value="${i + 1}"${i === 2 ? " checked" : ""}><span>${esc(c)}</span></label>`).join("\n          ")}
         </div>
       </fieldset>
       <div class="date-field">
-        <label for="trip-date">Around when? <small>(optional)</small></label>
+        <label for="trip-date">${esc(H.planner.when)} <small>${esc(H.planner.optional)}</small></label>
         <input type="date" id="trip-date" name="date">
       </div>
       <fieldset>
-        <legend>${icon("pin")}Places you want to include <small>(optional)</small></legend>
+        <legend>${icon("pin")}${esc(H.planner.places)} <small>${esc(H.planner.optional)}</small></legend>
         <div class="chips chips-multi">
-          ${dests.map(d => `<label class="chip"><input type="checkbox" name="places" value="${esc(d.name)}"><span>${icon(d.icon)}${esc(d.name)}</span></label>`).join("\n          ")}
+          ${dests.map(d => `<label class="chip"><input type="checkbox" name="places" value="${esc(td(d).name)}"><span>${icon(d.icon)}${esc(td(d).name)}</span></label>`).join("\n          ")}
         </div>
       </fieldset>
       <div class="route-result" aria-live="polite">
-        <h3 id="route-title">Your 3-day Koraput journey</h3>
+        <h3 id="route-title">${esc(H.planner.routeTitle)}</h3>
         <div class="route-days" id="route-days"></div>
       </div>
-      <button class="btn btn-earth" type="submit">${icon("whatsapp")}<span>Get this itinerary and price on WhatsApp</span></button>
-      <p class="form-note">${icon("shield")}<span>No payment is requested until your itinerary, price and availability are confirmed.</span></p>
+      <button class="btn btn-earth" type="submit">${icon("whatsapp")}<span>${esc(H.planner.submit)}</span></button>
+      <p class="form-note">${icon("shield")}<span>${esc(H.planner.note)}</span></p>
     </form>
   </div>
 </section>
@@ -253,8 +265,8 @@ function render() {
 <section class="band band-grey" id="destinations" aria-labelledby="destinations-title">
   <div class="wrap">
     <div class="section-head">
-      <h2 id="destinations-title">Places worth the drive</h2>
-      <p class="lede">Ten stops we know well. Start with the big three, then let the season and your days decide the rest.</p>
+      <h2 id="destinations-title">${esc(H.destinations.h2)}</h2>
+      <p class="lede">${esc(H.destinations.lede)}</p>
     </div>
     <div class="dest-grid">
       ${dests.map((d, i) => destCard(d, i === 0)).join("\n")}
@@ -265,66 +277,31 @@ function render() {
 <section class="band band-white" id="together" aria-labelledby="together-title">
   <div class="wrap">
     <div class="section-head">
-      <h2 id="together-title">One group. One vehicle. One trip.</h2>
-      <p class="lede">For 10 to 17 people, several small cars turn a holiday into coordination. One Traveller keeps everyone on the same road at the same time.</p>
+      <h2 id="together-title">${esc(H.together.h2)}</h2>
+      <p class="lede">${esc(H.together.lede)}</p>
     </div>
     <div class="compare">
       <div class="compare-card compare-bad">
-        <div class="compare-head"><span>Three to five cars</span><strong>The group splits</strong></div>
+        <div class="compare-head"><span>${esc(H.together.badLabel)}</span><strong>${esc(H.together.badTitle)}</strong></div>
         <div class="scene scene-cars" aria-hidden="true">
           <svg viewBox="0 0 420 120" preserveAspectRatio="xMidYMid meet">
             <rect x="0" y="86" width="420" height="34" fill="#e9ecf1"/>
             <path class="scene-dash" d="M0 103 H420" stroke="#fff" stroke-width="3" stroke-dasharray="18 14"/>
             <g transform="translate(0,52)">
-              <g class="car car-1" style="--x:14px">
-          <rect x="6" y="14" width="58" height="20" rx="7" fill="#d7dbe3"/>
-          <path d="M18 14 L26 3 H48 L56 14 Z" fill="#c2c8d2"/>
-          <rect x="28" y="5" width="18" height="8" rx="2" fill="#eef2f7"/>
-          <rect x="6" y="30" width="58" height="4" rx="2" fill="#b7bdc8"/>
-          <circle cx="20" cy="34" r="6" fill="#2a2a2a"/><circle cx="20" cy="34" r="2.4" fill="#9aa0aa"/>
-          <circle cx="50" cy="34" r="6" fill="#2a2a2a"/><circle cx="50" cy="34" r="2.4" fill="#9aa0aa"/>
-          <text x="35" y="26" text-anchor="middle" font-size="9" font-weight="700" fill="#3b4250">4</text>
-        </g><g class="car car-2" style="--x:112px">
-          <rect x="6" y="14" width="58" height="20" rx="7" fill="#d7dbe3"/>
-          <path d="M18 14 L26 3 H48 L56 14 Z" fill="#c2c8d2"/>
-          <rect x="28" y="5" width="18" height="8" rx="2" fill="#eef2f7"/>
-          <rect x="6" y="30" width="58" height="4" rx="2" fill="#b7bdc8"/>
-          <circle cx="20" cy="34" r="6" fill="#2a2a2a"/><circle cx="20" cy="34" r="2.4" fill="#9aa0aa"/>
-          <circle cx="50" cy="34" r="6" fill="#2a2a2a"/><circle cx="50" cy="34" r="2.4" fill="#9aa0aa"/>
-          <text x="35" y="26" text-anchor="middle" font-size="9" font-weight="700" fill="#3b4250">5</text>
-        </g><g class="car car-3" style="--x:224px">
-          <rect x="6" y="14" width="58" height="20" rx="7" fill="#d7dbe3"/>
-          <path d="M18 14 L26 3 H48 L56 14 Z" fill="#c2c8d2"/>
-          <rect x="28" y="5" width="18" height="8" rx="2" fill="#eef2f7"/>
-          <rect x="6" y="30" width="58" height="4" rx="2" fill="#b7bdc8"/>
-          <circle cx="20" cy="34" r="6" fill="#2a2a2a"/><circle cx="20" cy="34" r="2.4" fill="#9aa0aa"/>
-          <circle cx="50" cy="34" r="6" fill="#2a2a2a"/><circle cx="50" cy="34" r="2.4" fill="#9aa0aa"/>
-          <text x="35" y="26" text-anchor="middle" font-size="9" font-weight="700" fill="#3b4250">4</text>
-        </g><g class="car car-4" style="--x:332px">
-          <rect x="6" y="14" width="58" height="20" rx="7" fill="#d7dbe3"/>
-          <path d="M18 14 L26 3 H48 L56 14 Z" fill="#c2c8d2"/>
-          <rect x="28" y="5" width="18" height="8" rx="2" fill="#eef2f7"/>
-          <rect x="6" y="30" width="58" height="4" rx="2" fill="#b7bdc8"/>
-          <circle cx="20" cy="34" r="6" fill="#2a2a2a"/><circle cx="20" cy="34" r="2.4" fill="#9aa0aa"/>
-          <circle cx="50" cy="34" r="6" fill="#2a2a2a"/><circle cx="50" cy="34" r="2.4" fill="#9aa0aa"/>
-          <text x="35" y="26" text-anchor="middle" font-size="9" font-weight="700" fill="#3b4250">4</text>
-        </g>
+              ${car(14, 4).replace('class="car"', 'class="car car-1"')}${car(112, 5).replace('class="car"', 'class="car car-2"')}${car(224, 4).replace('class="car"', 'class="car car-3"')}${car(332, 4).replace('class="car"', 'class="car car-4"')}
             </g>
-            <g class="bubble bubble-1" style="--x:150px;--y:16px"><rect x="0" y="0" width="44" height="26" rx="8" fill="#fff" stroke="#e3e6ec"/><path d="M14 26 l6 8 l4 -8" fill="#fff" stroke="#e3e6ec"/><text x="22" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#c93b3b">?</text></g>
-            <g class="bubble bubble-2" style="--x:262px;--y:8px"><rect x="0" y="0" width="52" height="26" rx="8" fill="#fff" stroke="#e3e6ec"/><path d="M16 26 l6 8 l4 -8" fill="#fff" stroke="#e3e6ec"/><text x="26" y="18" text-anchor="middle" font-size="11" font-weight="700" fill="#c93b3b">Where?</text></g>
-            <g class="bubble bubble-3" style="--x:40px;--y:12px"><rect x="0" y="0" width="58" height="26" rx="8" fill="#fff" stroke="#e3e6ec"/><path d="M18 26 l6 8 l4 -8" fill="#fff" stroke="#e3e6ec"/><text x="29" y="18" text-anchor="middle" font-size="11" font-weight="700" fill="#c93b3b">Waiting…</text></g>
+            ${bubble("bubble-1", 150, 16, 44, H.together.bubbles[0])}
+            ${bubble("bubble-2", 262, 8, 60, H.together.bubbles[1])}
+            ${bubble("bubble-3", 40, 12, 70, H.together.bubbles[2])}
           </svg>
         </div>
         <ul class="compare-list">
-          <li><span class="cmp-ic">${icon("users")}</span><div><strong>The group separates</strong><small>Different drivers, different arrival times at every stop.</small></div></li>
-          <li><span class="cmp-ic">${icon("phone")}</span><div><strong>Calls to find each other</strong><small>"Where are you?" at every viewpoint and every lunch.</small></div></li>
-          <li><span class="cmp-ic">${icon("luggage")}</span><div><strong>Luggage in the wrong car</strong><small>Bags split across boots; someone's jacket is always elsewhere.</small></div></li>
-          <li><span class="cmp-ic">${icon("chat")}</span><div><strong>Half the group misses the story</strong><small>The driver's explanation reaches one car, not five.</small></div></li>
+          ${H.together.badList.map(([a, b], i) => `<li><span class="cmp-ic">${icon(cmpIcons[i])}</span><div><strong>${esc(a)}</strong><small>${esc(b)}</small></div></li>`).join("\n          ")}
         </ul>
       </div>
       <div class="compare-vs" aria-hidden="true">vs</div>
       <div class="compare-card compare-good">
-        <div class="compare-head"><span>One Traveller</span><strong>Everyone together</strong></div>
+        <div class="compare-head"><span>${esc(H.together.goodLabel)}</span><strong>${esc(H.together.goodTitle)}</strong></div>
         <div class="scene scene-van" aria-hidden="true">
           <svg viewBox="0 0 420 120" preserveAspectRatio="xMidYMid meet">
             <rect x="0" y="86" width="420" height="34" fill="#232323"/>
@@ -342,26 +319,20 @@ function render() {
                 <g class="wheel"><circle cx="100" cy="88" r="9" fill="#2a2a2a"/><circle cx="100" cy="88" r="4" fill="#9aa0aa"/><path d="M100 79 v18 M91 88 h18" stroke="#2a2a2a" stroke-width="2"/></g>
                 <g class="wheel"><circle cx="300" cy="88" r="9" fill="#2a2a2a"/><circle cx="300" cy="88" r="4" fill="#9aa0aa"/><path d="M300 79 v18 M291 88 h18" stroke="#2a2a2a" stroke-width="2"/></g>
               </g>
-              <g class="people"><circle class="person" cx="78" cy="49" r="3.2" fill="#f26a1b"/><circle class="person" cx="93" cy="49" r="3.2" fill="#f26a1b"/><circle class="person" cx="108" cy="49" r="3.2" fill="#f26a1b"/><circle class="person" cx="123" cy="49" r="3.2" fill="#f26a1b"/><circle class="person" cx="138" cy="49" r="3.2" fill="#f26a1b"/><circle class="person" cx="153" cy="49" r="3.2" fill="#f26a1b"/><circle class="person" cx="168" cy="49" r="3.2" fill="#f26a1b"/><circle class="person" cx="183" cy="49" r="3.2" fill="#f26a1b"/><circle class="person" cx="198" cy="49" r="3.2" fill="#f26a1b"/><circle class="person" cx="78" cy="58" r="3.2" fill="#f26a1b"/><circle class="person" cx="93" cy="58" r="3.2" fill="#f26a1b"/><circle class="person" cx="108" cy="58" r="3.2" fill="#f26a1b"/><circle class="person" cx="123" cy="58" r="3.2" fill="#f26a1b"/><circle class="person" cx="138" cy="58" r="3.2" fill="#f26a1b"/><circle class="person" cx="153" cy="58" r="3.2" fill="#f26a1b"/><circle class="person" cx="168" cy="58" r="3.2" fill="#f26a1b"/><circle class="person" cx="183" cy="58" r="3.2" fill="#f26a1b"/></g>
+              <g class="people">${people}</g>
               <g class="check-badge"><circle cx="352" cy="30" r="16" fill="#22883f"/><path d="M344 30 l6 6 l11 -12" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></g>
-              <g class="people-pill"><rect x="58" y="6" width="150" height="20" rx="10" fill="#f26a1b"/><text x="133" y="20" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">17 travellers · 1 vehicle</text></g>
+              <g class="people-pill"><rect x="58" y="6" width="170" height="20" rx="10" fill="#f26a1b"/><text x="143" y="20" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">${esc(H.together.pill)}</text></g>
             </g>
           </svg>
         </div>
         <ul class="compare-list">
-          <li><span class="cmp-ic">${icon("pin")}</span><div><strong>One pickup, one route</strong><small>One departure time, one set of timings for the whole group.</small></div></li>
-          <li><span class="cmp-ic">${icon("wheel")}</span><div><strong>One driver who knows the road</strong><small>Sunrise timings, food stops and the slow bends, handled.</small></div></li>
-          <li><span class="cmp-ic">${icon("luggage")}</span><div><strong>Luggage loaded once</strong><small>Overhead rack for small bags; everything travels together.</small></div></li>
-          <li><span class="cmp-ic">${icon("users")}</span><div><strong>Same view, same story, same time</strong><small>Everyone hears the same explanation at the same viewpoint.</small></div></li>
+          ${H.together.goodList.map(([a, b], i) => `<li><span class="cmp-ic">${icon(goodIcons[i])}</span><div><strong>${esc(a)}</strong><small>${esc(b)}</small></div></li>`).join("\n          ")}
         </ul>
-        <a class="text-link" href="group-tour-koraput/">How a group day runs ${icon("arrow")}</a>
+        <a class="text-link" href="${L.page("group-tour-koraput")}">${esc(H.together.howGroupDay)} ${icon("arrow")}</a>
       </div>
     </div>
-    <ul class="compare-stats" aria-label="What changes with one vehicle">
-      <li>${icon("van")}<span class="stat-from">3–5 cars</span><span class="stat-arrow">${icon("arrow")}</span><span class="stat-to">1 Traveller</span></li>
-      <li>${icon("wheel")}<span class="stat-from">3–5 drivers</span><span class="stat-arrow">${icon("arrow")}</span><span class="stat-to">1 driver</span></li>
-      <li>${icon("phone")}<span class="stat-from">Calls at every stop</span><span class="stat-arrow">${icon("arrow")}</span><span class="stat-to">None</span></li>
-      <li>${icon("luggage")}<span class="stat-from">Bags in 4 boots</span><span class="stat-arrow">${icon("arrow")}</span><span class="stat-to">Loaded once</span></li>
+    <ul class="compare-stats" aria-label="${esc(H.together.statsAria)}">
+      ${H.together.stats.map(([a, b], i) => `<li>${icon(statIcons[i])}<span class="stat-from">${esc(a)}</span><span class="stat-arrow">${icon("arrow")}</span><span class="stat-to">${esc(b)}</span></li>`).join("\n      ")}
     </ul>
   </div>
 </section>
@@ -369,47 +340,39 @@ function render() {
 <section class="band band-grey" id="traveller" aria-labelledby="vehicle-title">
   <div class="wrap">
     <div class="section-head">
-      <h2 id="vehicle-title">Your vehicle for Koraput</h2>
-      <p class="lede">A brand-new Force Traveller, air conditioned, 17 passenger seats, photographed in Semiliguda on the day it arrived, ${site.vehicle.deliveredOn}. Facts, not adjectives.</p>
+      <h2 id="vehicle-title">${esc(H.traveller.h2)}</h2>
+      <p class="lede">${esc(f(H.traveller.lede, { date: dates.deliveredOn }))}</p>
     </div>
     <div class="gallery" id="vehicle-gallery">
-      <figure class="gallery-main" data-gallery-open="gallery" role="button" tabindex="0" aria-label="Open this photo full screen">
-        ${pic("traveller-side", { alt: "The white Ananta Force Traveller seen from the side, showing the full window line", sizes: "(min-width: 900px) 62vw, 100vw", cls: "gallery-img is-active" })}
-        ${pic("traveller-front-hill", { alt: "Front of the Ananta Traveller parked on a hillside in Koraput", sizes: "(min-width: 900px) 62vw, 100vw", cls: "gallery-img" })}
-        ${pic("traveller-front-garland", { alt: "Front of the Traveller with a marigold garland on delivery day", sizes: "(min-width: 900px) 62vw, 100vw", cls: "gallery-img" })}
-        ${pic("traveller-rear", { alt: "Rear doors of the Traveller with the emergency exit and contact numbers", sizes: "(min-width: 900px) 62vw, 100vw", cls: "gallery-img" })}
-        ${pic("traveller-cabin", { alt: "Inside the Traveller: pushback seats in a 2+1 layout, curtains, overhead rack and AC vents", sizes: "(min-width: 900px) 62vw, 100vw", cls: "gallery-img" })}
-        ${realBadge("Real photo · our Traveller")}
-        <figcaption id="gallery-caption">Side view. Registration OD02 DT 9296, all-India permit.</figcaption>
+      <figure class="gallery-main">
+        <div class="gallery-stage" data-gallery-open="gallery" role="button" tabindex="0" aria-label="${esc(H.traveller.openFull)}">
+          ${gal.map((g, i) => P(g.photo, { alt: g.alt, sizes: "(min-width: 1180px) 1100px, 100vw", cls: "gallery-img" + (i === 0 ? " is-active" : ""), attrs: `data-lb="${g.lb}"` })).join("\n          ")}
+        </div>
+        ${realBadge(U.realPhoto)}
+        <span class="gallery-count" id="gallery-count" aria-hidden="true">1 / ${gal.length}</span>
+        <button class="gallery-arrow gallery-prev" type="button" data-gallery-step="-1" aria-label="${esc(H.hero.prev)}">${icon("arrow")}</button>
+        <button class="gallery-arrow gallery-next" type="button" data-gallery-step="1" aria-label="${esc(H.hero.next)}">${icon("arrow")}</button>
+        <figcaption id="gallery-caption">${esc(gal[0].caption)}</figcaption>
       </figure>
-      <div class="gallery-thumbs" role="tablist" aria-label="Vehicle photographs">
-        <button type="button" role="tab" aria-selected="true" data-index="0" data-caption="Side view. Registration OD02 DT 9296, all-India permit.">${pic("traveller-side", { alt: "Side view", sizes: "12rem" })}<span>Side</span></button>
-        <button type="button" role="tab" aria-selected="false" data-index="4" data-caption="Inside: pushback seats with armrests, 2+1 across, curtains on every window, overhead rack, AC vents.">${pic("traveller-cabin", { alt: "Cabin and seats", sizes: "12rem" })}<span>Cabin</span></button>
-        <button type="button" role="tab" aria-selected="false" data-index="1" data-caption="On a Koraput hillside, first week out.">${pic("traveller-front-hill", { alt: "Front, on a hillside", sizes: "12rem" })}<span>On the hills</span></button>
-        <button type="button" role="tab" aria-selected="false" data-index="2" data-caption="Delivery day, ${site.vehicle.deliveredOn}.">${pic("traveller-front-garland", { alt: "Front, delivery day", sizes: "12rem" })}<span>Delivery day</span></button>
-        <button type="button" role="tab" aria-selected="false" data-index="3" data-caption="Rear doors with the emergency exit and our numbers.">${pic("traveller-rear", { alt: "Rear", sizes: "12rem" })}<span>Rear</span></button>
+      <div class="gallery-thumbs" role="tablist" aria-label="${esc(H.traveller.thumbsAria)}">
+        ${gal.map((g, i) => `<button type="button" role="tab" aria-selected="${i === 0}" data-index="${i}" data-caption="${esc(g.caption)}">${P(g.photo, { alt: "", sizes: "(min-width: 900px) 14rem, 40vw" })}<span class="thumb-text"><strong>${esc(g.label)}</strong><small>${i + 1}/${gal.length}</small></span></button>`).join("\n        ")}
       </div>
     </div>
-    <p class="gallery-note">${icon("shield")}<span>These are real, unedited photographs of our own Force Traveller (OD02 DT 9296), taken by us on delivery day, ${site.vehicle.deliveredOn}. No stock or AI-generated vehicle images are used anywhere on this site.</span></p>
+    <p class="gallery-note">${icon("shield")}<span>${esc(f(H.traveller.galleryNote, { date: dates.deliveredOn }))}</span></p>
   </div>
   <div class="wrap vehicle-grid">
     <div class="vehicle-copy">
       <div class="fact-grid">
-        <div class="fact">${icon("van")}<div><strong>Force Traveller</strong><small>Purchased new, ${site.vehicle.purchased}</small></div></div>
-        <div class="fact">${icon("seat")}<div><strong>17 passenger seats</strong><small>Your whole group in one vehicle</small></div></div>
-        <div class="fact">${icon("snowflake")}<div><strong>Air conditioned</strong><small>Comfort on long ghat sections</small></div></div>
-        <div class="fact">${icon("shield")}<div><strong>All-India permit</strong><small>Serviced on schedule, checked before every trip</small></div></div>
-        <div class="fact">${icon("wheel")}<div><strong>Experienced local driver</strong><small>Knows the roads, the timings and the stops</small></div></div>
-        <div class="fact">${icon("users")}<div><strong>Tour support available</strong><small>Support staff and guided-tour assistance</small></div></div>
+        ${H.traveller.facts.map(([a, b], i) => `<div class="fact">${icon(factIcons[i])}<div><strong>${esc(a)}</strong><small>${esc(f(b, { date: dates.purchased }))}</small></div></div>`).join("\n        ")}
       </div>
-      <p class="vehicle-note">${icon("camera")}<span>Every photograph here is our own vehicle, never a stock Traveller. Pushback seats with armrests, curtains on every window and an overhead rack for small bags.</span></p>
-      <a class="text-link" href="17-seater-traveller-koraput/">More about the Traveller ${icon("arrow")}</a>
+      <p class="vehicle-note">${icon("camera")}<span>${esc(H.traveller.note)}</span></p>
+      <a class="text-link" href="${L.page("17-seater-traveller-koraput")}">${esc(H.traveller.more)} ${icon("arrow")}</a>
     </div>
-    <div class="seat-stage" aria-label="Interactive seat layout">
-      <div class="seat-head"><strong>17</strong><span>seats · tap one</span></div>
+    <div class="seat-stage" aria-label="${esc(H.traveller.seatsAria)}">
+      <div class="seat-head"><strong>17</strong><span>${esc(H.traveller.seatsTap)}</span></div>
       <div class="seatmap" id="seatmap"></div>
-      <p class="seat-info" id="seat-info">Tap a seat. Pushback seats in 2+1 rows with a back bench, as in the cabin photo.</p>
-      <div class="seat-legend" aria-hidden="true"><span><i style="background:#c47a45"></i>Passenger seat</span><span><i style="background:#f26a1b"></i>Selected</span><span><i style="background:#333"></i>Driver</span></div>
+      <p class="seat-info" id="seat-info">${esc(H.traveller.seatInfo)}</p>
+      <div class="seat-legend" aria-hidden="true">${H.traveller.legend.map((l, i) => `<span><i style="background:${["#c47a45", "#f26a1b", "#333"][i]}"></i>${esc(l)}</span>`).join("")}</div>
     </div>
   </div>
 </section>
@@ -417,17 +380,15 @@ function render() {
 <section class="band band-white" id="team" aria-labelledby="team-title">
   <div class="wrap team-grid">
     <figure class="team-photo" data-parallax="6">
-      ${pic("koraput-sunrise", { alt: "Sunrise through forest silhouettes in Koraput", sizes: "(min-width: 900px) 45vw, 100vw" })}
-      <figcaption>${icon("sunrise")}Sunrise through the forest on the Koraput highlands.</figcaption>
+      ${P("koraput-sunrise", { alt: H.team.photoAlt, sizes: "(min-width: 900px) 45vw, 100vw" })}
+      <figcaption>${icon("sunrise")}${esc(H.team.caption)}</figcaption>
     </figure>
     <div class="team-copy">
-      <h2 id="team-title">You're not travelling alone.</h2>
-      <blockquote>Friendly local team. No confusion in an unfamiliar place.</blockquote>
-      <p>From pickup to sightseeing and return, our team stays available to help with routes, stops, local information and unexpected changes during your journey.</p>
+      <h2 id="team-title">${esc(H.team.h2)}</h2>
+      <blockquote>${esc(H.team.quote)}</blockquote>
+      <p>${esc(H.team.p)}</p>
       <ul class="role-list">
-        <li><span class="role-ic">${icon("wheel")}</span><div><strong>Local driver</strong><small>Knows the ghat roads, the sunrise timings and where to stop for a good meal.</small></div></li>
-        <li><span class="role-ic">${icon("chat")}</span><div><strong>Support staff</strong><small>On WhatsApp through your trip for timings, changes and questions.</small></div></li>
-        <li><span class="role-ic">${icon("compass")}</span><div><strong>Guided-tour assistance</strong><small>Someone to explain what you are seeing, whenever you want it.</small></div></li>
+        ${H.team.roles.map(([a, b], i) => `<li><span class="role-ic">${icon(roleIcons[i])}</span><div><strong>${esc(a)}</strong><small>${esc(b)}</small></div></li>`).join("\n        ")}
       </ul>
     </div>
   </div>
@@ -436,36 +397,34 @@ function render() {
 <section class="band band-grey" id="booking" aria-labelledby="booking-title">
   <div class="wrap">
     <div class="section-head">
-      <h2 id="booking-title">Plan first. Pay after confirmation.</h2>
-      <p class="lede">The order never changes, so you always know what you are paying for.</p>
+      <h2 id="booking-title">${esc(H.booking.h2)}</h2>
+      <p class="lede">${esc(H.booking.lede)}</p>
     </div>
     <ol class="steps">
-      <li><strong>Share your trip</strong><p>Dates, group size and where you will arrive from. WhatsApp is easiest.</p></li>
-      <li><strong>Confirm itinerary and price</strong><p>We send the route, timings and the Traveller price. You know what is included before you decide.</p></li>
-      <li><strong>Pay a booking advance</strong><p>The official UPI QR and a booking reference come privately on WhatsApp, with confirmation of the amount.</p></li>
+      ${H.booking.steps.map(([a, b]) => `<li><strong>${esc(a)}</strong><p>${esc(b)}</p></li>`).join("\n      ")}
     </ol>
-    <p class="steps-note">${icon("shield")}<span>No payment is requested before your itinerary, price and availability are confirmed.</span></p>
+    <p class="steps-note">${icon("shield")}<span>${esc(H.booking.note)}</span></p>
   </div>
 </section>
 
 <section class="band band-white" id="map" aria-labelledby="map-title">
   <div class="wrap">
     <div class="section-head">
-      <h2 id="map-title">Every stop, pinned</h2>
-      <p class="lede">Where the places are, and how they sit around Koraput town. Open any pin in Google Maps for live directions.</p>
+      <h2 id="map-title">${esc(H.map.h2)}</h2>
+      <p class="lede">${esc(H.map.lede)}</p>
     </div>
     <div class="map-grid">
       <div class="map-frame">
-        <p class="map-loading">Loading Google Maps…</p>
+        <p class="map-loading">${esc(H.map.loading)}</p>
         <div id="gmap" hidden></div>
-        <iframe id="map-embed" src="${embedUrl}" title="Google Map of Koraput tourist attractions" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+        <iframe id="map-embed" src="${embedUrl}" title="${esc(H.map.iframeTitle)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
       </div>
       <div>
         <ul class="pin-list">
-          <li><span class="pin-letter">${icon("pin")}</span><span class="pin-name">Koraput town<small>Start and end of every trip</small></span><a href="https://www.google.com/maps/search/?api=1&query=${site.koraput.lat}%2C${site.koraput.lng}" target="_blank" rel="noopener noreferrer">Open ${icon("arrow-up-right")}</a></li>
-          ${dests.map(d => `<li><span class="pin-letter">${icon(d.icon)}</span><span class="pin-name">${esc(d.name)}<small>${esc(d.drive)} · ${d.km} km</small></span><a href="${mapsLink(d)}" target="_blank" rel="noopener noreferrer">Open ${icon("arrow-up-right")}</a></li>`).join("\n")}
+          <li><span class="pin-letter">${icon("pin")}</span><span class="pin-name">${esc(H.map.town)}<small>${esc(H.map.townSub)}</small></span><a href="https://www.google.com/maps/search/?api=1&query=${site.koraput.lat}%2C${site.koraput.lng}" target="_blank" rel="noopener noreferrer">${esc(H.map.open)} ${icon("arrow-up-right")}</a></li>
+          ${dests.map(d => { const t = td(d); return `<li><span class="pin-letter">${icon(d.icon)}</span><span class="pin-name">${esc(t.name)}<small>${esc(t.drive)} · ${d.km} km</small></span><a href="${mapsLink(d)}" target="_blank" rel="noopener noreferrer">${esc(H.map.open)} ${icon("arrow-up-right")}</a></li>`; }).join("\n")}
         </ul>
-        <p class="map-note">The line on the map is Google's road estimate for one long loop. Real trips split these stops over two to four days.</p>
+        <p class="map-note">${esc(H.map.note)}</p>
       </div>
     </div>
   </div>
@@ -474,28 +433,19 @@ function render() {
 <section class="band band-grey" id="origins" aria-labelledby="origins-title">
   <div class="wrap">
     <div class="section-head">
-      <h2 id="origins-title">Start from where you are</h2>
-      <p class="lede">Two city guides that answer the real planning questions: how to reach Koraput, how many days to keep, and where the Traveller fits in.</p>
+      <h2 id="origins-title">${esc(H.origins.h2)}</h2>
+      <p class="lede">${esc(H.origins.lede)}</p>
     </div>
     <div class="origin-grid">
-      <article class="origin-card">
-        ${pic("rail-train", { alt: "A passenger train winding through misty Eastern Ghats near Laxmipur Road", sizes: "(min-width: 900px) 50vw, 100vw" })}
+      ${[["bbs", "rail-train", "koraput-tour-package-from-bhubaneswar"], ["kol", "rail-bridge", "koraput-tour-package-from-kolkata"]].map(([k, photo, slug]) => `<article class="origin-card">
+        ${P(photo, { alt: H.origins[k].alt, sizes: "(min-width: 900px) 50vw, 100vw" })}
         <div class="origin-body">
-          <span>${icon("train")}From Bhubaneswar</span>
-          <h3>Travel overnight. Wake up in the hills.</h3>
-          <p>Train, road and flight options, a 2 to 3 day plan and pickup timed to your arrival.</p>
+          <span>${icon("train")}${esc(H.origins[k].label)}</span>
+          <h3>${esc(H.origins[k].h3)}</h3>
+          <p>${esc(H.origins[k].p)}</p>
         </div>
-        <a class="card-link" href="koraput-tour-package-from-bhubaneswar/"><span>Koraput tour from Bhubaneswar</span></a>
-      </article>
-      <article class="origin-card">
-        ${pic("rail-bridge", { alt: "Railway bridge on the Kirandul line crossing the Eastern Ghats", sizes: "(min-width: 900px) 50vw, 100vw" })}
-        <div class="origin-body">
-          <span>${icon("train")}From Kolkata</span>
-          <h3>Make Koraput the destination, not a logistics puzzle.</h3>
-          <p>How to reach, how long to keep, and a plan that starts the moment you step off the train.</p>
-        </div>
-        <a class="card-link" href="koraput-tour-package-from-kolkata/"><span>Koraput tour from Kolkata</span></a>
-      </article>
+        <a class="card-link" href="${L.page(slug)}"><span>${esc(H.origins[k].link)}</span></a>
+      </article>`).join("\n      ")}
     </div>
   </div>
 </section>
@@ -503,46 +453,46 @@ function render() {
 <section class="band band-white" id="stations" aria-labelledby="stations-title">
   <div class="wrap">
     <div class="section-head">
-      <h2 id="stations-title">Station, airport and bus-stand pickup</h2>
-      <p class="lede">Tell us your train, flight or bus and we meet it. Drive times are from our base in Semiliguda; Koraput town is about 20 minutes further west.</p>
+      <h2 id="stations-title">${esc(H.stations.h2)}</h2>
+      <p class="lede">${esc(H.stations.lede)}</p>
     </div>
     <div class="station-grid">
       ${stations.main.map(s => `<article class="station-card">
         <div class="station-top">${icon("train")}<span class="station-code">${esc(s.code)}</span></div>
-        <h3>${esc(s.name)}</h3>
-        <p>${esc(s.trains)}</p>
-        <div class="station-meta"><span>${icon("clock")}${esc(s.drive)} from Semiliguda</span><span>${icon("road")}About ${s.kmBase} km</span></div>
-        <a href="https://www.google.com/maps/search/?api=1&query=${s.lat}%2C${s.lng}" target="_blank" rel="noopener noreferrer">Open in Maps ${icon("arrow-up-right")}</a>
+        <h3>${esc(N[s.code] || s.name)}</h3>
+        <p>${esc(S[s.code] || s.trains)}</p>
+        <div class="station-meta"><span>${icon("clock")}${esc(f(H.stations.fromBase, { drive: dur(s.drive) }))}</span><span>${icon("road")}${esc(f(H.stations.aboutKm, { km: s.kmBase }))}</span></div>
+        <a href="https://www.google.com/maps/search/?api=1&query=${s.lat}%2C${s.lng}" target="_blank" rel="noopener noreferrer">${esc(H.stations.openMaps)} ${icon("arrow-up-right")}</a>
       </article>`).join("")}
     </div>
     <details class="station-halts">
-      <summary>Smaller halts we also serve (passenger trains) <span>${icon("spark")}</span></summary>
-      <p>Stops on the Koraput–Rayagada line and both directions of the Kirandul line. Only passenger and DMU trains stop here and timings change, so send us your train number and we confirm.</p>
+      <summary>${esc(H.stations.haltsSummary)} <span>${icon("spark")}</span></summary>
+      <p>${esc(H.stations.haltsP)}</p>
       <ul class="halt-list">
-        ${stations.halts.map(h => `<li><b>${esc(h.name)}<code>${esc(h.code)}</code></b><small>${esc(h.drive)} · ${esc(h.line)}</small></li>`).join("")}
+        ${stations.halts.map(h => `<li><b>${esc(N[h.code] || h.name)}<code>${esc(h.code)}</code></b><small>${esc(dur(h.drive))} · ${esc(U.lines[h.line] || h.line)}</small></li>`).join("")}
       </ul>
     </details>
-    <p class="station-note">${icon("info")}<span>Shimiliguda station (SMLG) on the Araku line in Andhra Pradesh is a different place from our Semiliguda. For Koraput, book to Koraput Junction (KRPU).</span></p>
+    <p class="station-note">${icon("info")}<span>${esc(H.stations.note)}</span></p>
     <div class="transport-grid">
       <article class="transport-card">
         <div class="station-top">${icon("wind")}<span class="station-code">${esc(transport.airport.code)}</span></div>
-        <h3>Flights: ${esc(transport.airport.name)}</h3>
-        <p>${transport.airport.driveKoraput} from Koraput town, ${transport.airport.driveBase} from our base. Pickup at the terminal.</p>
+        <h3>${esc(f(H.stations.flightsH3, { airport: T.airportName }))}</h3>
+        <p>${esc(f(H.stations.flightsP, { driveKoraput: dur(transport.airport.driveKoraput), driveBase: dur(transport.airport.driveBase) }))}</p>
         <table class="timetable">
-          <thead><tr><th>Route</th><th>Times</th><th>Runs</th></tr></thead>
-          <tbody>${transport.flights.map(f => `<tr><td>${esc(f.route)}</td><td>${esc(f.times)}</td><td>${esc(f.days)}</td></tr>`).join("")}</tbody>
+          <thead><tr><th>${esc(H.stations.route)}</th><th>${esc(H.stations.times)}</th><th>${esc(H.stations.runs)}</th></tr></thead>
+          <tbody>${transport.flights.map((fl, i) => `<tr><td>${esc(T.flights[i].route)}</td><td>${esc(fl.times)}</td><td>${esc(T.flights[i].days)}</td></tr>`).join("")}</tbody>
         </table>
-        <p class="transport-note">${esc(transport.flightNote)}</p>
-        <a href="https://www.google.com/maps/search/?api=1&query=${transport.airport.lat}%2C${transport.airport.lng}" target="_blank" rel="noopener noreferrer">Open airport in Maps ${icon("arrow-up-right")}</a>
+        <p class="transport-note">${esc(T.flightNote)}</p>
+        <a href="https://www.google.com/maps/search/?api=1&query=${transport.airport.lat}%2C${transport.airport.lng}" target="_blank" rel="noopener noreferrer">${esc(H.stations.openAirport)} ${icon("arrow-up-right")}</a>
       </article>
       <article class="transport-card">
         <div class="station-top">${icon("route")}<span class="station-code">BUS</span></div>
-        <h3>Buses to Koraput</h3>
-        <p>Overnight and day services reach Koraput bus stand, 20 minutes from our base. We meet the bus you name.</p>
+        <h3>${esc(H.stations.busH3)}</h3>
+        <p>${esc(H.stations.busP)}</p>
         <ul class="bus-list">
-          ${transport.buses.map(b => `<li><strong>${esc(b.from)}</strong><span>${esc(b.operators)}${b.times ? ". " + esc(b.times) : ""}${b.duration ? ". " + esc(b.duration) : ""}${b.fare ? ". " + esc(b.fare) : ""}.${b.to && !b.times ? " " + esc(b.to.charAt(0).toUpperCase() + b.to.slice(1)) + "." : ""}</span></li>`).join("")}
+          ${T.buses.map(b => `<li><strong>${esc(b.from)}</strong><span>${esc(b.text)}</span></li>`).join("")}
         </ul>
-        <p class="transport-note">Timings from operator listings, ${esc(transport.checked)}. They change with season and festivals; send us your ticket and we confirm the pickup time.</p>
+        <p class="transport-note">${esc(f(H.stations.busNote, { checked: dates.checked }))}</p>
       </article>
     </div>
   </div>
@@ -551,72 +501,93 @@ function render() {
 <section class="band band-grey" id="faq" aria-labelledby="faq-title">
   <div class="wrap faq-grid">
     <div class="section-head">
-      <h2 id="faq-title">Before you write to us</h2>
-      <p class="lede">Short answers to the questions most groups ask first.</p>
+      <h2 id="faq-title">${esc(H.faq.h2)}</h2>
+      <p class="lede">${esc(H.faq.lede)}</p>
     </div>
     <div class="faq-list">
-      <details open><summary>How many people can travel together?<span>${icon("spark")}</span></summary><p>Up to 17 passengers in one Traveller. Tell us your luggage needs and we confirm the seating plan before booking.</p></details>
-      <details><summary>Do you plan the whole itinerary?<span>${icon("spark")}</span></summary><p>Yes. Share dates, arrival point, group size and interests. We suggest a route matched to your days, with sensible timings for sunrise stops and long drives.</p></details>
-      <details><summary>Do you pick up from the railway station or airport?<span>${icon("spark")}</span></summary><p>Yes. We meet trains at Koraput Junction, Damanjodi, Jeypore, Araku, Rayagada and, on request, Vizianagaram and Visakhapatnam, plus the smaller halts <a href="#stations">listed above</a>. Send your train number and we time the vehicle to it. Jeypore airport pickups when flights operate.</p></details>
-      <details><summary>When do I pay?<span>${icon("spark")}</span></summary><p>Only after the itinerary, price and availability are confirmed. The UPI QR and booking reference are shared privately on WhatsApp.</p></details>
-      <details><summary>Which months are best?<span>${icon("spark")}</span></summary><p>October to February is cool and clear. September to December has the fullest waterfalls. Monsoon months are green but some roads slow down.</p></details>
+      ${H.faq.items.map(([q, a], i) => `<details${i === 0 ? " open" : ""}><summary>${esc(q)}<span>${icon("spark")}</span></summary><p>${esc(a)}</p></details>`).join("\n      ")}
     </div>
   </div>
 </section>
 
 <section class="band band-grey">
   <div class="wrap">
-    ${ctaCard({ photo: "traveller-front-hill", heading: "Tell us your dates. We'll shape the road ahead.", text: "Usually easiest: dates, number of travellers and where you arrive from. We reply with a route, timings and the Traveller price." })}
+    ${ctaCard(L, { photo: "traveller-front-hill", heading: H.cta.heading, text: H.cta.text })}
   </div>
 </section>
 
-<div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Photo gallery">
-  <button class="lb-close" type="button" aria-label="Close gallery">${icon("close")}</button>
-  <button class="lb-arrow lb-prev" type="button" aria-label="Previous photo">${icon("arrow")}</button>
+<div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="${esc(H.lightbox.aria)}">
+  <button class="lb-close" type="button" aria-label="${esc(H.lightbox.close)}">${icon("close")}</button>
+  <button class="lb-arrow lb-prev" type="button" aria-label="${esc(H.lightbox.prev)}">${icon("arrow")}</button>
   <figure class="lb-figure"><img id="lb-img" alt="" decoding="async"><figcaption><span id="lb-caption"></span><span class="lb-count" id="lb-count"></span></figcaption></figure>
-  <button class="lb-arrow lb-next" type="button" aria-label="Next photo">${icon("arrow")}</button>
-  <div class="lb-thumbs" id="lb-thumbs">${heroSlides.map((s, i) => `<button type="button" data-lb-to="${i}" aria-label="Photo ${i + 1}">${pic(s.photo, { alt: "", sizes: "6rem" })}</button>`).join("")}</div>
+  <button class="lb-arrow lb-next" type="button" aria-label="${esc(H.lightbox.next)}">${icon("arrow")}</button>
+  <div class="lb-thumbs" id="lb-thumbs">${heroSlides.map((s, i) => `<button type="button" data-lb-to="${i}" aria-label="${esc(f(H.lightbox.photoN, { n: i + 1 }))}">${P(s.photo, { alt: "", sizes: "6rem" })}</button>`).join("")}</div>
 </div>
-<script id="gallery-data" type="application/json">${JSON.stringify(heroSlides.map(s => { const m = require("./photo-manifest.json")[s.photo]; const w = Math.max(...m.sizes); return { src: `assets/photos/${s.photo}-${w}.webp`, fallback: `assets/photos/${s.photo}-960.jpg`, caption: s.caption, alt: s.alt }; }))}</script>
-<script id="site-data" type="application/json">${JSON.stringify({ destinations: dests.map(d => ({ slug: d.slug, name: d.name, icon: d.icon, lat: d.lat, lng: d.lng, kind: d.kind, drive: d.drive, km: d.km, page: d.page || null })), koraput: site.koraput })}</script>`;
+<script id="gallery-data" type="application/json">${JSON.stringify(heroSlides.map(s => { const m = manifest[s.photo]; const w = Math.max(...m.sizes); return { src: `assets/photos/${s.photo}-${w}.webp`, fallback: `assets/photos/${s.photo}-960.jpg`, caption: s.caption, alt: s.alt }; }))}</script>
+<script id="site-data" type="application/json">${JSON.stringify({ destinations: dests.map(d => { const t = td(d); return { slug: d.slug, name: t.name, icon: d.icon, lat: d.lat, lng: d.lng, kind: t.kind, drive: t.drive, km: d.km, page: d.page || null }; }), koraput: site.koraput })}</script>`;
 
+  const c = site.contact;
   const jsonld = [
     {
       "@context": "https://schema.org",
       "@type": "TravelAgency",
+      "@id": `${site.url}/#organization`,
       name: site.name,
-      description: "Koraput sightseeing journeys for families and groups in a new 17-seater AC Traveller with a local driver, support staff and guided-tour assistance.",
+      alternateName: "Ananta Tours",
+      description: H.jsonDescription,
       url: site.url,
-      areaServed: ["Koraput", "Odisha"],
-      telephone: site.contact.phones[0].tel,
-      email: site.contact.email,
-      address: { "@type": "PostalAddress", streetAddress: site.contact.address.street, addressLocality: site.contact.address.locality, addressRegion: site.contact.address.region, postalCode: site.contact.address.postalCode, addressCountry: "IN" },
-      contactPoint: [{ "@type": "ContactPoint", contactType: "reservations", telephone: "+" + site.contact.whatsapp, availableLanguage: ["en", "or", "hi"] }],
+      inLanguage: L.code,
+      knowsLanguage: ["en", "or", "hi", "bn", "te"],
+      logo: `${site.url}/assets/logo-960.png`,
+      image: [`${site.url}/assets/photos/traveller-front-garland-1600.webp`, `${site.url}/assets/photos/traveller-side-1600.webp`, `${site.url}/assets/photos/traveller-cabin-1600.webp`],
+      areaServed: [{ "@type": "AdministrativeArea", name: "Koraput district, Odisha, India" }, { "@type": "State", name: "Odisha" }],
+      telephone: "+" + c.whatsapp,
+      email: c.email,
+      address: { "@type": "PostalAddress", streetAddress: c.address.street, addressLocality: c.address.locality, addressRegion: c.address.region, postalCode: c.address.postalCode, addressCountry: "IN" },
+      geo: { "@type": "GeoCoordinates", latitude: site.base ? site.base.lat : 18.7227, longitude: site.base ? site.base.lng : 82.8678 },
+      hasMap: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(c.address.locality + ", " + c.address.district + ", " + c.address.region)}`,
+      contactPoint: [{ "@type": "ContactPoint", contactType: "reservations", telephone: "+" + c.whatsapp, email: c.email, availableLanguage: ["English", "Odia", "Hindi", "Bengali", "Telugu"] }],
       priceRange: "₹₹",
-      makesOffer: dests.filter(d => d.page).map(d => ({ "@type": "Offer", itemOffered: { "@type": "TouristTrip", name: `${d.name} day trip`, url: `${site.url}/${d.page}/` } }))
+      currenciesAccepted: "INR",
+      paymentAccepted: "UPI, bank transfer, cash",
+      makesOffer: dests.filter(d => d.page).map(d => ({ "@type": "Offer", itemOffered: { "@type": "TouristTrip", name: `${td(d).name} day trip`, url: `${site.url}/${L.has(d.page) ? L.lang.folder : ""}${d.page}/` } })),
+      owns: { "@type": "Vehicle", name: "Force Traveller 17-seater AC", vehicleSeatingCapacity: site.vehicle.seats, purchaseDate: "2026-09-04", vehicleConfiguration: "2+1 pushback seats, air conditioned, all-India permit" }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": `${site.url}/#website`,
+      url: site.url,
+      name: site.name,
+      inLanguage: ["en", "or", "hi", "bn", "te"],
+      publisher: { "@id": `${site.url}/#organization` }
     },
     {
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      mainEntity: [
-        ["How many people can travel together?", "Up to 17 passengers in one Traveller. Tell us your luggage needs and we confirm the seating plan before booking."],
-        ["Do you plan the whole itinerary?", "Yes. Share dates, arrival point, group size and interests and we suggest a route matched to your days."],
-        ["When do I pay?", "Only after the itinerary, price and availability are confirmed. The UPI QR and booking reference are shared privately on WhatsApp."]
-      ].map(([q, a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } }))
+      inLanguage: L.code,
+      mainEntity: H.faq.items.map(([q, a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } }))
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      name: H.destinations.h2,
+      inLanguage: L.code,
+      itemListElement: dests.map((d, i) => { const t = td(d); return { "@type": "ListItem", position: i + 1, item: { "@type": "TouristAttraction", name: t.name, description: t.blurb, geo: { "@type": "GeoCoordinates", latitude: d.lat, longitude: d.lng }, url: d.page ? `${site.url}/${L.has(d.page) ? L.lang.folder : ""}${d.page}/` : `${site.url}/koraput-sightseeing/#${d.slug}` } }; })
     }
   ];
 
-  return layout({
-    title: `${site.name} | Koraput Trip Planning, Sightseeing and a 17-Seater AC Traveller for Groups`,
-    description: "Plan a Koraput trip: tourist places, 1 to 4 day itineraries, tours from Bhubaneswar and Kolkata, and one 17-seater AC Traveller with a local driver and support staff for your group. Enquire on WhatsApp.",
+  return layout(L, {
+    title: H.title,
+    description: H.description,
     path: "",
-    depth: 0,
     body,
     jsonld,
     preloadHero: true,
     heroPhoto: "traveller-front-garland",
     ogImage: "assets/photos/traveller-front-garland-960.jpg",
-    isHome: true
+    isHome: true,
+    alternates
   });
 }
 

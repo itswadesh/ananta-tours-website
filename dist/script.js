@@ -12,6 +12,10 @@
   const coarse = window.matchMedia("(pointer: coarse)").matches;
   const hasGsap = !!(window.gsap && window.ScrollTrigger);
   const data = (() => { try { return JSON.parse($("#site-data")?.textContent || "{}"); } catch (e) { return {}; } })();
+  const S = (() => { try { return JSON.parse($("#ui-strings")?.textContent || "{}"); } catch (e) { return {}; } })();
+  const fill = (s, v = {}) => String(s == null ? "" : s).replace(/\{(\w+)\}/g, (m, k) => (k in v ? v[k] : m));
+  const LANG = document.body.dataset.lang || "en";
+  const LOCALE = { en: "en-IN", or: "or-IN", hi: "hi-IN", bn: "bn-IN", te: "te-IN" }[LANG] || "en-IN";
   const dest = Object.fromEntries((data.destinations || []).map(d => [d.slug, d]));
 
   /* ---------- Smooth scrolling ---------- */
@@ -87,11 +91,11 @@
   function openWhatsApp(message) {
     const base = WHATSAPP_NUMBER ? `https://wa.me/${WHATSAPP_NUMBER}` : "https://wa.me/";
     window.open(`${base}?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
-    if (!WHATSAPP_NUMBER) showToast("Business number pending. WhatsApp will ask you to choose a contact.");
+    if (!WHATSAPP_NUMBER) showToast(S.pending);
   }
   const defaultMessage = origin => origin
-    ? `Hi Ananta Tours, I am planning a Koraput trip from ${origin}. Please help me with the itinerary and 17-seater Traveller availability.`
-    : "Hi Ananta Tours, I am planning a Koraput trip. Please help me with the itinerary and 17-seater Traveller availability.";
+    ? fill(S.waOrigin, { origin })
+    : S.waDefault;
   $$(".js-whatsapp").forEach(b => b.addEventListener("click", () => openWhatsApp(b.dataset.message || defaultMessage(b.dataset.origin))));
 
   /* ---------- Hero: one reveal, parallax, real footage ---------- */
@@ -175,7 +179,7 @@
         const v = el.dataset.galleryOpen;
         let i = 0;
         if (v === "current") i = slideIndex;
-        else if (v === "gallery") { const active = $$(".gallery-img").findIndex(p => p.classList.contains("is-active")); const map = [1, 2, 0, 4, 3]; i = active >= 0 ? map[active] : 0; }
+        else if (v === "gallery") { const active = $(".gallery-img.is-active"); i = active ? Number(active.dataset.lb) || 0 : 0; }
         else i = Number(v) || 0;
         open(i);
       };
@@ -280,10 +284,10 @@
       west: { gupteswar: "10:00", maliguda: "15:30" }
     };
     const plans = {
-      "1": [["Day 1", ["sabara-srikhetra", "tribal-museum", "kolab", "deomali"], eta.one, "Leave 07:30, back about 20:00"]],
-      "2": [["Day 1", ["sabara-srikhetra", "tribal-museum", "kolab"], eta.town, "Easy start, back about 18:30"], ["Day 2", ["deomali", "nandapur", "rani-duduma"], eta.hills, "Leave 05:00, back about 17:30"]],
-      "3": [["Day 1", ["sabara-srikhetra", "tribal-museum", "kolab"], eta.town, "Easy start, back about 18:30"], ["Day 2", ["deomali", "nandapur", "rani-duduma"], eta.hills, "Leave 05:00, back about 17:30"], ["Day 3", ["duduma", "onukadelli"], eta.south, "Leave 07:00, back about 17:30"]],
-      "4": [["Day 1", ["sabara-srikhetra", "tribal-museum", "kolab"], eta.town, "Easy start, back about 18:30"], ["Day 2", ["deomali", "nandapur", "rani-duduma"], eta.hills, "Leave 05:00, back about 17:30"], ["Day 3", ["duduma", "onukadelli"], eta.south, "Leave 07:00, back about 17:30"], ["Day 4", ["gupteswar", "maliguda"], eta.west, "Leave 07:30, back about 17:00"]]
+      "1": [[1, ["sabara-srikhetra", "tribal-museum", "kolab", "deomali"], eta.one, S.notes.one]],
+      "2": [[1, ["sabara-srikhetra", "tribal-museum", "kolab"], eta.town, S.notes.town], [2, ["deomali", "nandapur", "rani-duduma"], eta.hills, S.notes.hills]],
+      "3": [[1, ["sabara-srikhetra", "tribal-museum", "kolab"], eta.town, S.notes.town], [2, ["deomali", "nandapur", "rani-duduma"], eta.hills, S.notes.hills], [3, ["duduma", "onukadelli"], eta.south, S.notes.south]],
+      "4": [[1, ["sabara-srikhetra", "tribal-museum", "kolab"], eta.town, S.notes.town], [2, ["deomali", "nandapur", "rani-duduma"], eta.hills, S.notes.hills], [3, ["duduma", "onukadelli"], eta.south, S.notes.south], [4, ["gupteswar", "maliguda"], eta.west, S.notes.west]]
     };
     const out = $("#route-days"), title = $("#route-title"), dateInput = $("#trip-date");
     const val = n => form.querySelector(`input[name="${n}"]:checked`)?.value || "";
@@ -292,9 +296,9 @@
     function render() {
       const days = val("days") || "3";
       const plan = plans[days];
-      title.textContent = `Your ${days === "4" ? "4-day" : days + "-day"} Koraput journey`;
-      out.innerHTML = plan.map(([label, stops, times, note]) => `<div class="route-day"><b>${label}</b><div><div class="route-stops">${stops.map((s, i) =>
-        `<span class="route-stop" style="animation-delay:${i * 60}ms"><svg class="ic" aria-hidden="true"><use href="#i-${iconOf(s)}"/></svg>${times && times[s] ? `<em>${times[s]}</em>` : ""}${name(s)}${s === "onukadelli" ? " (Thu)" : ""}</span>`).join("")}</div>${note ? `<small class="route-note">${note}</small>` : ""}</div></div>`).join("");
+      title.textContent = fill(S.routeTitle, { n: days });
+      out.innerHTML = plan.map(([n, stops, times, note]) => `<div class="route-day"><b>${fill(S.day, { n })}</b><div><div class="route-stops">${stops.map((s, i) =>
+        `<span class="route-stop" style="animation-delay:${i * 60}ms"><svg class="ic" aria-hidden="true"><use href="#i-${iconOf(s)}"/></svg>${times && times[s] ? `<em>${times[s]}</em>` : ""}${name(s)}${s === "onukadelli" ? S.thu : ""}</span>`).join("")}</div>${note ? `<small class="route-note">${note}</small>` : ""}</div></div>`).join("");
     }
     form.addEventListener("change", e => {
       const chip = e.target.closest(".chip");
@@ -309,12 +313,12 @@
       let when = "";
       if (dateInput?.value) {
         const d = new Date(dateInput.value + "T00:00:00");
-        when = ` around ${d.getDate()} ${d.toLocaleString("en-IN", { month: "long" })}`;
+        when = fill(S.around, { date: `${d.getDate()} ${d.toLocaleString(LOCALE, { month: "long" })}` });
       }
-      const route = plan.map(([label, stops, times]) => `${label}: ${stops.map(s => (times && times[s] ? times[s] + " " : "") + name(s)).join(" → ")}`).join("; ");
+      const route = plan.map(([n, stops, times]) => `${fill(S.day, { n })}: ${stops.map(s => (times && times[s] ? times[s] + " " : "") + name(s)).join(" → ")}`).join("; ");
       const wanted = $('input[name="places"]:checked', form).map(i => i.value);
-      const must = wanted.length ? ` Places we want to include: ${wanted.join(", ")}.` : "";
-      openWhatsApp(`Hi Ananta Tours, we are ${people} people travelling from ${origin} and planning a ${days === "4" ? "4+" : days}-day Koraput trip${when}. Suggested route: ${route}.${must} Please send an itinerary, availability and the Traveller price.`);
+      const must = wanted.length ? fill(S.waPlaces, { places: wanted.join(", ") }) : "";
+      openWhatsApp(fill(S.waPlanner, { people, origin, days: days === "4" ? S.fourPlus : days, when, route, must }));
     });
     render();
   }
@@ -363,13 +367,28 @@
   /* ---------- Vehicle gallery ---------- */
   const gallery = $("#vehicle-gallery");
   if (gallery) {
-    const imgs = $$(".gallery-img", gallery), caption = $("#gallery-caption"), thumbs = $$(".gallery-thumbs button", gallery);
-    thumbs.forEach(btn => btn.addEventListener("click", () => {
-      const i = Number(btn.dataset.index);
-      imgs.forEach((im, k) => im.classList.toggle("is-active", k === i));
-      thumbs.forEach(b => b.setAttribute("aria-selected", String(b === btn)));
-      caption.textContent = btn.dataset.caption;
-    }));
+    const imgs = $$(".gallery-img", gallery), caption = $("#gallery-caption"), count = $("#gallery-count"), thumbs = $$(".gallery-thumbs button", gallery), stage = $(".gallery-stage", gallery);
+    const strip = thumbs[0]?.parentElement;
+    let gi = imgs.findIndex(im => im.classList.contains("is-active")); if (gi < 0) gi = 0;
+    const show = i => {
+      gi = (i + imgs.length) % imgs.length;
+      imgs.forEach((im, k) => im.classList.toggle("is-active", k === gi));
+      thumbs.forEach((b, k) => b.setAttribute("aria-selected", String(k === gi)));
+      if (caption && thumbs[gi]) caption.textContent = thumbs[gi].dataset.caption;
+      if (count) count.textContent = `${gi + 1} / ${imgs.length}`;
+      const t = thumbs[gi];
+      if (t && strip && strip.scrollWidth > strip.clientWidth) strip.scrollTo({ left: t.offsetLeft - (strip.clientWidth - t.offsetWidth) / 2, behavior: reduce ? "auto" : "smooth" });
+    };
+    thumbs.forEach((btn, k) => btn.addEventListener("click", () => show(k)));
+    $$("[data-gallery-step]", gallery).forEach(b => b.addEventListener("click", () => show(gi + Number(b.dataset.galleryStep))));
+    gallery.addEventListener("keydown", e => { if (e.key === "ArrowRight") { e.preventDefault(); show(gi + 1); } else if (e.key === "ArrowLeft") { e.preventDefault(); show(gi - 1); } });
+    // Swipe on the main photo; a swipe must not also open the lightbox.
+    if (stage) {
+      let sx = 0, swiped = false;
+      stage.addEventListener("pointerdown", e => { sx = e.clientX; swiped = false; });
+      stage.addEventListener("pointerup", e => { const dx = e.clientX - sx; if (Math.abs(dx) > 40) { swiped = true; show(gi + (dx < 0 ? 1 : -1)); } });
+      stage.addEventListener("click", e => { if (swiped) { e.stopImmediatePropagation(); e.preventDefault(); swiped = false; } }, true);
+    }
   }
 
   /* ---------- Seat map ---------- */
@@ -380,17 +399,18 @@
     const info = $("#seat-info");
     seatmap.innerHTML = rows.map((row, ri) => `<div class="seat-row">${row.map((s, ci) => {
       if (s === "") return `<span class="aisle" aria-hidden="true"></span>`;
-      if (s === "D") return `<span class="seat driver" title="Driver"><span class="seat-back">D</span><span class="seat-cushion"></span></span>`;
-      const side = ri === 5 ? (ci === 0 || ci === 3 ? "window" : "middle") : (ci === 0 || ci === 3 ? "window" : "aisle");
-      const rowName = ri === 0 ? "front row, beside the driver" : ri === 5 ? "back bench" : `row ${ri + 1}`;
-      return `<button class="seat" type="button" data-seat="${s}" data-desc="Seat ${s} · ${rowName} · ${side} seat" aria-label="Seat ${s}, ${rowName}, ${side}"><span class="seat-back">${s}</span><span class="seat-cushion"></span></button>`;
+      if (s === "D") return `<span class="seat driver" title="${S.driver}"><span class="seat-back">D</span><span class="seat-cushion"></span></span>`;
+      const side = ri === 5 ? (ci === 0 || ci === 3 ? S.window : S.middle) : (ci === 0 || ci === 3 ? S.window : S.aisle);
+      const rowName = ri === 0 ? S.frontRow : ri === 5 ? S.backBench : fill(S.row, { n: ri + 1 });
+      const label = fill(S.seat, { n: s });
+      return `<button class="seat" type="button" data-seat="${s}" data-desc="${label} · ${rowName} · ${side} ${S.seatWord}" aria-label="${label}, ${rowName}, ${side}"><span class="seat-back">${s}</span><span class="seat-cushion"></span></button>`;
     }).join("")}</div>`).join("");
     seatmap.addEventListener("click", e => {
       const seat = e.target.closest(".seat[data-seat]");
       if (!seat) return;
       $$(".seat.is-active", seatmap).forEach(s => s.classList.remove("is-active"));
       seat.classList.add("is-active");
-      info.innerHTML = `<strong>${seat.dataset.desc}</strong><br>Layout as photographed in the cabin. Tell us who sits where and we keep it.`;
+      info.innerHTML = `<strong>${seat.dataset.desc}</strong><br>${S.seatInfo}`;
     });
   }
 
@@ -425,6 +445,6 @@
 
   /* ---------- Copy-to-clipboard for map coordinates (map pins) ---------- */
   $$("[data-copy]").forEach(b => b.addEventListener("click", async () => {
-    try { await navigator.clipboard.writeText(b.dataset.copy); showToast("Copied"); } catch (e) { showToast(b.dataset.copy); }
+    try { await navigator.clipboard.writeText(b.dataset.copy); showToast(S.copied); } catch (e) { showToast(b.dataset.copy); }
   }));
 })();
