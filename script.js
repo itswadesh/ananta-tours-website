@@ -315,7 +315,7 @@
       const info = new google.maps.InfoWindow();
       const pins = [{ name: "Koraput town", lat: data.koraput.lat, lng: data.koraput.lng, drive: "Start and end" }, ...data.destinations];
       pins.forEach(d => {
-        const m = new google.maps.Marker({ position: { lat: d.lat, lng: d.lng }, map, title: d.name, icon: { path: google.maps.SymbolPath.CIRCLE, scale: 8, fillColor: "#d9500d", fillOpacity: 1, strokeColor: "#ffb84d", strokeWeight: 2 } });
+        const m = new google.maps.Marker({ position: { lat: d.lat, lng: d.lng }, map, title: d.name, icon: { path: google.maps.SymbolPath.CIRCLE, scale: 8, fillColor: "#d9500d", fillOpacity: 1, strokeColor: "#ff8c1a", strokeWeight: 2 } });
         m.addListener("click", () => {
           info.setContent(`<div style="font:14px/1.4 sans-serif;color:#13201c"><strong>${d.name}</strong><br>${d.drive || ""}${d.km ? ` · ${d.km} km` : ""}${d.page ? `<br><a href="${d.page}/">Read the guide</a>` : ""}<br><a href="https://www.google.com/maps/search/?api=1&query=${d.lat}%2C${d.lng}" target="_blank" rel="noopener">Directions</a></div>`);
           info.open({ anchor: m, map });
