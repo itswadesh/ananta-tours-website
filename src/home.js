@@ -104,6 +104,7 @@ function render() {
         <span class="stop-kind">${icon("pin")}Start</span>
         <h3>Koraput town</h3>
         <p>Pickup at your hotel, the railway station or wherever your journey into the hills begins.</p>
+        <div class="stop-vehicle">${pic("traveller-front-garland", { alt: "The Ananta Traveller, ready for pickup", sizes: "12rem" })}<span>The Traveller, on the day it arrived.</span></div>
       </div>
     </article>
     ${journey.map(stop).join("\n")}
@@ -187,19 +188,38 @@ function render() {
 </section>
 
 <section class="band band-forest" id="traveller" aria-labelledby="vehicle-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="vehicle-title">Your vehicle for Koraput</h2>
+      <p class="lede">A brand-new Force Traveller, air conditioned, 17 passenger seats, photographed on the day it arrived in Semiliguda. Facts, not adjectives.</p>
+    </div>
+    <div class="gallery" id="vehicle-gallery">
+      <figure class="gallery-main">
+        ${pic("traveller-side", { alt: "The white Ananta Force Traveller seen from the side, showing the full window line", sizes: "(min-width: 900px) 62vw, 100vw", cls: "gallery-img is-active" })}
+        ${pic("traveller-front-hill", { alt: "Front of the Ananta Traveller parked on a hillside in Koraput", sizes: "(min-width: 900px) 62vw, 100vw", cls: "gallery-img" })}
+        ${pic("traveller-front-garland", { alt: "Front of the Traveller with a marigold garland on delivery day", sizes: "(min-width: 900px) 62vw, 100vw", cls: "gallery-img" })}
+        ${pic("traveller-rear", { alt: "Rear doors of the Traveller with the emergency exit and contact numbers", sizes: "(min-width: 900px) 62vw, 100vw", cls: "gallery-img" })}
+        <figcaption id="gallery-caption">Side view. Registration OD02 DT 9296, all-India permit.</figcaption>
+      </figure>
+      <div class="gallery-thumbs" role="tablist" aria-label="Vehicle photographs">
+        <button type="button" role="tab" aria-selected="true" data-index="0" data-caption="Side view. Registration OD02 DT 9296, all-India permit.">${pic("traveller-side", { alt: "Side view", sizes: "12rem" })}<span>Side</span></button>
+        <button type="button" role="tab" aria-selected="false" data-index="1" data-caption="On a Koraput hillside, first week out.">${pic("traveller-front-hill", { alt: "Front, on a hillside", sizes: "12rem" })}<span>On the hills</span></button>
+        <button type="button" role="tab" aria-selected="false" data-index="2" data-caption="Delivery day, September 2026.">${pic("traveller-front-garland", { alt: "Front, delivery day", sizes: "12rem" })}<span>Delivery day</span></button>
+        <button type="button" role="tab" aria-selected="false" data-index="3" data-caption="Rear doors with the emergency exit and our numbers.">${pic("traveller-rear", { alt: "Rear", sizes: "12rem" })}<span>Rear</span></button>
+      </div>
+    </div>
+  </div>
   <div class="wrap vehicle-grid">
     <div class="vehicle-copy">
-      <h2 id="vehicle-title">Your vehicle for Koraput</h2>
-      <p class="lede">A newly purchased air-conditioned 17-seater Traveller, dedicated to group journeys on Koraput's hill roads. Facts, not adjectives.</p>
       <div class="fact-grid">
-        <div class="fact">${icon("spark")}<div><strong>Brand new</strong><small>Purchased ${site.vehicle.purchased}</small></div></div>
+        <div class="fact">${icon("van")}<div><strong>Force Traveller</strong><small>Purchased new, ${site.vehicle.purchased}</small></div></div>
         <div class="fact">${icon("seat")}<div><strong>17 passenger seats</strong><small>Your whole group in one vehicle</small></div></div>
         <div class="fact">${icon("snowflake")}<div><strong>Air conditioned</strong><small>Comfort on long ghat sections</small></div></div>
-        <div class="fact">${icon("shield")}<div><strong>Professionally maintained</strong><small>Serviced on schedule, checked before every trip</small></div></div>
+        <div class="fact">${icon("shield")}<div><strong>All-India permit</strong><small>Serviced on schedule, checked before every trip</small></div></div>
         <div class="fact">${icon("wheel")}<div><strong>Experienced local driver</strong><small>Knows the roads, the timings and the stops</small></div></div>
         <div class="fact">${icon("users")}<div><strong>Tour support available</strong><small>Support staff and guided-tour assistance</small></div></div>
       </div>
-      <p class="vehicle-note">${icon("camera")}<span>We photograph the real vehicle, never a stock Traveller. Front, cabin, seats, legroom, AC and luggage-space photographs will appear here once the vehicle arrives and the exact variant is confirmed.</span></p>
+      <p class="vehicle-note">${icon("camera")}<span>Every photograph here is our own vehicle, never a stock Traveller. Cabin, seat and luggage-space photographs are next.</span></p>
       <a class="text-link" href="17-seater-traveller-koraput/">More about the Traveller ${icon("arrow")}</a>
     </div>
     <div class="seat-stage" aria-label="Interactive seat layout">
@@ -314,7 +334,7 @@ function render() {
 
 <section class="band band-mist">
   <div class="wrap">
-    ${ctaCard({ photo: "deomali-hills", heading: "Tell us your dates. We'll shape the road ahead.", text: "Usually easiest: dates, number of travellers and where you arrive from. We reply with a route, timings and the Traveller price." })}
+    ${ctaCard({ photo: "traveller-front-hill", heading: "Tell us your dates. We'll shape the road ahead.", text: "Usually easiest: dates, number of travellers and where you arrive from. We reply with a route, timings and the Traveller price." })}
   </div>
 </section>
 

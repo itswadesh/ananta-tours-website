@@ -13,12 +13,13 @@ function pic(slug, { alt = "", sizes = "100vw", cls = "", priority = false, root
   return `<picture class="pic${cls ? " " + cls : ""}"><source type="image/webp" srcset="${srcset}" sizes="${sizes}"><img src="${root}assets/photos/${slug}-960.jpg" alt="${esc(alt)}" width="${m.w}" height="${m.h}" loading="${priority ? "eager" : "lazy"}"${priority ? ' fetchpriority="high"' : ""} decoding="async"></picture>`;
 }
 
-const logo = `<svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true"><path d="M4 40c9-3 12-16 20-16s11 13 20 16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M14 32 24 14l10 18" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><circle cx="24" cy="9" r="2.5" fill="currentColor"/></svg>`;
+// The business logo (src/own-photos/logo.png). `root` is "" on the homepage and "../" on guides.
+const logo = (root = "") => `<img class="brand-mark" src="${root}assets/logo.png" srcset="${root}assets/logo.png 480w, ${root}assets/logo-960.png 960w" sizes="3.4rem" width="480" height="480" alt="" decoding="async">`;
 
 function header(root) {
   const home = root || "./";
   return `<header class="site-header" id="top">
-  <a class="brand" href="${home}" aria-label="${esc(site.name)} home">${logo}<span class="brand-text"><strong>Ananta</strong><small>Tours &amp; Travels</small></span></a>
+  <a class="brand" href="${home}" aria-label="${esc(site.name)} home">${logo(root)}<span class="brand-text"><strong>Ananta</strong><small>Tours &amp; Travels</small></span></a>
   <nav class="site-nav" id="site-nav" aria-label="Main">
     ${site.nav.map(n => `<a href="${root}${n.href}">${n.label}</a>`).join("")}
     <a class="nav-link-sub" href="${root}koraput-tour/">Plan a trip</a>
@@ -34,8 +35,8 @@ function footer(root) {
   return `<footer class="site-footer">
   <div class="footer-grid">
     <div class="footer-brand">
-      <a class="brand" href="${root || "./"}">${logo}<span class="brand-text"><strong>Ananta</strong><small>Tours &amp; Travels</small></span></a>
-      <p>Group journeys across Koraput, Odisha, in a new 17-seater AC Traveller with a local driver and support team.</p>
+      <a class="brand brand-lg" href="${root || "./"}" aria-label="${esc(site.name)} home"><img src="${root}assets/logo-960.png" width="960" height="960" alt="${esc(site.name)} logo" loading="lazy" decoding="async"></a>
+      <p>Group journeys across Koraput, Odisha, in a new 17-seater AC Force Traveller with a local driver and support team.</p>
       <address class="footer-contact">
         <span>${icon("pin")}<span>${esc(site.contact.address.street)}, ${esc(site.contact.address.locality)}, Dist. ${esc(site.contact.address.district)}, ${esc(site.contact.address.region)} ${esc(site.contact.address.postalCode)}</span></span>
         <span>${icon("whatsapp")}<a href="https://wa.me/${site.contact.whatsapp}" target="_blank" rel="noopener noreferrer">${esc(site.contact.whatsappDisplay)}</a> on WhatsApp</span>
@@ -90,7 +91,9 @@ function layout({ title, description, path = "", depth = 0, body, jsonld = [], p
 <meta property="og:url" content="${canonical}">
 <meta property="og:image" content="${site.url}/${ogImage}">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" type="image/svg+xml" href="${root}assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="${root}assets/icon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="${root}assets/icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="${root}assets/icon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..600,50;1,9..144,300..600,50&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
@@ -140,7 +143,7 @@ function creditsPage() {
   const body = `<article class="prose-page">
   <header class="prose-head">
     <h1>Photo credits</h1>
-    <p>Every landscape and place photograph on this site is a real photograph of Koraput district, shared by its photographer on Wikimedia Commons under a Creative Commons licence. We crop and resize them for the web and change nothing else. Photographs of the Ananta Traveller and team will be our own.</p>
+    <p>Every landscape and place photograph on this site is a real photograph of Koraput district, shared by its photographer on Wikimedia Commons under a Creative Commons licence. We crop and resize them for the web and change nothing else. Photographs of the Ananta Traveller and the logo are our own.</p>
   </header>
   <ul class="credit-list">${rows}</ul>
   <p>Hero footage: <a href="${site.heroVideoCredit.url}" target="_blank" rel="noopener noreferrer">${esc(site.heroVideoCredit.title)}</a>, embedded from YouTube with the creator's player.</p>

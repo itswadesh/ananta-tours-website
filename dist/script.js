@@ -245,6 +245,18 @@
     });
   }
 
+  /* ---------- Vehicle gallery ---------- */
+  const gallery = $("#vehicle-gallery");
+  if (gallery) {
+    const imgs = $$(".gallery-img", gallery), caption = $("#gallery-caption"), thumbs = $$(".gallery-thumbs button", gallery);
+    thumbs.forEach(btn => btn.addEventListener("click", () => {
+      const i = Number(btn.dataset.index);
+      imgs.forEach((im, k) => im.classList.toggle("is-active", k === i));
+      thumbs.forEach(b => b.setAttribute("aria-selected", String(b === btn)));
+      caption.textContent = btn.dataset.caption;
+    }));
+  }
+
   /* ---------- Seat map ---------- */
   const seatmap = $("#seatmap");
   if (seatmap) {

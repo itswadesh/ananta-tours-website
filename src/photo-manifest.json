@@ -346,5 +346,41 @@
    960,
    1600
   ]
+ },
+ "traveller-front-hill": {
+  "w": 1200,
+  "h": 1600,
+  "sizes": [
+   480,
+   960
+  ],
+  "own": true
+ },
+ "traveller-rear": {
+  "w": 1530,
+  "h": 1530,
+  "sizes": [
+   480,
+   960
+  ],
+  "own": true
+ },
+ "traveller-front-garland": {
+  "w": 1530,
+  "h": 1530,
+  "sizes": [
+   480,
+   960
+  ],
+  "own": true
+ },
+ "traveller-side": {
+  "w": 1530,
+  "h": 1530,
+  "sizes": [
+   480,
+   960
+  ],
+  "own": true
  }
 }
