@@ -138,7 +138,7 @@ main { padding-top: var(--header-h); }
 .hero-media .hero-slide img { transform: scale(1.04); transition: transform 7s linear; }
 .hero-media .hero-slide.is-active img { transform: scale(1); }
 .hero-open { position: absolute; inset: 0; z-index: 1; cursor: zoom-in; background: transparent; }
-.hero-ui { position: absolute; right: var(--gutter); bottom: 2.1rem; z-index: 3; display: grid; gap: 0.5rem; justify-items: end; max-width: min(28rem, 60vw); }
+.hero-ui { position: absolute; right: var(--gutter); bottom: 1.4rem; z-index: 3; display: grid; gap: 0.5rem; justify-items: end; max-width: min(28rem, 60vw); }
 .hero-slide-caption { margin: 0; font-family: var(--serif); font-style: italic; font-size: 0.95rem; color: rgba(255, 255, 255, 0.9); text-align: right; text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6); }
 .hero-ui-row { display: flex; align-items: center; gap: 0.5rem; }
 .hero-arrow { width: 2.4rem; height: 2.4rem; display: grid; place-items: center; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.55); color: #fff; background: rgba(0, 0, 0, 0.35); backdrop-filter: blur(6px); transition: background-color 0.2s, transform 0.2s; }
@@ -175,7 +175,7 @@ body.lb-open { overflow: hidden; }
 .hero-shade { position: absolute; inset: 0; background:
   linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.1) 25%, rgba(0, 0, 0, 0.6) 58%, rgba(0, 0, 0, 0.93) 100%),
   linear-gradient(90deg, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.4) 42%, rgba(0, 0, 0, 0.05) 100%); }
-.hero-inner { position: relative; z-index: 2; width: min(var(--wrap), 100% - 2 * var(--gutter)); margin-inline: auto; padding: 5rem 0 2.25rem; display: grid; gap: 1.4rem; justify-items: start; }
+.hero-inner { position: relative; z-index: 2; width: min(var(--wrap), 100% - 2 * var(--gutter)); margin-inline: auto; padding: 5rem 0 5.6rem; display: grid; gap: 1.4rem; justify-items: start; }
 .hero h1 { max-width: 14ch; color: #fff; text-shadow: 0 2px 24px rgba(0, 0, 0, 0.5); }
 .hero h1 em { font-style: normal; color: var(--orange); }
 .hero-copy { max-width: 36rem; font-size: clamp(1.05rem, 1.3vw, 1.2rem); line-height: 1.55; color: rgba(255, 255, 255, 0.9); }
@@ -652,6 +652,7 @@ body.lb-open { overflow: hidden; }
   .hero-actions .btn { width: 100%; }
   .scroll-cue { display: none; }
   .hero-ui { right: 1rem; left: 1rem; max-width: none; justify-items: start; bottom: 1rem; }
+  .hero-inner { padding-bottom: 6.5rem; }
   .hero-slide-caption { text-align: left; }
   .hero-view span { display: none; }
   .lb-arrow { width: 2.4rem; height: 2.4rem; }
