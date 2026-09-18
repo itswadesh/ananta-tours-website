@@ -367,7 +367,7 @@
   /* ---------- Seat map ---------- */
   const seatmap = $("#seatmap");
   if (seatmap) {
-    // Indicative 17-passenger layout: front passenger seat, four rows of 2+1, back bench of 4.
+    // 17-passenger layout as photographed: front passenger seat, four rows of 2+1, back bench of 4.
     const rows = [["D", 1, "", ""], [2, 3, "", 4], [5, 6, "", 7], [8, 9, "", 10], [11, 12, "", 13], [14, 15, 16, 17]];
     const info = $("#seat-info");
     seatmap.innerHTML = rows.map((row, ri) => `<div class="seat-row">${row.map((s, ci) => {
@@ -382,7 +382,7 @@
       if (!seat) return;
       $$(".seat.is-active", seatmap).forEach(s => s.classList.remove("is-active"));
       seat.classList.add("is-active");
-      info.innerHTML = `<strong>${seat.dataset.desc}</strong><br>Indicative layout. The final arrangement follows the confirmed variant.`;
+      info.innerHTML = `<strong>${seat.dataset.desc}</strong><br>Layout as photographed in the cabin. Tell us who sits where and we keep it.`;
     });
   }
 
