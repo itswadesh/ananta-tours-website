@@ -96,8 +96,7 @@ function render() {
     <p class="hero-copy">Travel through the mountains, waterfalls and hidden landscapes of Koraput in our brand-new 17-seater AC Traveller, with a friendly local driver, support staff and guided-tour assistance.</p>
     <div class="hero-actions">
       <a class="btn btn-earth magnetic" href="#planner">${icon("route")}<span>Plan my Koraput trip</span></a>
-      <button class="btn btn-ghost magnetic js-whatsapp" type="button">${icon("whatsapp")}<span>WhatsApp Ananta</span></button>
-      <a class="hero-phone" href="tel:+${site.contact.whatsapp}">${icon("phone")}<span>Call ${esc(site.contact.whatsappDisplay)}</span></a>
+      <a class="btn btn-ghost magnetic" href="tel:+${site.contact.whatsapp}">${icon("phone")}<span>${esc(site.contact.whatsappDisplay)}</span></a>
     </div>
     <div class="hero-proof" aria-label="Service facts">
       <span>${icon("spark")}<strong>New</strong>&nbsp;· purchased ${site.vehicle.purchased}</span>
