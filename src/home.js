@@ -328,6 +328,9 @@ function render() {
       description: "Koraput sightseeing journeys for families and groups in a new 17-seater AC Traveller with a local driver, support staff and guided-tour assistance.",
       url: site.url,
       areaServed: ["Koraput", "Odisha"],
+      telephone: site.contact.phones[0].tel,
+      address: { "@type": "PostalAddress", streetAddress: site.contact.address.street, addressLocality: site.contact.address.locality, addressRegion: site.contact.address.region, postalCode: site.contact.address.postalCode, addressCountry: "IN" },
+      contactPoint: [{ "@type": "ContactPoint", contactType: "reservations", telephone: "+" + site.contact.whatsapp, availableLanguage: ["en", "or", "hi"] }],
       priceRange: "₹₹",
       makesOffer: dests.filter(d => d.page).map(d => ({ "@type": "Offer", itemOffered: { "@type": "TouristTrip", name: `${d.name} day trip`, url: `${site.url}/${d.page}/` } }))
     },

@@ -9,6 +9,15 @@ module.exports = {
   heroVideoId: "N3OU1S6Bhw4",
   heroVideoCredit: { title: "Deomali — Koraput Odisha", url: "https://www.youtube.com/watch?v=N3OU1S6Bhw4" },
   year: 2026,
+  contact: {
+    whatsapp: "917978707236",             // digits with country code, used by every WhatsApp button
+    whatsappDisplay: "+91 79787 07236",
+    phones: [
+      { display: "+91 76098 35466", tel: "+917609835466" },
+      { display: "+91 82609 03443", tel: "+918260903443" }
+    ],
+    address: { street: "Kalinga Nagar", locality: "Semiliguda", district: "Koraput", region: "Odisha", postalCode: "764036" }
+  },
   vehicle: {
     seats: 17,
     purchased: "September 2026"

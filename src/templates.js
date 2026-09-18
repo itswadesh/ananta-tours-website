@@ -36,6 +36,11 @@ function footer(root) {
     <div class="footer-brand">
       <a class="brand" href="${root || "./"}">${logo}<span class="brand-text"><strong>Ananta</strong><small>Tours &amp; Travels</small></span></a>
       <p>Group journeys across Koraput, Odisha, in a new 17-seater AC Traveller with a local driver and support team.</p>
+      <address class="footer-contact">
+        <span>${icon("pin")}<span>${esc(site.contact.address.street)}, ${esc(site.contact.address.locality)}, Dist. ${esc(site.contact.address.district)}, ${esc(site.contact.address.region)} ${esc(site.contact.address.postalCode)}</span></span>
+        <span>${icon("whatsapp")}<a href="https://wa.me/${site.contact.whatsapp}" target="_blank" rel="noopener noreferrer">${esc(site.contact.whatsappDisplay)}</a> on WhatsApp</span>
+        ${site.contact.phones.map(p => `<span>${icon("phone")}<a href="tel:${p.tel}">${esc(p.display)}</a></span>`).join("")}
+      </address>
     </div>
     <div class="footer-col">
       <h4>Plan</h4>
@@ -93,7 +98,7 @@ ${preloadHero ? `<link rel="preload" as="image" href="${root}assets/photos/hero-
 <link rel="stylesheet" href="${root}styles.css">
 ${jsonld.map(j => `<script type="application/ld+json">${JSON.stringify(j)}</script>`).join("\n")}
 </head>
-<body class="${isHome ? "is-home" : "is-sub"}" data-root="${root}">
+<body class="${isHome ? "is-home" : "is-sub"}" data-root="${root}" data-whatsapp="${site.contact.whatsapp}">
 ${sprite()}
 <div class="scroll-progress" aria-hidden="true"></div>
 ${header(root)}
