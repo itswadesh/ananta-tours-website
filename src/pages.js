@@ -29,7 +29,7 @@ module.exports = [
         "<strong>4 days:</strong> adds Gupteswar cave temple and a section of the Kirandul railway at Maliguda."
       ] },
       { type: "h2", text: "Getting here" },
-      { type: "p", html: "Most groups arrive by overnight train. From Bhubaneswar the Hirakhand Express reaches Koraput in the morning. From Kolkata, direct trains towards Jagdalpur stop at Koraput, or you fly to Visakhapatnam and continue by road or the scenic Araku line. Both city guides go into detail: <a href=\"../koraput-tour-package-from-bhubaneswar/\">from Bhubaneswar</a> and <a href=\"../koraput-tour-package-from-kolkata/\">from Kolkata</a>." },
+      { type: "p", html: "Most groups arrive by overnight train. From Bhubaneswar the Hirakhand Express reaches Koraput in the morning. From Kolkata, direct trains towards Jagdalpur stop at Koraput, or you fly to Visakhapatnam and continue by road or the scenic Araku line. Jeypore has an airport too: IndiaOne Air flies from Bhubaneswar most days and from Visakhapatnam daily, and OSRTC and private buses run overnight from Bhubaneswar and through the day from Visakhapatnam. Flight and bus timings are on the <a href=\"../#stations\">pickup section</a> of the homepage. Both city guides go into detail: <a href=\"../koraput-tour-package-from-bhubaneswar/\">from Bhubaneswar</a> and <a href=\"../koraput-tour-package-from-kolkata/\">from Kolkata</a>." },
       { type: "h2", text: "How the Traveller trip works" },
       { type: "p", html: "You send us dates, group size and where you arrive. We reply on WhatsApp with a route matched to your days, sensible timings for sunrise stops and long drives, and the Traveller price. Once you confirm, we share the UPI QR and a booking reference privately. On the day, the driver meets you at the station or hotel and the support team stays reachable throughout." },
       { type: "callout", icon: "shield", html: "Your quote lists exactly what is included. Typically that is the Traveller, driver, fuel, tolls and parking for the agreed route. Meals, entry tickets and hotels are paid by you directly." },
@@ -65,7 +65,8 @@ module.exports = [
       { type: "ul", items: [
         "<strong>Train:</strong> the Hirakhand Express runs overnight from Bhubaneswar to Koraput and back. Book sleeper or 3AC early for long weekends. Check the current timetable before booking.",
         "<strong>Road:</strong> around 500 km via Berhampur and Rayagada. Ten to twelve hours with stops. Fine for a group leaving early; tiring as a same-day return.",
-        "<strong>Air:</strong> fly to Visakhapatnam and continue by road (five to six hours via Araku) or by the Araku line train. Small regional flights to Jeypore run when scheduled; check before you rely on them."
+        "<strong>Air:</strong> IndiaOne Air flies Bhubaneswar to Jeypore most days (07:20 to 08:55 and 11:15 to 12:50; back at 10:50 and 14:35), a 9-seat aircraft with cabin-size baggage. We meet you at Jeypore Airport, 40 minutes from Koraput. Or fly to Visakhapatnam and continue by road (five to six hours via Araku) or the Araku line train.",
+        "<strong>Bus:</strong> OSRTC runs about seven buses a day, leaving Bhubaneswar between 14:00 and 20:00 and reaching Koraput bus stand in 11 to 12 hours; private sleeper and Volvo buses leave in the evening. Fares from about ₹666."
       ] },
       { type: "h2", text: "A 3-day plan that fits the train" },
       { type: "days", items: [
@@ -102,8 +103,8 @@ module.exports = [
       { type: "h2", text: "Getting to Koraput from Kolkata" },
       { type: "ul", items: [
         "<strong>Direct train:</strong> trains from Howrah and Shalimar towards Jagdalpur stop at Koraput. It is a full day and night on board, comfortable in AC classes, and the last stretch through the Eastern Ghats is beautiful in daylight.",
-        "<strong>Fly to Visakhapatnam:</strong> about 90 minutes in the air, then five to six hours by road through Araku, or the slow scenic train on the Kirandul line. We can send the Traveller to Visakhapatnam for the whole trip if that suits your group.",
-        "<strong>Fly to Bhubaneswar:</strong> then the overnight Hirakhand Express to Koraput. Good when flight times to Vizag do not work."
+        "<strong>Fly to Visakhapatnam:</strong> about 90 minutes in the air, then the daily IndiaOne Air hop to Jeypore (09:40 to 10:35), five to six hours by road through Araku, or the slow scenic train on the Kirandul line. We can send the Traveller to Visakhapatnam for the whole trip if that suits your group.",
+        "<strong>Fly to Bhubaneswar:</strong> then IndiaOne Air to Jeypore (07:20 or 11:15, about 95 minutes) or the overnight Hirakhand Express to Koraput. OSRTC buses also leave Bhubaneswar 14:00 to 20:00 and take 11 to 12 hours."
       ] },
       { type: "h2", text: "A 4-day plan" },
       { type: "days", items: [

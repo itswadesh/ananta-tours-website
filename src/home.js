@@ -1,6 +1,7 @@
 const site = require("./site");
 const dests = require("./destinations");
 const stations = require("./stations");
+const transport = require("./transport");
 const { esc, pic, icon, layout, ctaCard, realBadge } = require("./templates");
 
 const words = text => text.split(" ").map(w => `<span class="hero-word"><span>${esc(w)}</span></span>`).join(" ");
@@ -502,8 +503,8 @@ function render() {
 <section class="band band-white" id="stations" aria-labelledby="stations-title">
   <div class="wrap">
     <div class="section-head">
-      <h2 id="stations-title">Railway station pickup and drop</h2>
-      <p class="lede">Tell us your train and we meet it. Drive times are from our base in Semiliguda; Koraput town is about 20 minutes further west.</p>
+      <h2 id="stations-title">Station, airport and bus-stand pickup</h2>
+      <p class="lede">Tell us your train, flight or bus and we meet it. Drive times are from our base in Semiliguda; Koraput town is about 20 minutes further west.</p>
     </div>
     <div class="station-grid">
       ${stations.main.map(s => `<article class="station-card">
@@ -522,6 +523,28 @@ function render() {
       </ul>
     </details>
     <p class="station-note">${icon("info")}<span>Shimiliguda station (SMLG) on the Araku line in Andhra Pradesh is a different place from our Semiliguda. For Koraput, book to Koraput Junction (KRPU).</span></p>
+    <div class="transport-grid">
+      <article class="transport-card">
+        <div class="station-top">${icon("wind")}<span class="station-code">${esc(transport.airport.code)}</span></div>
+        <h3>Flights: ${esc(transport.airport.name)}</h3>
+        <p>${transport.airport.driveKoraput} from Koraput town, ${transport.airport.driveBase} from our base. Pickup at the terminal.</p>
+        <table class="timetable">
+          <thead><tr><th>Route</th><th>Times</th><th>Runs</th></tr></thead>
+          <tbody>${transport.flights.map(f => `<tr><td>${esc(f.route)}</td><td>${esc(f.times)}</td><td>${esc(f.days)}</td></tr>`).join("")}</tbody>
+        </table>
+        <p class="transport-note">${esc(transport.flightNote)}</p>
+        <a href="https://www.google.com/maps/search/?api=1&query=${transport.airport.lat}%2C${transport.airport.lng}" target="_blank" rel="noopener noreferrer">Open airport in Maps ${icon("arrow-up-right")}</a>
+      </article>
+      <article class="transport-card">
+        <div class="station-top">${icon("route")}<span class="station-code">BUS</span></div>
+        <h3>Buses to Koraput</h3>
+        <p>Overnight and day services reach Koraput bus stand, 20 minutes from our base. We meet the bus you name.</p>
+        <ul class="bus-list">
+          ${transport.buses.map(b => `<li><strong>${esc(b.from)}</strong><span>${esc(b.operators)}${b.times ? ". " + esc(b.times) : ""}${b.duration ? ". " + esc(b.duration) : ""}${b.fare ? ". " + esc(b.fare) : ""}.${b.to && !b.times ? " " + esc(b.to.charAt(0).toUpperCase() + b.to.slice(1)) + "." : ""}</span></li>`).join("")}
+        </ul>
+        <p class="transport-note">Timings from operator listings, ${esc(transport.checked)}. They change with season and festivals; send us your ticket and we confirm the pickup time.</p>
+      </article>
+    </div>
   </div>
 </section>
 

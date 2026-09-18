@@ -29,7 +29,7 @@ function header(root) {
     <a class="nav-link-sub" href="${root}koraput-tour/">Plan a trip</a>
   </nav>
   <div class="header-actions">
-    <button class="btn btn-wa btn-sm js-whatsapp" type="button">${icon("whatsapp")}<span>WhatsApp</span></button>
+    <button class="btn btn-wa btn-sm js-whatsapp" type="button" aria-label="WhatsApp ${esc(site.contact.whatsappDisplay)}">${icon("whatsapp")}<span>${esc(site.contact.whatsappDisplay)}</span></button>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">${icon("menu", "ic-open")}${icon("close", "ic-close")}</button>
   </div>
 </header>`;
@@ -107,7 +107,7 @@ function layout({ title, description, path = "", depth = 0, body, jsonld = [], p
 <link rel="apple-touch-icon" sizes="180x180" href="${root}assets/icon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..600,50;1,9..144,400..600,50&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400..700&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
 ${preloadHero ? `<link rel="preload" as="image" href="${root}assets/photos/${heroPhoto}-960.jpg" imagesrcset="${manifest[heroPhoto].sizes.map(w => `${root}assets/photos/${heroPhoto}-${w}.webp ${w}w`).join(", ")}" imagesizes="100vw" fetchpriority="high">` : ""}
 <link rel="stylesheet" href="${root}styles.css">
 ${jsonld.map(j => `<script type="application/ld+json">${JSON.stringify(j)}</script>`).join("\n")}

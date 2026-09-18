@@ -9,7 +9,7 @@ module.exports = {
     { name: "Damanjodi", code: "DMNJ", lat: 18.7695, lng: 82.8654, kmBase: 12, drive: "About 20 min", kmKoraput: 20,
       trains: "NALCO township station on the Rayagada side, closest to our base. Several expresses from the Rayagada direction stop here; check your train." },
     { name: "Jeypore", code: "JYP", lat: 18.896, lng: 82.554, kmBase: 45, drive: "About 1 h 10 min", kmKoraput: 25,
-      trains: "The same Bhubaneswar and Howrah expresses continue here towards Jagdalpur. Handy for Gupteswar and Kolab plans." },
+      trains: "The same Bhubaneswar and Howrah expresses continue here towards Jagdalpur. Jeypore Airport is 10 minutes away. Handy for Gupteswar and Kolab plans." },
     { name: "Araku", code: "ARK", lat: 18.3329, lng: 82.8653, kmBase: 70, drive: "About 1 h 45 min", kmKoraput: 90,
       trains: "Visakhapatnam–Kirandul passenger and the Vistadome tourist train. Good for groups coming via Vizag who want the scenic line." },
     { name: "Rayagada", code: "RGDA", lat: 19.1754, lng: 83.4107, kmBase: 120, drive: "About 3 h", kmKoraput: 105,
