@@ -5,10 +5,10 @@
 
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
-  // Respect the OS reduced-motion setting. Append ?motion to the URL to preview the full experience anyway.
-  const forceMotion = new URLSearchParams(location.search).has("motion");
-  if (forceMotion) document.documentElement.classList.add("force-motion");
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches && !forceMotion;
+  // Animations are on by default (many Windows machines report reduced motion without meaning it).
+  // Append ?still to the URL to switch autonomous animation off.
+  const reduce = new URLSearchParams(location.search).has("still");
+  document.documentElement.classList.add(reduce ? "is-still" : "force-motion");
   const coarse = window.matchMedia("(pointer: coarse)").matches;
   const hasGsap = !!(window.gsap && window.ScrollTrigger);
   const data = (() => { try { return JSON.parse($("#site-data")?.textContent || "{}"); } catch (e) { return {}; } })();

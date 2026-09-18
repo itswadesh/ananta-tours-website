@@ -646,6 +646,7 @@ body.lb-open { overflow: hidden; }
   .nav-toggle { display: grid; }
   .header-actions .btn span { display: none; }
   .header-actions .btn { padding: 0.65rem; }
+  .hero-ui, .hero-slide-caption { display: none !important; }
   .intro, .planner-grid, .vehicle-grid, .team-grid, .map-grid, .faq-grid, .cta-card, .article-body, .compare, .origin-grid, .gallery { grid-template-columns: minmax(0, 1fr); }
   .intro > *, .planner-grid > *, .vehicle-grid > *, .team-grid > *, .map-grid > *, .faq-grid > *, .cta-card > *, .article-body > *, .compare > *, .gallery > *, .prose, .prose > *, .planner > * { min-width: 0; max-width: 100%; }
   fieldset { min-inline-size: 0; }
@@ -744,11 +745,5 @@ body.lb-open { overflow: hidden; }
   .compare-stats { grid-template-columns: 1fr; }
 }
 
-/* Reduced motion: static photos, no smooth scroll, no travelling van, no footage.
-   html.force-motion is only set by ?motion for previewing. */
-@media (prefers-reduced-motion: reduce) {
-  html:not(.force-motion) { scroll-behavior: auto; }
-  html:not(.force-motion) *, html:not(.force-motion) *::before, html:not(.force-motion) *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
-  html:not(.force-motion) .hero-media iframe { display: none; }
-  html:not(.force-motion) :is(.hero-media img, .intro-photo img, .stop-media img, .team-photo img, .article-hero .pic img, .prose figure .pic img) { transform: none !important; }
-}
+/* Motion opt-out: add ?still to the URL (sets html.is-still) to freeze decorative animation. */
+html.is-still *, html.is-still *::before, html.is-still *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
