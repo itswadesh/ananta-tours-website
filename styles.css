@@ -221,7 +221,7 @@ body.lb-open { overflow: hidden; }
 .road-edge { fill: none; stroke: #3a3a3a; stroke-width: 24; stroke-linecap: round; stroke-linejoin: round; }
 .road-dash { fill: none; stroke: rgba(255, 255, 255, 0.85); stroke-width: 2.5; stroke-dasharray: 12 16; stroke-linecap: round; }
 .road-drawn { fill: none; stroke: var(--orange); stroke-width: 5; stroke-linecap: round; opacity: 0.95; filter: drop-shadow(0 0 6px rgba(242, 106, 27, 0.6)); }
-.van { position: absolute; top: 0; left: 0; width: 4.4rem; height: 2.4rem; margin: -1.2rem 0 0 -2.2rem; z-index: 3; filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.55)); }
+.van { position: absolute; top: 0; left: 0; width: 4.4rem; height: 2.4rem; margin: -1.2rem 0 0 -2.2rem; z-index: 3; transform-origin: 50% 50%; will-change: transform; filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.55)); }
 .van .van-top { width: 100%; height: 100%; display: block; }
 .stop { position: relative; display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: clamp(2rem, 6vw, 7rem); padding-block: clamp(2.5rem, 6vw, 5rem); }
 .stop-media { position: relative; border-radius: var(--r-lg); overflow: hidden; aspect-ratio: 4 / 3; box-shadow: var(--shadow-lg); }
