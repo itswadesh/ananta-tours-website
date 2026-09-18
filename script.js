@@ -20,7 +20,18 @@
 
   /* ---------- Smooth scrolling ---------- */
   let lenis = null;
-  if (hasGsap) gsap.registerPlugin(ScrollTrigger, window.MotionPathPlugin || {});
+  if (hasGsap) gsap.registerPlugin(ScrollTrigger);
+
+  // The low-poly terrain pulls in Three.js (~600 KB). Load it only as the section approaches.
+  const terrainCanvas = $("#terrain");
+  if (terrainCanvas && "IntersectionObserver" in window) {
+    const io = new IntersectionObserver(entries => {
+      if (!entries.some(e => e.isIntersecting)) return;
+      io.disconnect();
+      import("./scene.js").catch(() => terrainCanvas.remove());
+    }, { rootMargin: "700px 0px" });
+    io.observe(terrainCanvas);
+  }
   // Smooth scrolling and scroll-linked effects stay on even under reduced motion; only autonomous animation is gated by `reduce`.
   if (window.Lenis) {
     lenis = new Lenis({ lerp: 0.09, smoothWheel: true, wheelMultiplier: 0.95 });
