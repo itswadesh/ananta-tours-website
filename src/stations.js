@@ -4,19 +4,19 @@
 // Note: "Shimiliguda" (SMLG) near Araku in Andhra Pradesh is a different place from Semiliguda, Koraput.
 module.exports = {
   main: [
-    { name: "Koraput Junction", code: "KRPU", lat: 18.792, lng: 82.7189, kmBase: 20, drive: "about 35 min", kmKoraput: 2,
+    { name: "Koraput Junction", code: "KRPU", lat: 18.792, lng: 82.7189, kmBase: 20, drive: "About 35 min", kmKoraput: 2,
       trains: "Express trains from Bhubaneswar (Hirakhand), Howrah (Samaleswari), Visakhapatnam and Jagdalpur. Our usual pickup point." },
-    { name: "Damanjodi", code: "DMNJ", lat: 18.7695, lng: 82.8654, kmBase: 12, drive: "about 20 min", kmKoraput: 20,
+    { name: "Damanjodi", code: "DMNJ", lat: 18.7695, lng: 82.8654, kmBase: 12, drive: "About 20 min", kmKoraput: 20,
       trains: "NALCO township station on the Rayagada side, closest to our base. Several expresses from the Rayagada direction stop here; check your train." },
-    { name: "Jeypore", code: "JYP", lat: 18.896, lng: 82.554, kmBase: 45, drive: "about 1 h 10 min", kmKoraput: 25,
+    { name: "Jeypore", code: "JYP", lat: 18.896, lng: 82.554, kmBase: 45, drive: "About 1 h 10 min", kmKoraput: 25,
       trains: "The same Bhubaneswar and Howrah expresses continue here towards Jagdalpur. Handy for Gupteswar and Kolab plans." },
-    { name: "Araku", code: "ARK", lat: 18.3329, lng: 82.8653, kmBase: 70, drive: "about 1 h 45 min", kmKoraput: 90,
+    { name: "Araku", code: "ARK", lat: 18.3329, lng: 82.8653, kmBase: 70, drive: "About 1 h 45 min", kmKoraput: 90,
       trains: "Visakhapatnam–Kirandul passenger and the Vistadome tourist train. Good for groups coming via Vizag who want the scenic line." },
-    { name: "Rayagada", code: "RGDA", lat: 19.1754, lng: 83.4107, kmBase: 120, drive: "about 3 h", kmKoraput: 105,
+    { name: "Rayagada", code: "RGDA", lat: 19.1754, lng: 83.4107, kmBase: 120, drive: "About 3 h", kmKoraput: 105,
       trains: "Big junction on the Vizianagaram–Raipur line with many more trains from Bhubaneswar, Howrah and Visakhapatnam. Worth it if Koraput trains are full." },
-    { name: "Vizianagaram Junction", code: "VZM", lat: 18.1115, lng: 83.3963, kmBase: 175, drive: "about 4 h", kmKoraput: 190,
+    { name: "Vizianagaram Junction", code: "VZM", lat: 18.1115, lng: 83.3963, kmBase: 175, drive: "About 4 h", kmKoraput: 190,
       trains: "On the Howrah–Chennai main line. A long transfer; usually only when a group is already travelling that way." },
-    { name: "Visakhapatnam", code: "VSKP", lat: 17.7221, lng: 83.2913, kmBase: 200, drive: "about 5 h", kmKoraput: 215,
+    { name: "Visakhapatnam", code: "VSKP", lat: 17.7221, lng: 83.2913, kmBase: 200, drive: "About 5 h", kmKoraput: 215,
       trains: "Main line trains from everywhere plus the airport. We collect groups here for the full trip on request, via Araku or Salur." }
   ],
   // Small halts on the two lines out of Koraput; passenger trains only, timings vary.

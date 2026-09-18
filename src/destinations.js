@@ -10,7 +10,7 @@ module.exports = [
     lat: 18.6756, lng: 82.9817,
     photo: "deomali-range",
     blurb: "Odisha's highest peak at 1,672 m. Open grassland on top, valleys on every side, and a road that climbs almost to the summit.",
-    km: 70, drive: "about 2 h",
+    km: 70, drive: "About 2 h",
     best: "October to February for clear views; carry a jacket, it is windy on top.",
     page: "deomali-tour",
     journey: true
@@ -23,7 +23,7 @@ module.exports = [
     lat: 18.5434, lng: 82.7523,
     photo: "raniduduma-road",
     blurb: "A quieter waterfall near Nandapur, reached by a country road through paddy fields and forest.",
-    km: 50, drive: "about 1.5 h",
+    km: 50, drive: "About 1.5 h",
     best: "August to December, when the stream is full.",
     journey: true
   },
@@ -35,7 +35,7 @@ module.exports = [
     lat: 18.5199, lng: 82.4515,
     photo: "duduma-gorge",
     blurb: "The Machkund river drops about 175 m into a forested gorge on the Odisha–Andhra border.",
-    km: 90, drive: "about 3 h",
+    km: 90, drive: "About 3 h",
     best: "September to January. The gorge is loudest just after the monsoon.",
     page: "duduma-waterfall-tour",
     journey: true
@@ -48,7 +48,7 @@ module.exports = [
     lat: 18.8226, lng: 82.1673,
     photo: "gupteswar-river",
     blurb: "A limestone cave shrine above the Sabari river. About 200 steps climb through forest to the Shiva lingam.",
-    km: 80, drive: "about 2.5 h",
+    km: 80, drive: "About 2.5 h",
     best: "Any dry month. Shravan (July–August) brings large pilgrim crowds.",
     page: "gupteswar-tour",
     journey: true
@@ -61,7 +61,7 @@ module.exports = [
     lat: 18.7905, lng: 82.6023,
     photo: "kolab-garden",
     blurb: "A dam, a terraced garden and a wide reservoir at about 3,000 ft. The easy evening stop on the way back.",
-    km: 20, drive: "about 35 min",
+    km: 20, drive: "About 35 min",
     best: "Late afternoon for the light on the water.",
     page: "kolab-dam-tour",
     journey: true
@@ -74,7 +74,7 @@ module.exports = [
     lat: 18.8106, lng: 82.7092,
     photo: "sabara-temple",
     blurb: "Koraput's Jagannath temple, open to everyone and rooted in the region's tribal traditions.",
-    km: 2, drive: "in town",
+    km: 2, drive: "In town",
     best: "Morning, before the day's drive."
   },
   {
@@ -85,7 +85,7 @@ module.exports = [
     lat: 18.8099, lng: 82.7077,
     photo: "museum-motif",
     blurb: "Homes, textiles, tools and wall art of Koraput's Adivasi communities. Worth an hour before you drive through their landscape.",
-    km: 2, drive: "in town",
+    km: 2, drive: "In town",
     best: "Check opening days locally; usually closed on public holidays."
   },
   {
@@ -96,7 +96,7 @@ module.exports = [
     lat: 18.9508, lng: 82.6413,
     photo: "rail-bridge",
     blurb: "The Kirandul railway crosses the Eastern Ghats here on bridges and tunnels. The Maliguda tunnel alone runs about 4 km.",
-    km: 27, drive: "about 50 min",
+    km: 27, drive: "About 50 min",
     best: "Morning light. Ask us about riding one section by train."
   },
   {
@@ -107,7 +107,7 @@ module.exports = [
     lat: 18.586, lng: 82.7543,
     photo: "nandapur-throne",
     blurb: "The old capital before Jeypore, with the 32-step Batrisa Singhasana throne and small stone shrines.",
-    km: 45, drive: "about 1.25 h",
+    km: 45, drive: "About 1.25 h",
     best: "Combine with Rani Duduma on the same road."
   },
   {
@@ -118,7 +118,7 @@ module.exports = [
     lat: 18.5171, lng: 82.4314,
     photo: "onukadelli-hills",
     blurb: "A Thursday market near Duduma where Bonda and other communities trade. We visit quietly and photograph only with consent.",
-    km: 90, drive: "about 3 h",
+    km: 90, drive: "About 3 h",
     best: "Thursdays only, in the morning."
   }
 ];

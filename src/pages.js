@@ -14,7 +14,7 @@ module.exports = [
     facts: [
       { icon: "calendar", label: "Best months", value: "October to February" },
       { icon: "clock", label: "Days to keep", value: "2 to 4" },
-      { icon: "mountain", label: "Koraput town altitude", value: "about 870 m" },
+      { icon: "mountain", label: "Koraput town altitude", value: "About 870 m" },
       { icon: "train", label: "Railway station", value: "Koraput (KRPU)" }
     ],
     blocks: [
@@ -55,8 +55,8 @@ module.exports = [
     ctaPhoto: "koraput-station",
     lede: "Travel overnight and wake up in the hills. Bhubaneswar to Koraput is a night on the train or a long day on the road, and the Traveller meets you the moment you arrive.",
     facts: [
-      { icon: "train", label: "Overnight train", value: "about 13 hours" },
-      { icon: "road", label: "By road", value: "about 500 km, 10–12 h" },
+      { icon: "train", label: "Overnight train", value: "About 13 hours" },
+      { icon: "road", label: "By road", value: "About 500 km, 10–12 h" },
       { icon: "calendar", label: "Days to keep", value: "2 to 3, plus travel" },
       { icon: "pin", label: "Pickup", value: "Koraput Jn, Damanjodi or hotel" }
     ],
@@ -93,7 +93,7 @@ module.exports = [
     ctaPhoto: "koraput-mist",
     lede: "Make Koraput the destination, not a logistics puzzle. From Kolkata the journey is the long part, so plan four days and let the local team handle everything after you step off the train.",
     facts: [
-      { icon: "train", label: "Direct train", value: "about a day" },
+      { icon: "train", label: "Direct train", value: "About a day" },
       { icon: "wind", label: "Via Visakhapatnam", value: "flight + 5–6 h" },
       { icon: "calendar", label: "Days to keep", value: "3 to 4, plus travel" },
       { icon: "pin", label: "Pickup", value: "Koraput Jn, Rayagada or Vizag" }
@@ -220,7 +220,7 @@ module.exports = [
     lede: "Three days is the sweet spot: the big mountain, two waterfalls, the reservoir and the town, without a single rushed day.",
     facts: [
       { icon: "calendar", label: "Days", value: "3" },
-      { icon: "road", label: "Total driving", value: "about 400 km" },
+      { icon: "road", label: "Total driving", value: "About 400 km" },
       { icon: "clock", label: "Longest day", value: "Day 3, about 6 h on the road" },
       { icon: "sunrise", label: "Early start", value: "Day 2 only" }
     ],
@@ -256,7 +256,7 @@ module.exports = [
     lede: "A weekend that still feels unhurried: one easy day around town and the reservoir, one big day on the mountain and the waterfall road.",
     facts: [
       { icon: "calendar", label: "Days", value: "2" },
-      { icon: "road", label: "Total driving", value: "about 220 km" },
+      { icon: "road", label: "Total driving", value: "About 220 km" },
       { icon: "clock", label: "Longest day", value: "Day 2, about 4.5 h on the road" },
       { icon: "sunrise", label: "Early start", value: "Optional, day 2" }
     ],
@@ -285,7 +285,7 @@ module.exports = [
     lede: "At 1,672 m Deomali is the highest point in Odisha, and unusually for a peak you can drive almost to the top. What you get is space: grassland, wind, and valleys folding away on every side.",
     facts: [
       { icon: "mountain", label: "Height", value: "1,672 m" },
-      { icon: "road", label: "From Koraput", value: "about 70 km, 2 h" },
+      { icon: "road", label: "From Koraput", value: "About 70 km, 2 h" },
       { icon: "calendar", label: "Best months", value: "October to February" },
       { icon: "luggage", label: "Carry", value: "Jacket, water, cash" }
     ],
@@ -320,8 +320,8 @@ module.exports = [
     ctaPhoto: "machkund-falls",
     lede: "The Machkund river drops about 175 m into a forested gorge on the Odisha–Andhra border. It is the biggest waterfall in the district, the furthest from town, and the reason to keep a whole day.",
     facts: [
-      { icon: "waterfall", label: "Height", value: "about 175 m" },
-      { icon: "road", label: "From Koraput", value: "about 90 km, 3 h" },
+      { icon: "waterfall", label: "Height", value: "About 175 m" },
+      { icon: "road", label: "From Koraput", value: "About 90 km, 3 h" },
       { icon: "calendar", label: "Best months", value: "September to January" },
       { icon: "clock", label: "Plan", value: "A full day" }
     ],
@@ -352,8 +352,8 @@ module.exports = [
     ctaPhoto: "kolab-dusk",
     lede: "A limestone cave shrine to Shiva above the Sabari river, reached by about 200 steps through forest. Pilgrims come in Shravan; the rest of the year it is quiet, green and cool.",
     facts: [
-      { icon: "road", label: "From Koraput", value: "about 80 km, 2.5 h" },
-      { icon: "stairs", label: "Climb", value: "about 200 steps" },
+      { icon: "road", label: "From Koraput", value: "About 80 km, 2.5 h" },
+      { icon: "stairs", label: "Climb", value: "About 200 steps" },
       { icon: "calendar", label: "Busy season", value: "Shravan (July–August)" },
       { icon: "drop", label: "River", value: "Sabari" }
     ],
@@ -382,8 +382,8 @@ module.exports = [
     ctaPhoto: "kolab-panorama",
     lede: "Twenty kilometres from town, the Upper Kolab dam holds back a reservoir wide enough to feel like a lake in the hills. It is the stop that asks nothing of you: a garden, a view and the evening light.",
     facts: [
-      { icon: "road", label: "From Koraput", value: "about 20 km, 35 min" },
-      { icon: "mountain", label: "Altitude", value: "about 914 m" },
+      { icon: "road", label: "From Koraput", value: "About 20 km, 35 min" },
+      { icon: "mountain", label: "Altitude", value: "About 914 m" },
       { icon: "clock", label: "Best time", value: "Late afternoon" },
       { icon: "calendar", label: "Season", value: "Year round" }
     ],

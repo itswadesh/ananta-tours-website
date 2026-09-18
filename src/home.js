@@ -32,7 +32,7 @@ function stop(d, i) {
     <span class="stop-kind">${icon(d.icon)}${esc(d.kind)}</span>
     <h3>${esc(d.name)}</h3>
     <p>${esc(d.blurb)}</p>
-    <div class="stop-meta"><span>${icon("clock")}${esc(d.drive)} from Koraput</span><span>${icon("road")}about ${d.km} km</span></div>
+    <div class="stop-meta"><span>${icon("clock")}${esc(d.drive)} from Koraput</span><span>${icon("road")}About ${d.km} km</span></div>
     ${d.page ? `<a class="text-link" href="${d.page}/">Plan a ${esc(d.name)} day ${icon("arrow")}</a>` : ""}
   </div>
 </article>`;
@@ -62,7 +62,7 @@ function render() {
   </div>
   <div class="hero-shade" aria-hidden="true"></div>
   <div class="hero-inner">
-    ${realBadge("Real photo · our Traveller on delivery day, September 2026", "real-badge-inline")}
+    ${realBadge(`Real photo · our Traveller on delivery day, ${site.vehicle.deliveredOn}`, "real-badge-inline")}
     <h1 id="hero-title">${words("Discover Koraput.")}<br><em>${words("We’ll take care of the journey.")}</em></h1>
     <p class="hero-copy">Travel through the mountains, waterfalls and hidden landscapes of Koraput in our brand-new 17-seater AC Traveller, with a friendly local driver, support staff and guided-tour assistance.</p>
     <div class="hero-actions">
@@ -85,8 +85,16 @@ function render() {
   <div class="wrap intro">
     <h2 id="intro-title">One group, one vehicle, one unhurried Koraput.</h2>
     <p>For families, friends, pilgrim groups and small teams arriving from Bhubaneswar, Kolkata or further away. We plan the route around your arrival, drive you between the hills, waterfalls and temples, and stay reachable the whole way.</p>
-    <div class="intro-photo" data-parallax="6">${pic("koraput-valley", { alt: "Green valley near Sunabeda in the monsoon, Koraput district", sizes: "(min-width: 1300px) 78rem, 100vw" })}</div>
   </div>
+  <figure class="cinematic" data-parallax="9">
+    <span class="bar bar-top" aria-hidden="true"></span>
+    ${pic("koraput-valley", { alt: "Green valley near Sunabeda in the monsoon, Koraput district", sizes: "100vw" })}
+    <figcaption>
+      <strong>Monsoon valley near Sunabeda, on the road to Deomali.</strong>
+      <span>${icon("pin")}Koraput district · about 20 minutes from our base</span>
+    </figcaption>
+    <span class="bar bar-bottom" aria-hidden="true"></span>
+  </figure>
 </section>
 
 <section class="journey band-dark" id="journey" aria-labelledby="journey-title">
@@ -106,7 +114,7 @@ function render() {
         <span class="stop-kind">${icon("pin")}Start</span>
         <h3>Koraput town</h3>
         <p>Pickup at your hotel, the railway station or wherever your journey into the hills begins.</p>
-        <div class="stop-vehicle">${pic("traveller-front-garland", { alt: "The Ananta Traveller, ready for pickup", sizes: "12rem" })}<span>Our Traveller, photographed on the day it arrived. Real photo.</span></div>
+        <div class="stop-vehicle">${pic("traveller-front-garland", { alt: "The Ananta Traveller, ready for pickup", sizes: "12rem" })}<span>Our Traveller, photographed on the day it arrived, ${site.vehicle.deliveredOn}. Real photo.</span></div>
       </div>
     </article>
     ${journey.map(stop).join("\n")}
@@ -219,27 +227,98 @@ function render() {
     <div class="compare">
       <div class="compare-card compare-bad">
         <div class="compare-head"><span>Three to five cars</span><strong>The group splits</strong></div>
-        <div class="compare-row" aria-hidden="true"><i class="car">4</i><i class="car">5</i><i class="car">4</i><i class="car">4</i></div>
-        <ul>
-          <li>${icon("close")}Different drivers, different arrival times</li>
-          <li>${icon("close")}Phone calls to find each other at every stop</li>
-          <li>${icon("close")}Luggage in the wrong car</li>
-          <li>${icon("close")}Half the group misses the explanation</li>
+        <div class="scene scene-cars" aria-hidden="true">
+          <svg viewBox="0 0 420 120" preserveAspectRatio="xMidYMid meet">
+            <rect x="0" y="86" width="420" height="34" fill="#e9ecf1"/>
+            <path class="scene-dash" d="M0 103 H420" stroke="#fff" stroke-width="3" stroke-dasharray="18 14"/>
+            <g transform="translate(0,52)">
+              <g class="car car-1" style="--x:14px">
+          <rect x="6" y="14" width="58" height="20" rx="7" fill="#d7dbe3"/>
+          <path d="M18 14 L26 3 H48 L56 14 Z" fill="#c2c8d2"/>
+          <rect x="28" y="5" width="18" height="8" rx="2" fill="#eef2f7"/>
+          <rect x="6" y="30" width="58" height="4" rx="2" fill="#b7bdc8"/>
+          <circle cx="20" cy="34" r="6" fill="#2a2a2a"/><circle cx="20" cy="34" r="2.4" fill="#9aa0aa"/>
+          <circle cx="50" cy="34" r="6" fill="#2a2a2a"/><circle cx="50" cy="34" r="2.4" fill="#9aa0aa"/>
+          <text x="35" y="26" text-anchor="middle" font-size="9" font-weight="700" fill="#3b4250">4</text>
+        </g><g class="car car-2" style="--x:112px">
+          <rect x="6" y="14" width="58" height="20" rx="7" fill="#d7dbe3"/>
+          <path d="M18 14 L26 3 H48 L56 14 Z" fill="#c2c8d2"/>
+          <rect x="28" y="5" width="18" height="8" rx="2" fill="#eef2f7"/>
+          <rect x="6" y="30" width="58" height="4" rx="2" fill="#b7bdc8"/>
+          <circle cx="20" cy="34" r="6" fill="#2a2a2a"/><circle cx="20" cy="34" r="2.4" fill="#9aa0aa"/>
+          <circle cx="50" cy="34" r="6" fill="#2a2a2a"/><circle cx="50" cy="34" r="2.4" fill="#9aa0aa"/>
+          <text x="35" y="26" text-anchor="middle" font-size="9" font-weight="700" fill="#3b4250">5</text>
+        </g><g class="car car-3" style="--x:224px">
+          <rect x="6" y="14" width="58" height="20" rx="7" fill="#d7dbe3"/>
+          <path d="M18 14 L26 3 H48 L56 14 Z" fill="#c2c8d2"/>
+          <rect x="28" y="5" width="18" height="8" rx="2" fill="#eef2f7"/>
+          <rect x="6" y="30" width="58" height="4" rx="2" fill="#b7bdc8"/>
+          <circle cx="20" cy="34" r="6" fill="#2a2a2a"/><circle cx="20" cy="34" r="2.4" fill="#9aa0aa"/>
+          <circle cx="50" cy="34" r="6" fill="#2a2a2a"/><circle cx="50" cy="34" r="2.4" fill="#9aa0aa"/>
+          <text x="35" y="26" text-anchor="middle" font-size="9" font-weight="700" fill="#3b4250">4</text>
+        </g><g class="car car-4" style="--x:332px">
+          <rect x="6" y="14" width="58" height="20" rx="7" fill="#d7dbe3"/>
+          <path d="M18 14 L26 3 H48 L56 14 Z" fill="#c2c8d2"/>
+          <rect x="28" y="5" width="18" height="8" rx="2" fill="#eef2f7"/>
+          <rect x="6" y="30" width="58" height="4" rx="2" fill="#b7bdc8"/>
+          <circle cx="20" cy="34" r="6" fill="#2a2a2a"/><circle cx="20" cy="34" r="2.4" fill="#9aa0aa"/>
+          <circle cx="50" cy="34" r="6" fill="#2a2a2a"/><circle cx="50" cy="34" r="2.4" fill="#9aa0aa"/>
+          <text x="35" y="26" text-anchor="middle" font-size="9" font-weight="700" fill="#3b4250">4</text>
+        </g>
+            </g>
+            <g class="bubble bubble-1" style="--x:150px;--y:16px"><rect x="0" y="0" width="44" height="26" rx="8" fill="#fff" stroke="#e3e6ec"/><path d="M14 26 l6 8 l4 -8" fill="#fff" stroke="#e3e6ec"/><text x="22" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#c93b3b">?</text></g>
+            <g class="bubble bubble-2" style="--x:262px;--y:8px"><rect x="0" y="0" width="52" height="26" rx="8" fill="#fff" stroke="#e3e6ec"/><path d="M16 26 l6 8 l4 -8" fill="#fff" stroke="#e3e6ec"/><text x="26" y="18" text-anchor="middle" font-size="11" font-weight="700" fill="#c93b3b">Where?</text></g>
+            <g class="bubble bubble-3" style="--x:40px;--y:12px"><rect x="0" y="0" width="58" height="26" rx="8" fill="#fff" stroke="#e3e6ec"/><path d="M18 26 l6 8 l4 -8" fill="#fff" stroke="#e3e6ec"/><text x="29" y="18" text-anchor="middle" font-size="11" font-weight="700" fill="#c93b3b">Waiting…</text></g>
+          </svg>
+        </div>
+        <ul class="compare-list">
+          <li><span class="cmp-ic">${icon("users")}</span><div><strong>The group separates</strong><small>Different drivers, different arrival times at every stop.</small></div></li>
+          <li><span class="cmp-ic">${icon("phone")}</span><div><strong>Calls to find each other</strong><small>"Where are you?" at every viewpoint and every lunch.</small></div></li>
+          <li><span class="cmp-ic">${icon("luggage")}</span><div><strong>Luggage in the wrong car</strong><small>Bags split across boots; someone's jacket is always elsewhere.</small></div></li>
+          <li><span class="cmp-ic">${icon("chat")}</span><div><strong>Half the group misses the story</strong><small>The driver's explanation reaches one car, not five.</small></div></li>
         </ul>
       </div>
       <div class="compare-vs" aria-hidden="true">vs</div>
       <div class="compare-card compare-good">
         <div class="compare-head"><span>One Traveller</span><strong>Everyone together</strong></div>
-        <div class="compare-row" aria-hidden="true"><i class="van-shape">17</i></div>
-        <ul>
-          <li>${icon("check")}One pickup, one route, one set of timings</li>
-          <li>${icon("check")}One driver who knows the road</li>
-          <li>${icon("check")}Luggage loaded once</li>
-          <li>${icon("check")}Same view, same story, same time</li>
+        <div class="scene scene-van" aria-hidden="true">
+          <svg viewBox="0 0 420 120" preserveAspectRatio="xMidYMid meet">
+            <rect x="0" y="86" width="420" height="34" fill="#232323"/>
+            <path class="scene-dash" d="M0 103 H420" stroke="#f26a1b" stroke-width="3" stroke-dasharray="18 14"/>
+            <g class="van-unit">
+              <g class="van-body">
+                <rect x="58" y="34" width="250" height="52" rx="10" fill="#ffffff"/>
+                <path d="M308 44 q30 2 42 26 v16 h-42 z" fill="#ffffff"/>
+                <rect x="70" y="42" width="215" height="22" rx="4" fill="#dbe7f5"/>
+                <g fill="#ffffff"><rect x="107" y="42" width="4" height="22"/><rect x="144" y="42" width="4" height="22"/><rect x="181" y="42" width="4" height="22"/><rect x="218" y="42" width="4" height="22"/><rect x="255" y="42" width="4" height="22"/></g>
+                <rect x="316" y="48" width="30" height="16" rx="3" fill="#dbe7f5"/>
+                <rect x="58" y="70" width="292" height="5" fill="#f26a1b"/>
+                <rect x="340" y="70" width="10" height="8" rx="2" fill="#ffd27a"/>
+                <text x="180" y="82" text-anchor="middle" font-size="9" font-weight="700" letter-spacing="1" fill="#3b4250">ANANTA TOURS &amp; TRAVELS</text>
+                <g class="wheel"><circle cx="100" cy="88" r="9" fill="#2a2a2a"/><circle cx="100" cy="88" r="4" fill="#9aa0aa"/><path d="M100 79 v18 M91 88 h18" stroke="#2a2a2a" stroke-width="2"/></g>
+                <g class="wheel"><circle cx="300" cy="88" r="9" fill="#2a2a2a"/><circle cx="300" cy="88" r="4" fill="#9aa0aa"/><path d="M300 79 v18 M291 88 h18" stroke="#2a2a2a" stroke-width="2"/></g>
+              </g>
+              <g class="people"><circle class="person" cx="78" cy="49" r="3.2" fill="#f26a1b"/><circle class="person" cx="93" cy="49" r="3.2" fill="#f26a1b"/><circle class="person" cx="108" cy="49" r="3.2" fill="#f26a1b"/><circle class="person" cx="123" cy="49" r="3.2" fill="#f26a1b"/><circle class="person" cx="138" cy="49" r="3.2" fill="#f26a1b"/><circle class="person" cx="153" cy="49" r="3.2" fill="#f26a1b"/><circle class="person" cx="168" cy="49" r="3.2" fill="#f26a1b"/><circle class="person" cx="183" cy="49" r="3.2" fill="#f26a1b"/><circle class="person" cx="198" cy="49" r="3.2" fill="#f26a1b"/><circle class="person" cx="78" cy="58" r="3.2" fill="#f26a1b"/><circle class="person" cx="93" cy="58" r="3.2" fill="#f26a1b"/><circle class="person" cx="108" cy="58" r="3.2" fill="#f26a1b"/><circle class="person" cx="123" cy="58" r="3.2" fill="#f26a1b"/><circle class="person" cx="138" cy="58" r="3.2" fill="#f26a1b"/><circle class="person" cx="153" cy="58" r="3.2" fill="#f26a1b"/><circle class="person" cx="168" cy="58" r="3.2" fill="#f26a1b"/><circle class="person" cx="183" cy="58" r="3.2" fill="#f26a1b"/></g>
+              <g class="check-badge"><circle cx="352" cy="30" r="16" fill="#22883f"/><path d="M344 30 l6 6 l11 -12" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></g>
+              <g class="people-pill"><rect x="58" y="6" width="150" height="20" rx="10" fill="#f26a1b"/><text x="133" y="20" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">17 travellers · 1 vehicle</text></g>
+            </g>
+          </svg>
+        </div>
+        <ul class="compare-list">
+          <li><span class="cmp-ic">${icon("pin")}</span><div><strong>One pickup, one route</strong><small>One departure time, one set of timings for the whole group.</small></div></li>
+          <li><span class="cmp-ic">${icon("wheel")}</span><div><strong>One driver who knows the road</strong><small>Sunrise timings, food stops and the slow bends, handled.</small></div></li>
+          <li><span class="cmp-ic">${icon("luggage")}</span><div><strong>Luggage loaded once</strong><small>Overhead rack for small bags; everything travels together.</small></div></li>
+          <li><span class="cmp-ic">${icon("users")}</span><div><strong>Same view, same story, same time</strong><small>Everyone hears the same explanation at the same viewpoint.</small></div></li>
         </ul>
         <a class="text-link" href="group-tour-koraput/">How a group day runs ${icon("arrow")}</a>
       </div>
     </div>
+    <ul class="compare-stats" aria-label="What changes with one vehicle">
+      <li>${icon("van")}<span class="stat-from">3–5 cars</span><span class="stat-arrow">${icon("arrow")}</span><span class="stat-to">1 Traveller</span></li>
+      <li>${icon("wheel")}<span class="stat-from">3–5 drivers</span><span class="stat-arrow">${icon("arrow")}</span><span class="stat-to">1 driver</span></li>
+      <li>${icon("phone")}<span class="stat-from">Calls at every stop</span><span class="stat-arrow">${icon("arrow")}</span><span class="stat-to">None</span></li>
+      <li>${icon("luggage")}<span class="stat-from">Bags in 4 boots</span><span class="stat-arrow">${icon("arrow")}</span><span class="stat-to">Loaded once</span></li>
+    </ul>
   </div>
 </section>
 
@@ -247,7 +326,7 @@ function render() {
   <div class="wrap">
     <div class="section-head">
       <h2 id="vehicle-title">Your vehicle for Koraput</h2>
-      <p class="lede">A brand-new Force Traveller, air conditioned, 17 passenger seats, photographed on the day it arrived in Semiliguda. Facts, not adjectives.</p>
+      <p class="lede">A brand-new Force Traveller, air conditioned, 17 passenger seats, photographed in Semiliguda on the day it arrived, ${site.vehicle.deliveredOn}. Facts, not adjectives.</p>
     </div>
     <div class="gallery" id="vehicle-gallery">
       <figure class="gallery-main">
@@ -263,11 +342,11 @@ function render() {
         <button type="button" role="tab" aria-selected="true" data-index="0" data-caption="Side view. Registration OD02 DT 9296, all-India permit.">${pic("traveller-side", { alt: "Side view", sizes: "12rem" })}<span>Side</span></button>
         <button type="button" role="tab" aria-selected="false" data-index="4" data-caption="Inside: pushback seats with armrests, 2+1 across, curtains on every window, overhead rack, AC vents.">${pic("traveller-cabin", { alt: "Cabin and seats", sizes: "12rem" })}<span>Cabin</span></button>
         <button type="button" role="tab" aria-selected="false" data-index="1" data-caption="On a Koraput hillside, first week out.">${pic("traveller-front-hill", { alt: "Front, on a hillside", sizes: "12rem" })}<span>On the hills</span></button>
-        <button type="button" role="tab" aria-selected="false" data-index="2" data-caption="Delivery day, September 2026.">${pic("traveller-front-garland", { alt: "Front, delivery day", sizes: "12rem" })}<span>Delivery day</span></button>
+        <button type="button" role="tab" aria-selected="false" data-index="2" data-caption="Delivery day, ${site.vehicle.deliveredOn}.">${pic("traveller-front-garland", { alt: "Front, delivery day", sizes: "12rem" })}<span>Delivery day</span></button>
         <button type="button" role="tab" aria-selected="false" data-index="3" data-caption="Rear doors with the emergency exit and our numbers.">${pic("traveller-rear", { alt: "Rear", sizes: "12rem" })}<span>Rear</span></button>
       </div>
     </div>
-    <p class="gallery-note">${icon("shield")}<span>These are real, unedited photographs of our own Force Traveller (OD02 DT 9296), taken by us in September 2026. No stock or AI-generated vehicle images are used anywhere on this site.</span></p>
+    <p class="gallery-note">${icon("shield")}<span>These are real, unedited photographs of our own Force Traveller (OD02 DT 9296), taken by us on delivery day, ${site.vehicle.deliveredOn}. No stock or AI-generated vehicle images are used anywhere on this site.</span></p>
   </div>
   <div class="wrap vehicle-grid">
     <div class="vehicle-copy">
@@ -285,7 +364,8 @@ function render() {
     <div class="seat-stage" aria-label="Interactive seat layout">
       <div class="seat-head"><strong>17</strong><span>seats · tap one</span></div>
       <div class="seatmap" id="seatmap"></div>
-      <p class="seat-info" id="seat-info">Indicative 2+1 layout with a back bench. The final arrangement follows the confirmed variant.</p>
+      <p class="seat-info" id="seat-info">Tap a seat. Pushback seats in 2+1 rows with a back bench, as in the cabin photo.</p>
+      <div class="seat-legend" aria-hidden="true"><span><i style="background:#c47a45"></i>Passenger seat</span><span><i style="background:#f26a1b"></i>Selected</span><span><i style="background:#333"></i>Driver</span></div>
     </div>
   </div>
 </section>
@@ -387,7 +467,7 @@ function render() {
         <div class="station-top">${icon("train")}<span class="station-code">${esc(s.code)}</span></div>
         <h3>${esc(s.name)}</h3>
         <p>${esc(s.trains)}</p>
-        <div class="station-meta"><span>${icon("clock")}${esc(s.drive)} from Semiliguda</span><span>${icon("road")}about ${s.kmBase} km</span></div>
+        <div class="station-meta"><span>${icon("clock")}${esc(s.drive)} from Semiliguda</span><span>${icon("road")}About ${s.kmBase} km</span></div>
         <a href="https://www.google.com/maps/search/?api=1&query=${s.lat}%2C${s.lng}" target="_blank" rel="noopener noreferrer">Open in Maps ${icon("arrow-up-right")}</a>
       </article>`).join("")}
     </div>

@@ -65,7 +65,7 @@ module.exports = [
     metaTitle: "Koraput Group Tour: Travel Together in One 17-Seater Traveller",
     description: "How a Koraput trip works for a group of 8 to 17: one vehicle, one driver, realistic day plans, seating, meals, hotels and the questions families, pilgrim groups and office teams ask.",
     kind: "Group travel", icon: "users",
-    hero: "traveller-front-garland", heroAlt: "The Ananta Traveller with a marigold garland on delivery day",
+    hero: "traveller-front-garland", heroAlt: "The Ananta Traveller with a marigold garland on delivery day, 18 September 2026",
     ctaPhoto: "deomali-range",
     lede: "Groups are where Koraput gets complicated: too many people for one car, too few for a bus. One Traveller with a local team removes the coordination, and this page shows how a group day actually runs.",
     facts: [
@@ -119,7 +119,7 @@ module.exports = [
     lede: "One long, good day. It works if you sleep in Koraput the night before, start at eight and accept that the two big waterfalls wait for a second visit.",
     facts: [
       { icon: "calendar", label: "Days", value: "1" },
-      { icon: "road", label: "Driving", value: "about 200 km" },
+      { icon: "road", label: "Driving", value: "About 200 km" },
       { icon: "clock", label: "Start", value: "8 am, Koraput town" },
       { icon: "sunrise", label: "Ends", value: "Deomali sunset, back by 8 pm" }
     ],
@@ -148,7 +148,7 @@ module.exports = [
     lede: "Four days covers every direction from Koraput without a rushed one: the mountain, both big waterfalls, the cave temple, the reservoir and the railway through the Ghats.",
     facts: [
       { icon: "calendar", label: "Days", value: "4" },
-      { icon: "road", label: "Total driving", value: "about 580 km" },
+      { icon: "road", label: "Total driving", value: "About 580 km" },
       { icon: "clock", label: "Longest day", value: "Day 3, about 6 h on the road" },
       { icon: "sunrise", label: "Early start", value: "Day 2 only" }
     ],
