@@ -6,7 +6,7 @@ const canvas = document.getElementById("terrain");
 if (canvas) init(canvas);
 
 function init(canvas) {
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const reduce = new URLSearchParams(location.search).has("still");
   let renderer;
   try {
     renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: "low-power" });

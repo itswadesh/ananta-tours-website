@@ -29,7 +29,7 @@ Pages: `/`, `/koraput-tour/`, `/koraput-tour-package-from-bhubaneswar/`, `/korap
 2. Run `node build.js`. It rewrites every HTML page, `sitemap.xml` and `robots.txt`.
 3. Commit `dist/` together with `src/`.
 
-Preview locally with any static server, for example `npx serve dist`. Add `?motion` to the URL to preview animations on a machine that has reduced motion switched on.
+Preview locally with any static server, for example `npx serve dist`. Animations run by default; add `?still` to the URL to switch decorative animation off.
 
 ## Before launch
 
