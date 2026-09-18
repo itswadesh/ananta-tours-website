@@ -725,7 +725,7 @@ html:not([lang="en"]) .site-nav { font-size: 0.98rem; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 900px) {
-  .site-nav { position: fixed; inset: var(--header-h) 0 0 0; background: rgba(255, 255, 255, 0.86); backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%); display: grid; align-content: start; justify-items: start; gap: 0.2rem; padding: 1.5rem var(--gutter); font-size: 1.25rem; font-weight: 600; transform: translateY(-8px); opacity: 0; pointer-events: none; transition: transform 0.35s var(--ease-out), opacity 0.3s; border-top: 1px solid var(--line); }
+  .site-nav { position: absolute; top: var(--header-h); left: 0; right: 0; height: calc(100svh - var(--header-h)); overflow-y: auto; overscroll-behavior: contain; background: #fff; display: grid; align-content: start; justify-items: start; gap: 0.2rem; padding: 1.5rem var(--gutter) calc(1.5rem + env(safe-area-inset-bottom, 0px)); font-size: 1.25rem; font-weight: 600; transform: translateY(-8px); opacity: 0; pointer-events: none; transition: transform 0.35s var(--ease-out), opacity 0.3s; border-top: 1px solid var(--line); box-shadow: 0 24px 40px -24px rgba(0, 0, 0, 0.45); }
   .site-nav a { width: 100%; padding: 0.9rem 0; border-bottom: 1px solid var(--line); color: var(--ink); font-size: 1.35rem; }
   .nav-open .site-nav { transform: none; opacity: 1; pointer-events: auto; }
   .nav-toggle { display: grid; }
