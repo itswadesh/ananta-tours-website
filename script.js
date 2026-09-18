@@ -99,14 +99,18 @@
       gsap.to(".hero-media", { yPercent: 16, ease: "none", scrollTrigger: { trigger: hero, start: "top top", end: "bottom top", scrub: true } });
       gsap.to(".hero-inner", { y: -50, opacity: 0.25, ease: "none", scrollTrigger: { trigger: hero, start: "40% top", end: "bottom top", scrub: true } });
     }
+    // Real footage only after the visitor has settled on the hero for ~3 s, never on slow or data-saver connections.
+    const conn = navigator.connection || {};
+    const slowNet = !!conn.saveData || /(^|[^4-9])[23]g$/.test(conn.effectiveType || "");
     const video = $("#hero-video");
-    if (video && !reduce) {
+    if (video && slowNet) video.remove();
+    if (video && !reduce && !slowNet) {
       const send = fn => video.contentWindow?.postMessage(JSON.stringify({ event: "command", func: fn, args: [] }), "https://www.youtube-nocookie.com");
       let timer, started = false;
       const play = () => { send("mute"); send("playVideo"); setTimeout(() => video.classList.add("is-playing"), 500); started = true; };
       new IntersectionObserver(([en]) => {
         clearTimeout(timer);
-        if (en.isIntersecting && en.intersectionRatio >= 0.4) timer = setTimeout(play, started ? 0 : 1400);
+        if (en.isIntersecting && en.intersectionRatio >= 0.4) timer = setTimeout(play, started ? 0 : 3000);
         else { send("pauseVideo"); video.classList.remove("is-playing"); }
       }, { threshold: [0, 0.4] }).observe(hero);
     }
@@ -182,7 +186,7 @@
   const form = $("#trip-form");
   if (form) {
     const plans = {
-      "1": [["Day 1", ["sabara-srikhetra", "tribal-museum", "deomali", "kolab"]]],
+      "1": [["Day 1", ["sabara-srikhetra", "tribal-museum", "kolab", "deomali"]]],
       "2": [["Day 1", ["sabara-srikhetra", "tribal-museum", "kolab"]], ["Day 2", ["deomali", "nandapur", "rani-duduma"]]],
       "3": [["Day 1", ["sabara-srikhetra", "tribal-museum", "kolab"]], ["Day 2", ["deomali", "nandapur", "rani-duduma"]], ["Day 3", ["duduma", "onukadelli"]]],
       "4": [["Day 1", ["sabara-srikhetra", "tribal-museum", "kolab"]], ["Day 2", ["deomali", "nandapur", "rani-duduma"]], ["Day 3", ["duduma", "onukadelli"]], ["Day 4", ["gupteswar", "maliguda"]]]
@@ -214,7 +218,9 @@
         when = ` around ${d.getDate()} ${d.toLocaleString("en-IN", { month: "long" })}`;
       }
       const route = plan.map(([label, stops]) => `${label}: ${stops.map(name).join(" → ")}`).join("; ");
-      openWhatsApp(`Hi Ananta Tours, we are ${people} people travelling from ${origin} and planning a ${days === "4" ? "4+" : days}-day Koraput trip${when}. Suggested route: ${route}. Please send an itinerary, availability and the Traveller price.`);
+      const wanted = $('input[name="places"]:checked', form).map(i => i.value);
+      const must = wanted.length ? ` Places we want to include: ${wanted.join(", ")}.` : "";
+      openWhatsApp(`Hi Ananta Tours, we are ${people} people travelling from ${origin} and planning a ${days === "4" ? "4+" : days}-day Koraput trip${when}. Suggested route: ${route}.${must} Please send an itinerary, availability and the Traveller price.`);
     });
     render();
   }
