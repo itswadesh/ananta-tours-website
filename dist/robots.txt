@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://itswadesh.github.io/ananta-tours-website/sitemap.xml

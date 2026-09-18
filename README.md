@@ -1,0 +1,62 @@
+# Ananta Tours & Travels
+
+Static website for Koraput group tours in a new 17-seater AC Traveller.
+Positioning: **Experience Koraput in Comfort**. Koraput sells the trip; the vehicle and the local team are the trust features.
+
+## Structure
+
+```
+build.js            Generates dist/ from src/ (no dependencies: `node build.js`)
+src/site.js         Name, public URL, hero video id, nav
+src/destinations.js Ten places with coordinates, photos, drive times
+src/pages.js        The eleven planning guides (content only)
+src/home.js         Homepage template
+src/article.js      Guide page template
+src/templates.js    Layout, header, footer, <picture> helper, credits page
+src/icons.js        Inline SVG icon set
+src/photo-credits.json / photo-manifest.json   Attribution and sizes for dist/assets/photos
+dist/               What GitHub Pages serves (generated HTML + static assets)
+dist/styles.css     All styles
+dist/script.js      Smooth scroll, the scroll-driven road, planner, seat map, map, micro-interactions
+dist/scene.js       Three.js low-poly terrain behind "17 seats. One incredible Koraput."
+```
+
+Pages: `/`, `/koraput-tour/`, `/koraput-tour-package-from-bhubaneswar/`, `/koraput-tour-package-from-kolkata/`, `/17-seater-traveller-koraput/`, `/koraput-sightseeing/`, `/koraput-3-day-itinerary/`, `/koraput-2-day-itinerary/`, `/deomali-tour/`, `/duduma-waterfall-tour/`, `/gupteswar-tour/`, `/kolab-dam-tour/`, `/photo-credits/`.
+
+## Editing
+
+1. Change content in `src/` (or styles/scripts in `dist/`).
+2. Run `node build.js`. It rewrites every HTML page, `sitemap.xml` and `robots.txt`.
+3. Commit `dist/` together with `src/`.
+
+Preview locally with any static server, for example `npx serve dist`. Add `?motion` to the URL to preview animations on a machine that has reduced motion switched on.
+
+## Before launch
+
+1. Add the WhatsApp business number to `WHATSAPP_NUMBER` at the top of `dist/script.js` (digits only, with country code).
+2. Set the final public URL in `src/site.js` and rebuild; it feeds canonical links, Open Graph tags and the sitemap.
+3. Confirm the vehicle make, model and variant, then add real photographs of it to the Traveller section and `/17-seater-traveller-koraput/`.
+4. Add a photograph of the driver and support team in the "You're not travelling alone" section.
+5. Optional: create a Google Maps browser key restricted to the domain and put it in `GOOGLE_MAPS_API_KEY` in `dist/script.js` for a fully interactive pinned map. Without a key the section uses Google's keyless route embed plus "Open in Maps" links for every stop.
+6. Re-check distances, drive times and train timetables in `src/destinations.js` and `src/pages.js` against current conditions.
+
+## Photos and footage
+
+All landscape and place photographs are real photographs of Koraput district from Wikimedia Commons under Creative Commons licences, resized for the web. Each one is credited on `/photo-credits/` (generated from `src/photo-credits.json`). Do not replace them with stock or AI-generated imagery. The hero plays real Deomali footage from YouTube (credited in the footer) over a still photograph.
+
+## Deploying to GitHub Pages
+
+The site is served from the `gh-pages` branch, which holds the contents of `dist/`. Pages source in the repository settings is **Deploy from a branch → gh-pages → / (root)**.
+
+To publish a change:
+
+```
+node build.js          # regenerate dist/
+git add -A && git commit -m "Update site"
+git push               # main: sources + generated site
+node deploy.js         # pushes dist/ to gh-pages
+```
+
+`deploy.js` uses `git subtree split`, so `main` keeps `src/` and `dist/` together while `gh-pages` gets only the published files.
+
+Live: https://itswadesh.github.io/ananta-tours-website/
