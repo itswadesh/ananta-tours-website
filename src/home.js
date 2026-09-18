@@ -22,6 +22,17 @@ const mapNames = {
 const embedUrl = `https://www.google.com/maps?saddr=${enc("Koraput, Odisha")}&daddr=${Object.values(mapNames).map(enc).join("+to:")}&output=embed`;
 const mapsLink = d => `https://www.google.com/maps/search/?api=1&query=${d.lat}%2C${d.lng}`;
 
+// "Leave 07:00 → arrive about HH:MM" from the approximate drive time.
+function etaFrom(drive, startMin = 7 * 60) {
+  const m = /([\d.]+)\s*h/.exec(drive), n = /([\d.]+)\s*min/.exec(drive);
+  let mins = 0;
+  if (m) mins += Math.round(parseFloat(m[1]) * 60);
+  if (n) mins += parseInt(n[1], 10);
+  if (!mins) return null;
+  const t = startMin + mins;
+  return `${String(Math.floor(t / 60)).padStart(2, "0")}:${String(t % 60).padStart(2, "0")}`;
+}
+
 function stop(d, i) {
   // Photo alternates sides; the road marker sits under the photo edge so the road weaves without crossing text.
   const x = i % 2 === 0 ? 56 : 44;
@@ -32,7 +43,7 @@ function stop(d, i) {
     <span class="stop-kind">${icon(d.icon)}${esc(d.kind)}</span>
     <h3>${esc(d.name)}</h3>
     <p>${esc(d.blurb)}</p>
-    <div class="stop-meta"><span>${icon("clock")}${esc(d.drive)} from Koraput</span><span>${icon("road")}About ${d.km} km</span></div>
+    <div class="stop-meta"><span>${icon("clock")}${esc(d.drive)} from Koraput</span><span>${icon("road")}About ${d.km} km</span>${etaFrom(d.drive) ? `<span>${icon("sunrise")}Leave 07:00, arrive about ${etaFrom(d.drive)}</span>` : ""}</div>
     ${d.page ? `<a class="text-link" href="${d.page}/">Plan a ${esc(d.name)} day ${icon("arrow")}</a>` : ""}
   </div>
 </article>`;
@@ -86,6 +97,7 @@ function render() {
     <div class="hero-actions">
       <a class="btn btn-earth magnetic" href="#planner">${icon("route")}<span>Plan my Koraput trip</span></a>
       <button class="btn btn-ghost magnetic js-whatsapp" type="button">${icon("whatsapp")}<span>WhatsApp Ananta</span></button>
+      <a class="hero-phone" href="tel:+${site.contact.whatsapp}">${icon("phone")}<span>Call ${esc(site.contact.whatsappDisplay)}</span></a>
     </div>
     <div class="hero-proof" aria-label="Service facts">
       <span>${icon("spark")}<strong>New</strong>&nbsp;· purchased ${site.vehicle.purchased}</span>

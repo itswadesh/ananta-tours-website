@@ -69,9 +69,9 @@ module.exports = [
       ] },
       { type: "h2", text: "A 3-day plan that fits the train" },
       { type: "days", items: [
-        { title: "Arrive, settle, an easy first day", text: "The driver meets your morning train. Breakfast, Sabara Srikhetra, the Tribal Museum, then Upper Kolab for the late afternoon light.", stops: ["sabara-srikhetra", "tribal-museum", "kolab"] },
-        { title: "The highland circuit", text: "Deomali early, with time on top. Back through Nandapur's old capital to Rani Duduma before the light goes.", stops: ["deomali", "nandapur", "rani-duduma"] },
-        { title: "Duduma, then the evening train", text: "A long drive south-west to Duduma Waterfall and the Machkund valley, lunch on the way, and back to Koraput for the evening departure.", stops: ["duduma", "onukadelli"] }
+        { title: "Arrive, settle, an easy first day", text: "The driver meets your morning train. Breakfast, Sabara Srikhetra, the Tribal Museum, then Upper Kolab for the late afternoon light.", stops: ["sabara-srikhetra", "tribal-museum", "kolab"], plan: [["Morning","Driver waiting at Koraput Junction for your train"],["09:30","Breakfast in town"],["10:30","Sabara Srikhetra"],["11:30","Tribal Museum"],["13:00","Lunch, hotel check-in"],["15:30","Upper Kolab"],["18:30","Back at the hotel"]] },
+        { title: "The highland circuit", text: "Deomali early, with time on top. Back through Nandapur's old capital to Rani Duduma before the light goes.", stops: ["deomali", "nandapur", "rani-duduma"], plan: [["05:00","Leave Koraput"],["07:00","Deomali top, sunrise"],["09:30","Breakfast, Semiliguda"],["12:30","Nandapur, Batrisa Singhasana"],["14:00","Rani Duduma"],["17:30","Back in Koraput"]] },
+        { title: "Duduma, then the evening train", text: "A long drive south-west to Duduma Waterfall and the Machkund valley, lunch on the way, and back to Koraput for the evening departure.", stops: ["duduma", "onukadelli"], plan: [["07:00","Leave Koraput, breakfast packed"],["10:00","Duduma viewpoints"],["12:00","Onukadelli market (Thursdays) or Machkund valley"],["13:30","Lunch on the road"],["16:30","Koraput Junction for the evening train"]] }
       ] },
       { type: "callout", icon: "clock", html: "Keep a buffer before your return train. Ghat roads and a good waterfall both take longer than the map suggests." },
       { type: "h2", text: "What the Traveller changes" },
@@ -107,10 +107,10 @@ module.exports = [
       ] },
       { type: "h2", text: "A 4-day plan" },
       { type: "days", items: [
-        { title: "Arrive and breathe", text: "Pickup, hotel check-in, the town temple and museum, and Kolab at sunset. Nothing early on the first day.", stops: ["sabara-srikhetra", "tribal-museum", "kolab"] },
-        { title: "Deomali and the old capital", text: "Sunrise or a slow morning on Deomali, then Nandapur and Rani Duduma on the way back.", stops: ["deomali", "nandapur", "rani-duduma"] },
-        { title: "Duduma and Machkund", text: "The long south-west day: Duduma Waterfall, the Machkund valley and, on Thursdays, Onukadelli market.", stops: ["duduma", "onukadelli"] },
-        { title: "Gupteswar and the railway", text: "West to the Gupteswar cave temple on the Sabari river, back via Jeypore, and the Maliguda section of the Kirandul line before your departure.", stops: ["gupteswar", "maliguda"] }
+        { title: "Arrive and breathe", text: "Pickup, hotel check-in, the town temple and museum, and Kolab at sunset. Nothing early on the first day.", stops: ["sabara-srikhetra", "tribal-museum", "kolab"], plan: [["On arrival","Pickup at the station, hotel check-in"],["14:30","Lunch"],["15:30","Sabara Srikhetra"],["16:15","Tribal Museum"],["17:15","Upper Kolab for sunset"],["19:00","Back at the hotel"]] },
+        { title: "Deomali and the old capital", text: "Sunrise or a slow morning on Deomali, then Nandapur and Rani Duduma on the way back.", stops: ["deomali", "nandapur", "rani-duduma"], plan: [["05:00","Leave Koraput"],["07:00","Deomali top, sunrise"],["09:30","Breakfast, Semiliguda"],["12:30","Nandapur, Batrisa Singhasana"],["14:00","Rani Duduma"],["17:30","Back in Koraput"]] },
+        { title: "Duduma and Machkund", text: "The long south-west day: Duduma Waterfall, the Machkund valley and, on Thursdays, Onukadelli market.", stops: ["duduma", "onukadelli"], plan: [["07:00","Leave Koraput, breakfast packed"],["10:00","Duduma viewpoints"],["12:00","Onukadelli market (Thursdays) or Machkund valley"],["13:30","Lunch on the road"],["17:30","Back in Koraput"]] },
+        { title: "Gupteswar and the railway", text: "West to the Gupteswar cave temple on the Sabari river, back via Jeypore, and the Maliguda section of the Kirandul line before your departure.", stops: ["gupteswar", "maliguda"], plan: [["07:30","Leave Koraput"],["10:00","Gupteswar cave, 200 steps"],["11:30","Sabari river bank"],["13:00","Lunch, Jeypore"],["15:30","Maliguda bridges and tunnel"],["17:00","Koraput station or hotel"]] }
       ] },
       { type: "h2", text: "Why groups from Kolkata book the whole vehicle" },
       { type: "p", html: "You do not know the local operators, and the places are far apart. One Traveller with a known driver, fixed timings and a support number removes the guesswork. We also time your first pickup to the actual train, not the scheduled one." },
@@ -225,9 +225,9 @@ module.exports = [
     ],
     blocks: [
       { type: "days", items: [
-        { title: "Koraput town and Upper Kolab", text: "Pickup at the station or hotel. Sabara Srikhetra and the Tribal Museum before lunch, a slow afternoon, then Upper Kolab for the last light on the water. Back in town by dark.", stops: ["sabara-srikhetra", "tribal-museum", "kolab"] },
-        { title: "Deomali, Nandapur, Rani Duduma", text: "Leave at 4:30 am for sunrise on Deomali, or at 7 am for a quieter morning on top. Breakfast in Semiliguda on the way back. Nandapur's old capital after lunch, then Rani Duduma's waterfall and country road before the light goes.", stops: ["deomali", "nandapur", "rani-duduma"] },
-        { title: "Duduma Waterfall and Machkund", text: "The long day. South-west through the hills to the Duduma gorge and its viewpoints, the Machkund valley, and on Thursdays the Onukadelli market. Packed lunch or a simple meal on the way. Back by evening for a train or a last night in town.", stops: ["duduma", "onukadelli"] }
+        { title: "Koraput town and Upper Kolab", text: "Pickup at the station or hotel. Sabara Srikhetra and the Tribal Museum before lunch, a slow afternoon, then Upper Kolab for the last light on the water. Back in town by dark.", stops: ["sabara-srikhetra", "tribal-museum", "kolab"], plan: [["09:00","Sabara Srikhetra"],["10:00","Tribal Museum"],["12:30","Lunch in Koraput town"],["15:30","Upper Kolab garden and viewpoint"],["17:45","Sunset from the dam road"],["18:30","Back at the hotel"]] },
+        { title: "Deomali, Nandapur, Rani Duduma", text: "Leave at 4:30 am for sunrise on Deomali, or at 7 am for a quieter morning on top. Breakfast in Semiliguda on the way back. Nandapur's old capital after lunch, then Rani Duduma's waterfall and country road before the light goes.", stops: ["deomali", "nandapur", "rani-duduma"], plan: [["05:00","Leave Koraput"],["07:00","Deomali top, sunrise"],["09:30","Breakfast, Semiliguda"],["12:30","Nandapur, Batrisa Singhasana"],["14:00","Rani Duduma"],["17:30","Back in Koraput"]] },
+        { title: "Duduma Waterfall and Machkund", text: "The long day. South-west through the hills to the Duduma gorge and its viewpoints, the Machkund valley, and on Thursdays the Onukadelli market. Packed lunch or a simple meal on the way. Back by evening for a train or a last night in town.", stops: ["duduma", "onukadelli"], plan: [["07:00","Leave Koraput, breakfast packed"],["10:00","Duduma viewpoints"],["12:00","Onukadelli market (Thursdays) or Machkund valley"],["13:30","Lunch on the road"],["17:30","Back in Koraput"]] }
       ] },
       { type: "figure", photo: "duduma-gorge", alt: "Duduma waterfall dropping into a deep forested gorge", caption: "Duduma gorge, the day-three destination." },
       { type: "h2", text: "Why this order" },
@@ -261,8 +261,8 @@ module.exports = [
     ],
     blocks: [
       { type: "days", items: [
-        { title: "Town, museum and the reservoir", text: "Morning pickup, Sabara Srikhetra, then the Tribal Museum. Lunch in town. Upper Kolab in the late afternoon: the garden, the viewpoint over the water and sunset from the dam road.", stops: ["sabara-srikhetra", "tribal-museum", "kolab"] },
-        { title: "Deomali and the waterfall road", text: "Early departure for Deomali, time on top, breakfast on the way down. Nandapur's stone shrines and the 32-step throne, then the country road to Rani Duduma. Back to Koraput by evening.", stops: ["deomali", "nandapur", "rani-duduma"] }
+        { title: "Town, museum and the reservoir", text: "Morning pickup, Sabara Srikhetra, then the Tribal Museum. Lunch in town. Upper Kolab in the late afternoon: the garden, the viewpoint over the water and sunset from the dam road.", stops: ["sabara-srikhetra", "tribal-museum", "kolab"], plan: [["09:00","Sabara Srikhetra"],["10:00","Tribal Museum"],["12:30","Lunch in Koraput town"],["15:30","Upper Kolab garden and viewpoint"],["17:45","Sunset from the dam road"],["18:30","Back at the hotel"]] },
+        { title: "Deomali and the waterfall road", text: "Early departure for Deomali, time on top, breakfast on the way down. Nandapur's stone shrines and the 32-step throne, then the country road to Rani Duduma. Back to Koraput by evening.", stops: ["deomali", "nandapur", "rani-duduma"], plan: [["05:00","Leave Koraput"],["07:00","Deomali top, sunrise"],["09:30","Breakfast, Semiliguda"],["12:30","Nandapur, Batrisa Singhasana"],["14:00","Rani Duduma"],["17:30","Back in Koraput"]] }
       ] },
       { type: "figure", photo: "kolab-garden", alt: "Terraced garden below the Upper Kolab dam wall", caption: "The garden below the Upper Kolab dam." },
       { type: "h2", text: "If you have one more evening" },

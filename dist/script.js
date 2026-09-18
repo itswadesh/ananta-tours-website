@@ -271,11 +271,19 @@
   /* ---------- Trip planner ---------- */
   const form = $("#trip-form");
   if (form) {
+    // Typical arrival times for each stop within a day (leaving Koraput town).
+    const eta = {
+      town: { "sabara-srikhetra": "09:00", "tribal-museum": "10:00", kolab: "15:30" },
+      one: { "sabara-srikhetra": "08:00", "tribal-museum": "09:00", kolab: "10:30", deomali: "15:00" },
+      hills: { deomali: "07:00", nandapur: "12:30", "rani-duduma": "14:00" },
+      south: { duduma: "10:00", onukadelli: "12:00" },
+      west: { gupteswar: "10:00", maliguda: "15:30" }
+    };
     const plans = {
-      "1": [["Day 1", ["sabara-srikhetra", "tribal-museum", "kolab", "deomali"]]],
-      "2": [["Day 1", ["sabara-srikhetra", "tribal-museum", "kolab"]], ["Day 2", ["deomali", "nandapur", "rani-duduma"]]],
-      "3": [["Day 1", ["sabara-srikhetra", "tribal-museum", "kolab"]], ["Day 2", ["deomali", "nandapur", "rani-duduma"]], ["Day 3", ["duduma", "onukadelli"]]],
-      "4": [["Day 1", ["sabara-srikhetra", "tribal-museum", "kolab"]], ["Day 2", ["deomali", "nandapur", "rani-duduma"]], ["Day 3", ["duduma", "onukadelli"]], ["Day 4", ["gupteswar", "maliguda"]]]
+      "1": [["Day 1", ["sabara-srikhetra", "tribal-museum", "kolab", "deomali"], eta.one, "Leave 07:30, back about 20:00"]],
+      "2": [["Day 1", ["sabara-srikhetra", "tribal-museum", "kolab"], eta.town, "Easy start, back about 18:30"], ["Day 2", ["deomali", "nandapur", "rani-duduma"], eta.hills, "Leave 05:00, back about 17:30"]],
+      "3": [["Day 1", ["sabara-srikhetra", "tribal-museum", "kolab"], eta.town, "Easy start, back about 18:30"], ["Day 2", ["deomali", "nandapur", "rani-duduma"], eta.hills, "Leave 05:00, back about 17:30"], ["Day 3", ["duduma", "onukadelli"], eta.south, "Leave 07:00, back about 17:30"]],
+      "4": [["Day 1", ["sabara-srikhetra", "tribal-museum", "kolab"], eta.town, "Easy start, back about 18:30"], ["Day 2", ["deomali", "nandapur", "rani-duduma"], eta.hills, "Leave 05:00, back about 17:30"], ["Day 3", ["duduma", "onukadelli"], eta.south, "Leave 07:00, back about 17:30"], ["Day 4", ["gupteswar", "maliguda"], eta.west, "Leave 07:30, back about 17:00"]]
     };
     const out = $("#route-days"), title = $("#route-title"), dateInput = $("#trip-date");
     const val = n => form.querySelector(`input[name="${n}"]:checked`)?.value || "";
@@ -285,8 +293,8 @@
       const days = val("days") || "3";
       const plan = plans[days];
       title.textContent = `Your ${days === "4" ? "4-day" : days + "-day"} Koraput journey`;
-      out.innerHTML = plan.map(([label, stops]) => `<div class="route-day"><b>${label}</b><div class="route-stops">${stops.map((s, i) =>
-        `<span class="route-stop" style="animation-delay:${i * 60}ms"><svg class="ic" aria-hidden="true"><use href="#i-${iconOf(s)}"/></svg>${name(s)}${s === "onukadelli" ? " (Thu)" : ""}</span>`).join("")}</div></div>`).join("");
+      out.innerHTML = plan.map(([label, stops, times, note]) => `<div class="route-day"><b>${label}</b><div><div class="route-stops">${stops.map((s, i) =>
+        `<span class="route-stop" style="animation-delay:${i * 60}ms"><svg class="ic" aria-hidden="true"><use href="#i-${iconOf(s)}"/></svg>${times && times[s] ? `<em>${times[s]}</em>` : ""}${name(s)}${s === "onukadelli" ? " (Thu)" : ""}</span>`).join("")}</div>${note ? `<small class="route-note">${note}</small>` : ""}</div></div>`).join("");
     }
     form.addEventListener("change", e => {
       const chip = e.target.closest(".chip");
@@ -303,7 +311,7 @@
         const d = new Date(dateInput.value + "T00:00:00");
         when = ` around ${d.getDate()} ${d.toLocaleString("en-IN", { month: "long" })}`;
       }
-      const route = plan.map(([label, stops]) => `${label}: ${stops.map(name).join(" → ")}`).join("; ");
+      const route = plan.map(([label, stops, times]) => `${label}: ${stops.map(s => (times && times[s] ? times[s] + " " : "") + name(s)).join(" → ")}`).join("; ");
       const wanted = $('input[name="places"]:checked', form).map(i => i.value);
       const must = wanted.length ? ` Places we want to include: ${wanted.join(", ")}.` : "";
       openWhatsApp(`Hi Ananta Tours, we are ${people} people travelling from ${origin} and planning a ${days === "4" ? "4+" : days}-day Koraput trip${when}. Suggested route: ${route}.${must} Please send an itinerary, availability and the Traveller price.`);

@@ -14,7 +14,7 @@ function block(b) {
     case "figure": return `<figure><div class="pic-wrap" data-parallax="6">${pic(b.photo, { alt: b.alt || "", sizes: "(min-width: 900px) 60vw, 100vw", root })}${isOwn(b.photo) ? realBadge() : ""}</div>${b.caption ? `<figcaption>${b.caption}</figcaption>` : ""}</figure>`;
     case "html": return b.html;
     case "callout": return `<div class="callout">${icon(b.icon || "info")}<span>${b.html}</span></div>`;
-    case "days": return `<ol class="day-plan">${b.items.map((d, i) => `<li><b>Day ${i + 1}</b><div><strong>${esc(d.title)}</strong><p>${d.text}</p>${d.stops ? `<div class="stops">${d.stops.map(s => byId[s] ? `<span>${icon(byId[s].icon)}${esc(byId[s].name)}</span>` : `<span>${icon("pin")}${esc(s)}</span>`).join("")}</div>` : ""}</div></li>`).join("")}</ol>`;
+    case "days": return `<ol class="day-plan">${b.items.map((d, i) => `<li><b>Day ${i + 1}</b><div><strong>${esc(d.title)}</strong><p>${d.text}</p>${d.stops ? `<div class="stops">${d.stops.map(s => byId[s] ? `<span>${icon(byId[s].icon)}${esc(byId[s].name)}</span>` : `<span>${icon("pin")}${esc(s)}</span>`).join("")}</div>` : ""}${d.plan ? `<ol class="eta" aria-label="Estimated times"><li class="eta-head">${icon("clock")}Estimated times</li>${d.plan.map(([t, what]) => `<li><b>${esc(t)}</b><span>${esc(what)}</span></li>`).join("")}</ol>` : ""}</div></li>`).join("")}</ol>`;
     default: throw new Error("Unknown block type " + b.type);
   }
 }

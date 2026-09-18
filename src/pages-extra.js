@@ -125,7 +125,7 @@ module.exports = [
     ],
     blocks: [
       { type: "days", items: [
-        { title: "Temple, museum, Kolab, then the mountain", text: "Sabara Srikhetra at eight, the Tribal Museum at nine. Drive west to Upper Kolab for the garden and the view over the water, then back through Koraput for lunch in Semiliguda. Deomali by three, the top by four, sunset from the ridge and back in town by eight.", stops: ["sabara-srikhetra", "tribal-museum", "kolab", "deomali"] }
+        { title: "Temple, museum, Kolab, then the mountain", text: "Sabara Srikhetra at eight, the Tribal Museum at nine. Drive west to Upper Kolab for the garden and the view over the water, then back through Koraput for lunch in Semiliguda. Deomali by three, the top by four, sunset from the ridge and back in town by eight.", stops: ["sabara-srikhetra", "tribal-museum", "kolab", "deomali"], plan: [["08:00","Sabara Srikhetra"],["09:00","Tribal Museum"],["10:30","Upper Kolab garden and viewpoint"],["12:30","Lunch, Semiliguda"],["15:00","Deomali summit road"],["17:30","Sunset on the ridge"],["20:00","Back in Koraput"]] }
       ] },
       { type: "h2", text: "What to skip and why" },
       { type: "p", html: "Duduma is a three-hour drive each way and Gupteswar two and a half; either one eats the whole day. Rani Duduma and Nandapur fit only if you drop Kolab, which is the better trade in the monsoon when the falls are full. Ask us and we will re-cut the day." },
@@ -154,10 +154,10 @@ module.exports = [
     ],
     blocks: [
       { type: "days", items: [
-        { title: "Arrive, town and Upper Kolab", text: "Pickup, check-in, Sabara Srikhetra and the Tribal Museum. Upper Kolab for the late light. Nothing early.", stops: ["sabara-srikhetra", "tribal-museum", "kolab"] },
-        { title: "Deomali, Nandapur, Rani Duduma", text: "Sunrise on Deomali or a slow morning on top, breakfast in Semiliguda, Nandapur's old capital, then Rani Duduma's waterfall road home.", stops: ["deomali", "nandapur", "rani-duduma"] },
-        { title: "Duduma and Machkund", text: "The long south-west day to the Duduma gorge and the Machkund valley. On a Thursday, Onukadelli market first.", stops: ["duduma", "onukadelli"] },
-        { title: "Gupteswar and the railway", text: "West past Jeypore to the Gupteswar cave temple and the Sabari river, back via the Maliguda bridges and tunnel, then the station or one more night.", stops: ["gupteswar", "maliguda"] }
+        { title: "Arrive, town and Upper Kolab", text: "Pickup, check-in, Sabara Srikhetra and the Tribal Museum. Upper Kolab for the late light. Nothing early.", stops: ["sabara-srikhetra", "tribal-museum", "kolab"], plan: [["09:00","Sabara Srikhetra"],["10:00","Tribal Museum"],["12:30","Lunch in Koraput town"],["15:30","Upper Kolab garden and viewpoint"],["17:45","Sunset from the dam road"],["18:30","Back at the hotel"]] },
+        { title: "Deomali, Nandapur, Rani Duduma", text: "Sunrise on Deomali or a slow morning on top, breakfast in Semiliguda, Nandapur's old capital, then Rani Duduma's waterfall road home.", stops: ["deomali", "nandapur", "rani-duduma"], plan: [["05:00","Leave Koraput"],["07:00","Deomali top, sunrise"],["09:30","Breakfast, Semiliguda"],["12:30","Nandapur, Batrisa Singhasana"],["14:00","Rani Duduma"],["17:30","Back in Koraput"]] },
+        { title: "Duduma and Machkund", text: "The long south-west day to the Duduma gorge and the Machkund valley. On a Thursday, Onukadelli market first.", stops: ["duduma", "onukadelli"], plan: [["07:00","Leave Koraput, breakfast packed"],["10:00","Duduma viewpoints"],["12:00","Onukadelli market (Thursdays) or Machkund valley"],["13:30","Lunch on the road"],["17:30","Back in Koraput"]] },
+        { title: "Gupteswar and the railway", text: "West past Jeypore to the Gupteswar cave temple and the Sabari river, back via the Maliguda bridges and tunnel, then the station or one more night.", stops: ["gupteswar", "maliguda"], plan: [["07:30","Leave Koraput"],["10:00","Gupteswar cave, 200 steps"],["11:30","Sabari river bank"],["13:00","Lunch, Jeypore"],["15:30","Maliguda bridges and tunnel"],["17:00","Koraput station or hotel"]] }
       ] },
       { type: "figure", photo: "gupteswar-lingam", alt: "The Shiva lingam inside Gupteswar cave", caption: "Day four: inside Gupteswar cave." },
       { type: "h2", text: "Why this order" },
