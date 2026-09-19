@@ -8,7 +8,7 @@ Positioning: **Experience Koraput in Comfort**. Koraput sells the trip; the vehi
 ```
 build.js            Generates dist/ from src/ (no dependencies: `node build.js`)
 src/site.js         Name, public URL, vehicle facts, contact details, nav
-src/destinations.js Ten places with coordinates, photos, drive times
+src/destinations.js Twelve places with coordinates, photos, drive times
 src/pages.js, src/pages-extra.js, src/pages-seo.js   The twenty-one guides (content only)
 src/page-dates.json Content hash + date per page, so sitemap <lastmod> only moves on real change
 src/i18n/en.js      Every UI string and homepage text (English master)

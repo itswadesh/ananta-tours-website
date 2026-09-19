@@ -22,19 +22,30 @@
   let lenis = null;
   if (hasGsap) gsap.registerPlugin(ScrollTrigger);
 
-  // The low-poly terrain pulls in Three.js (~600 KB). Fetch it only once that section is close.
+  // The low-poly terrain pulls in Three.js (264 KB, ~62% unused). On a phone the canvas is usually
+  // already inside the old 700px prefetch margin at load, so the "lazy" import fired immediately and
+  // the decoration cost mid-range Android its main thread. Skip it outright on small screens, on
+  // reduced motion and on metered connections; the section reads fine without the canvas.
   const terrainCanvas = $("#terrain");
   if (terrainCanvas) {
-    let sceneAsked = false;
-    const nearTerrain = () => terrainCanvas.getBoundingClientRect().top < window.innerHeight + 700;
-    const checkTerrain = () => {
-      if (sceneAsked || !nearTerrain()) return;
-      sceneAsked = true;
-      window.removeEventListener("scroll", checkTerrain);
-      import("./scene.js").catch(() => {});
-    };
-    window.addEventListener("scroll", checkTerrain, { passive: true });
-    checkTerrain();
+    const conn = navigator.connection || {};
+    const metered = !!conn.saveData || /(^|-)2g$/.test(conn.effectiveType || "");
+    const smallScreen = window.matchMedia("(max-width: 900px)").matches;
+    if (reduce || metered || smallScreen) {
+      terrainCanvas.remove();
+    } else {
+      let sceneAsked = false;
+      const nearTerrain = () => terrainCanvas.getBoundingClientRect().top < window.innerHeight + 400;
+      const checkTerrain = () => {
+        if (sceneAsked || !nearTerrain()) return;
+        sceneAsked = true;
+        window.removeEventListener("scroll", checkTerrain);
+        import("./scene.js").catch(() => {});
+      };
+      window.addEventListener("scroll", checkTerrain, { passive: true });
+      // Deliberately not checked eagerly: that is what defeated the lazy import before.
+      window.addEventListener("load", () => setTimeout(checkTerrain, 1200), { once: true });
+    }
   }
   // Smooth scrolling and scroll-linked effects stay on even under reduced motion; only autonomous animation is gated by `reduce`.
   if (window.Lenis) {
@@ -82,17 +93,29 @@
   }
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
+  // The collapsed menu is only opacity:0 + pointer-events:none, so without this its links stayed in
+  // the tab order ahead of the hero CTA. Mirrored on load below for the initial closed state.
+  const siteNav = $("#site-nav");
+  const setNavInert = open => {
+    if (!siteNav) return;
+    const collapsed = !open && window.matchMedia("(max-width: 900px)").matches;
+    if (collapsed) siteNav.setAttribute("inert", ""); else siteNav.removeAttribute("inert");
+  };
   function closeNav() {
     if (!document.body.classList.contains("nav-open")) return;
     document.body.classList.remove("nav-open");
     navToggle?.setAttribute("aria-expanded", "false");
+    setNavInert(false);
     lenis?.start();
   }
   navToggle?.addEventListener("click", () => {
     const open = document.body.classList.toggle("nav-open");
     navToggle.setAttribute("aria-expanded", String(open));
+    setNavInert(open);
     open ? lenis?.stop() : lenis?.start();
   });
+  setNavInert(document.body.classList.contains("nav-open"));
+  window.addEventListener("resize", () => setNavInert(document.body.classList.contains("nav-open")), { passive: true });
 
   /* ---------- Toast + WhatsApp ---------- */
   const toast = $("#toast");
@@ -111,7 +134,19 @@
   const defaultMessage = origin => origin
     ? fill(S.waOrigin, { origin })
     : S.waDefault;
-  $$(".js-whatsapp").forEach(b => b.addEventListener("click", () => openWhatsApp(b.dataset.message || defaultMessage(b.dataset.origin))));
+  // The controls are real <a href="https://wa.me/..."> links so they work without JS. Where JS is
+  // available we refresh the prefilled text just before the browser follows the link, and only fall
+  // back to window.open for anything still rendered as a <button>.
+  $$(".js-whatsapp").forEach(b => {
+    const msg = () => b.dataset.message || defaultMessage(b.dataset.origin);
+    if (b.tagName === "A") {
+      b.addEventListener("click", () => {
+        if (WHATSAPP_NUMBER) b.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg())}`;
+      });
+    } else {
+      b.addEventListener("click", () => openWhatsApp(msg()));
+    }
+  });
 
   /* ---------- Hero: one reveal, parallax, real footage ---------- */
   const hero = $(".hero");
@@ -140,11 +175,30 @@
       if (cap && galleryData[slideIndex]) cap.textContent = galleryData[slideIndex].caption;
     };
     const restart = () => { clearInterval(slideTimer); slideTimer = setInterval(() => show(slideIndex + 1), 5500); };
-    $$("[data-slide]").forEach(b => b.addEventListener("click", () => { show(slideIndex + Number(b.dataset.slide)); restart(); }));
-    dots.forEach(d => d.addEventListener("click", () => { show(Number(d.dataset.slideTo)); restart(); }));
+    $$("[data-slide]").forEach(b => b.addEventListener("click", () => { hydrate(); show(slideIndex + Number(b.dataset.slide)); restart(); }));
+    dots.forEach(d => d.addEventListener("click", () => { hydrate(); show(Number(d.dataset.slideTo)); restart(); }));
     hero.addEventListener("pointerenter", () => clearInterval(slideTimer));
     hero.addEventListener("pointerleave", restart);
-    restart();
+    // Auto-advance waits for the first interaction. A carousel that swaps a full-bleed photo
+    // while the page is still loading makes that later paint the Largest Contentful Paint -
+    // measured worse, and genuinely worse on a slow connection, since the next slide is lazy
+    // and downloads mid-read. Reduced motion keeps it off entirely.
+    // Slides past the first ship with their URLs parked in data- attributes.
+    const hydrate = () => {
+      $$("[data-srcset], [data-src]", slider).forEach(el => {
+        if (el.dataset.srcset) { el.srcset = el.dataset.srcset; delete el.dataset.srcset; }
+        if (el.dataset.src) { el.src = el.dataset.src; delete el.dataset.src; }
+      });
+    };
+    let autoStarted = false;
+    const startAuto = () => {
+      if (autoStarted || reduce) return;
+      autoStarted = true;
+      hydrate();
+      restart();
+    };
+    ["pointerdown", "keydown", "wheel", "touchstart", "scroll"].forEach(ev =>
+      window.addEventListener(ev, startAuto, { once: true, passive: true }));
   }
   if (lb && galleryData.length) {
     const img = $("#lb-img"), capEl = $("#lb-caption"), count = $("#lb-count"), thumbs = $$("#lb-thumbs button");

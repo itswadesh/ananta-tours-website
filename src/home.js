@@ -3,7 +3,7 @@ const dests = require("./destinations");
 const stations = require("./stations");
 const transport = require("./transport");
 const manifest = require("./photo-manifest.json");
-const { esc, pic, icon, layout, ctaCard, realBadge, fill } = require("./templates");
+const { esc, pic, icon, layout, ctaCard, realBadge, fill, waHref } = require("./templates");
 
 const enc = s => encodeURIComponent(s).replace(/%20/g, "+");
 
@@ -52,10 +52,10 @@ function render(L, alternates = [], updated = null) {
   const gal = galleryKeys.map(k => ({ photo: galleryPhotos[k], alt: H.traveller.alts[k], caption: f(H.traveller.captions[k], { date: dates.deliveredOn }), label: H.traveller.thumbs[k], lb: heroPhotos.indexOf(galleryPhotos[k]) }));
 
   function stop(d, i) {
-    const t = td(d), x = i % 2 === 0 ? 56 : 44, eta = etaFrom(d.drive);
+    const t = td(d), x = i % 2 === 0 ? 56 : 44, eta = etaFrom(d.drive), pAlt = t.photoAlt || f(H.journey.photoAlt, { name: t.name });
     return `<article class="stop" id="stop-${d.slug}" style="--mx:${x}%">
   <span class="stop-marker" aria-hidden="true"><i>${i + 1}</i></span>
-  <div class="stop-media" data-parallax="7">${P(d.photo, { alt: f(H.journey.photoAlt, { name: t.name }), sizes: "(min-width: 900px) 45vw, 100vw" })}</div>
+  <div class="stop-media" data-parallax="7">${P(d.photo, { alt: pAlt, sizes: "(min-width: 900px) 45vw, 100vw" })}</div>
   <div class="stop-body">
     <span class="stop-kind">${icon(d.icon)}${esc(t.kind)}</span>
     <h3>${esc(t.name)}</h3>
@@ -69,8 +69,9 @@ function render(L, alternates = [], updated = null) {
   function destCard(d, featured) {
     const t = td(d);
     const href = d.page ? L.page(d.page) : `${L.page("koraput-sightseeing")}#${d.slug}`;
+    const pAlt = t.photoAlt || f(H.journey.photoAlt, { name: t.name });
     return `<article class="dest-card tilt${featured ? " dest-featured" : ""}">
-  ${P(d.photo, { alt: f(H.journey.photoAlt, { name: t.name }), sizes: featured ? "(min-width: 900px) 40vw, 100vw" : "(min-width: 1100px) 25vw, (min-width: 600px) 50vw, 100vw" })}
+  ${P(d.photo, { alt: pAlt, sizes: featured ? "(min-width: 900px) 40vw, 100vw" : "(min-width: 1100px) 25vw, (min-width: 600px) 50vw, 100vw" })}
   <div class="dest-body">
     <span class="dest-kind">${icon(d.icon)}${esc(t.kind)}</span>
     <h3>${esc(t.name)}</h3>
@@ -110,7 +111,7 @@ function render(L, alternates = [], updated = null) {
   const body = `
 <section class="hero" aria-labelledby="hero-title">
   <div class="hero-media" id="hero-slider">
-    ${heroSlides.map((s, i) => P(s.photo, { alt: s.alt, sizes: "100vw", priority: i === 0, cls: "hero-slide" + (i === 0 ? " is-active" : "") })).join("\n    ")}
+    ${heroSlides.map((s, i) => P(s.photo, { alt: s.alt, sizes: "100vw", priority: i === 0, defer: i !== 0, cls: "hero-slide" + (i === 0 ? " is-active" : "") })).join("\n    ")}
   </div>
   <div class="hero-shade" aria-hidden="true"></div>
   <button class="hero-open" type="button" aria-label="${esc(H.hero.openGallery)}" data-gallery-open="0"></button>
@@ -202,7 +203,7 @@ function render(L, alternates = [], updated = null) {
         <p>${esc(H.journey.endP)}</p>
         <div class="btn-row" style="justify-content:center">
           <a class="btn btn-sand" href="#planner">${icon("route")}<span>${esc(H.journey.buildTrip)}</span></a>
-          <button class="btn btn-ghost js-whatsapp" type="button">${icon("whatsapp")}<span>${esc(H.journey.whatsappAnanta)}</span></button>
+          <a class="btn btn-ghost js-whatsapp" href="${waHref()}" target="_blank" rel="noopener noreferrer">${icon("whatsapp")}<span>${esc(H.journey.whatsappAnanta)}</span></a>
         </div>
       </div>
     </article>
@@ -407,7 +408,7 @@ function render(L, alternates = [], updated = null) {
       <aside class="quote-card">
         <h3>${icon("chat")}${esc(H.price.cardTitle)}</h3>
         <ol>${H.price.cardLines.map(l => `<li>${esc(l)}</li>`).join("")}</ol>
-        <button class="btn btn-earth js-whatsapp" type="button">${icon("whatsapp")}<span>${esc(H.price.cta)}</span></button>
+        <a class="btn btn-earth js-whatsapp" href="${waHref()}" target="_blank" rel="noopener noreferrer">${icon("whatsapp")}<span>${esc(H.price.cta)}</span></a>
         <p class="quote-note">${icon("shield")}<span>${esc(H.price.note)}</span></p>
       </aside>
     </div>
@@ -474,8 +475,8 @@ function render(L, alternates = [], updated = null) {
       <p class="lede">${esc(H.origins.lede)}</p>
     </div>
     <div class="origin-grid">
-      ${[["bbs", "rail-train", "koraput-tour-package-from-bhubaneswar"], ["kol", "rail-bridge", "koraput-tour-package-from-kolkata"]].map(([k, photo, slug]) => `<article class="origin-card">
-        ${P(photo, { alt: H.origins[k].alt, sizes: "(min-width: 900px) 50vw, 100vw" })}
+      ${[["bbs", "rail-train", "koraput-tour-package-from-bhubaneswar"], ["kol", "rail-bridge", "koraput-tour-package-from-kolkata"], ["vzg", "rail-viaduct", "koraput-tour-package-from-visakhapatnam"]].map(([k, photo, slug]) => `<article class="origin-card">
+        ${P(photo, { alt: H.origins[k].alt, sizes: "(min-width: 900px) 33vw, 100vw" })}
         <div class="origin-body">
           <span>${icon("train")}${esc(H.origins[k].label)}</span>
           <h3>${esc(H.origins[k].h3)}</h3>

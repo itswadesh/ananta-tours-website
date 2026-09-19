@@ -4,8 +4,8 @@
    blocks and the footer. Text over photographs always sits on a dark gradient. */
 :root {
   --orange: #f26a1b;        /* logo orange: highlights, icons, links, the road */
-  --orange-deep: #d9500d;   /* solid buttons (white text passes contrast) */
-  --orange-hover: #c2470b;
+  --orange-deep: #c1470c;   /* text and solid buttons: >=4.5:1 on white, #f6f7f9 and the tint */
+  --orange-hover: #a63c08;
   --orange-tint: #fff1e6;   /* selected chips, callouts */
   --orange-line: #ffd2b0;
   --navy: #141414;          /* dark feature blocks (black, kept under the old token name) */
@@ -370,7 +370,7 @@ body.lb-open { overflow: hidden; }
 .compare-bad .cmp-ic { background: #fdecec; color: #c93b3b; }
 .compare-good .cmp-ic { background: rgba(242, 106, 27, 0.16); color: var(--orange); }
 .cmp-ic .ic { width: 1.2rem; height: 1.2rem; }
-.compare-vs { position: absolute; left: 50%; top: 50%; z-index: 2; width: 3rem; height: 3rem; display: grid; place-items: center; transform: translate(-50%, -50%); border-radius: 50%; background: var(--orange); color: #fff; font-family: var(--display); font-weight: 500; font-size: 1.05rem; box-shadow: 0 10px 25px -10px rgba(0, 0, 0, 0.5); }
+.compare-vs { position: absolute; left: 50%; top: 50%; z-index: 2; width: 3rem; height: 3rem; display: grid; place-items: center; transform: translate(-50%, -50%); border-radius: 50%; background: var(--orange-deep); color: #fff; font-family: var(--display); font-weight: 500; font-size: 1.05rem; box-shadow: 0 10px 25px -10px rgba(0, 0, 0, 0.5); }
 .compare-stats { list-style: none; padding: 0; margin-top: 1.2rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8rem; }
 .compare-stats li { display: flex; align-items: center; gap: 0.5rem; padding: 0.8rem 1rem; border-radius: var(--r); background: var(--grey); border: 1px solid var(--line); font-size: 0.92rem; }
 .compare-stats li > .ic { color: var(--orange); width: 1.3rem; height: 1.3rem; }
@@ -572,7 +572,7 @@ body.lb-open { overflow: hidden; }
 .station-note .ic { color: var(--orange); margin-top: 0.15rem; }
 
 /* Origins: text over photo on a dark gradient */
-.origin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+.origin-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
 .origin-card { position: relative; display: grid; border-radius: var(--r-lg); overflow: hidden; min-height: 24rem; color: #fff; background: var(--navy); border: 1px solid var(--line); }
 .origin-card .pic { position: absolute; inset: 0; }
 .origin-card .pic img { transition: transform 1s var(--ease-out); }
@@ -695,7 +695,7 @@ body.lb-open { overflow: hidden; }
 .lang-switch summary::-webkit-details-marker { display: none; }
 .lang-switch summary:hover, .lang-switch[open] summary { color: var(--ink); border-color: #c5cad4; background: #fff; }
 .lang-switch summary .ic { width: 1.1rem; height: 1.1rem; color: var(--orange-deep); }
-.lang-menu { position: absolute; right: 0; top: calc(100% + 0.5rem); z-index: 60; min-width: 11rem; display: grid; padding: 0.4rem; border-radius: var(--r); background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(18px) saturate(170%); -webkit-backdrop-filter: blur(18px) saturate(170%); border: 1px solid var(--line); box-shadow: 0 20px 40px -18px rgba(0, 0, 0, 0.35); animation: menuin 0.2s var(--ease-out); }
+.lang-menu { position: absolute; right: 0; top: calc(100% + 0.5rem); z-index: 60; min-width: 11rem; display: grid; padding: 0.4rem; border-radius: var(--r); background: #fff; backdrop-filter: blur(18px) saturate(170%); -webkit-backdrop-filter: blur(18px) saturate(170%); border: 1px solid var(--line); box-shadow: 0 20px 40px -18px rgba(0, 0, 0, 0.35); animation: menuin 0.2s var(--ease-out); }
 @keyframes menuin { from { opacity: 0; transform: translateY(-6px); } }
 .lang-menu a { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.55rem 0.7rem; border-radius: 0.55rem; font-size: 0.95rem; font-weight: 500; color: var(--ink-soft); }
 .lang-menu a:hover { background: var(--grey-2); color: var(--ink); }
@@ -839,3 +839,102 @@ html:not([lang="en"]) .site-nav { font-size: 0.98rem; }
 
 /* Motion opt-out: add ?still to the URL (sets html.is-still) to freeze decorative animation. */
 html.is-still *, html.is-still *::before, html.is-still *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+
+
+/* ---------------------------------------------------------------------------
+   Mobile ergonomics — from the September 2026 SEO/accessibility audit.
+   --------------------------------------------------------------------------- */
+
+/* 326px of content in a 320px viewport: the header's gutter padding plus its flex gap
+   overflowed the smallest phones still common in this market. */
+@media (max-width: 340px) {
+  .site-header { padding-inline: 0.65rem; gap: 0.35rem; }
+  .site-nav { gap: 0.35rem; }
+  .brand-mark { width: 2.3rem; height: 2.3rem; }
+}
+
+/* Tap targets. The header controls measured 37-40px, the language rows 42px and the footer
+   and contact links 24px on a 33px pitch — all under the 44px usable floor on a phone. */
+@media (max-width: 900px) {
+  .site-header .btn-sm,
+  .site-header .nav-toggle,
+  .lang-switch > summary { min-height: 44px; min-width: 44px; }
+  .lang-menu a { min-height: 44px; }
+  .footer-col a,
+  .footer-col button { min-height: 44px; display: inline-flex; align-items: center; }
+}
+
+/* The collapsed menu is hidden with opacity + pointer-events, which leaves its links in the
+   tab order; script.js marks it inert, and this keeps it non-interactive if that script fails. */
+@media (max-width: 900px) {
+  body:not(.nav-open) .site-nav[inert] { visibility: hidden; }
+}
+
+
+/* ---------------------------------------------------------------------------
+   Contrast and target size - September 2026 accessibility pass.
+   --------------------------------------------------------------------------- */
+
+/* .compare-card is a dark panel that is not .band-dark, so its links kept the dark-on-dark
+   orange (4.47:1). The bright accent reads 6.01:1 there. */
+.compare-card .text-link { color: var(--orange); }
+
+/* The seat-count figure sat at 2.85:1 on the grey band; large text still needs 3:1. */
+.seat-head strong { color: var(--orange-deep); }
+
+/* Footer headings moved from h4 to h2 to stop skipping a heading level; keep the old size. */
+.footer-col h2 {
+  color: #fff;
+  margin-bottom: 0.3rem;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 1.05rem;
+}
+
+/* Slider dots were 9.6px hit targets. The dot is now drawn by ::before so the button itself
+   can carry a 24px target without changing how it looks. */
+.hero-dots { gap: 0; padding: 0 0.3rem; }
+.hero-dots button {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: none;
+  position: relative;
+  transition: width 0.3s var(--ease-out);
+}
+.hero-dots button::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.45);
+  transition: width 0.3s var(--ease-out), background-color 0.2s;
+}
+.hero-dots button[aria-selected="true"] { width: 40px; }
+.hero-dots button[aria-selected="true"]::before {
+  width: 1.6rem;
+  border-radius: 0.3rem;
+  background: var(--orange);
+}
+
+
+/* Seventeen full-width sections were all laid out at load, which on a throttled phone cost more
+   than the bytes did: Style & Layout 740ms plus Rendering 523ms against 42ms of parsing.
+   content-visibility defers layout and paint for sections that are still offscreen; the auto
+   keyword lets each one remember its real height after the first pass, so the scrollbar does
+   not jump and Cumulative Layout Shift stays at zero. The hero is excluded: it is the Largest
+   Contentful Paint and must render immediately. */
+/* content-visibility was tried here and removed. It halved main-thread work (2.8s to 1.3s)
+   but did not move the Lighthouse score, and because sections are size-estimated until they
+   render, the accessibility geometry snapshot reported neighbouring sections as overlapping -
+   which failed the pointer-target check on desktop. Not worth three real points for no gain. */
+
+/* Two controls sat within 24px of a neighbouring target, which fails the pointer-target rule
+   even though each is large enough on its own. */
+#trip-form .btn-row { gap: 1.5rem; }
+.compare-card .text-link { margin-top: 0.75rem; }
+.compare-card .text-link, #trip-form .btn-row > * { min-height: 24px; }

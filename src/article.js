@@ -1,6 +1,6 @@
 const site = require("./site");
 const dests = require("./destinations");
-const { esc, pic, icon, layout, ctaCard, isOwn, realBadge, fill } = require("./templates");
+const { esc, pic, icon, layout, ctaCard, isOwn, realBadge, fill, waHref } = require("./templates");
 
 const byId = Object.fromEntries(dests.map(d => [d.slug, d]));
 // English page HTML links to sibling pages as "../slug/". In a language folder that only works for translated
@@ -82,7 +82,7 @@ function render(L, page, allPages, alternates = [], updated = null) {
       <div class="aside-card">
         <h3>${esc(t.planThis)}</h3>
         <p>${esc(P.asideText || t.asideText)}</p>
-        <button class="btn btn-sand js-whatsapp" type="button" data-message="${esc(message)}">${icon("whatsapp")}<span>${esc(t.whatsappAnanta)}</span></button>
+        <a class="btn btn-sand js-whatsapp" href="${waHref(message)}" target="_blank" rel="noopener noreferrer" data-message="${esc(message)}">${icon("whatsapp")}<span>${esc(t.whatsappAnanta)}</span></a>
         <a class="btn btn-ghost" href="${L.home}#planner">${icon("route")}<span>${esc(L.t.ui.cta.buildMyTrip)}</span></a>
       </div>
       ${related.length ? `<div class="aside-links"><h4>${esc(t.keepReading)}</h4>${related.map(p => `<a href="${L.page(p.slug)}">${icon("arrow")}${esc(p.short || p.title)}</a>`).join("")}</div>` : ""}
@@ -106,8 +106,9 @@ function render(L, page, allPages, alternates = [], updated = null) {
     description: P.description,
     inLanguage: L.code,
     image: `${site.url}/assets/photos/${P.hero}-1600.webp`,
-    author: { "@type": "Organization", name: site.name },
-    publisher: { "@type": "Organization", name: site.name },
+    // Reference the homepage TravelAgency node rather than minting a thin duplicate org per page.
+    author: { "@id": `${site.url}/#organization` },
+    publisher: { "@id": `${site.url}/#organization` },
     mainEntityOfPage: `${site.url}/${L.lang.folder}${P.slug}/`,
     dateModified: today,
     ...(attraction ? { about: { "@type": "TouristAttraction", name: dname(attraction.slug), geo: { "@type": "GeoCoordinates", latitude: attraction.lat, longitude: attraction.lng }, containedInPlace: { "@type": "AdministrativeArea", name: "Koraput district, Odisha" } } } : {})
@@ -119,8 +120,11 @@ function render(L, page, allPages, alternates = [], updated = null) {
     inLanguage: L.code,
     url: `${site.url}/${L.lang.folder}${P.slug}/`,
     touristType: ["Family", "Group", "Pilgrim"],
-    provider: { "@type": "TravelAgency", name: site.name, url: site.url },
-    itinerary: { "@type": "ItemList", itemListElement: daysBlock.items.map((d, i) => ({ "@type": "ListItem", position: i + 1, name: `${fill(t.day, { n: i + 1 })}: ${d.title}`, description: String(d.text).replace(/<[^>]+>/g, ""), item: (d.stops || []).map(s => ({ "@type": "TouristAttraction", name: dname(s), ...(byId[s] ? { geo: { "@type": "GeoCoordinates", latitude: byId[s].lat, longitude: byId[s].lng } } : {}) })) })) }
+    provider: { "@id": `${site.url}/#organization` },
+    // schema.org ListItem.item takes ONE Thing. Handing it an array made most consumers read
+    // element zero and silently drop the rest of the day's stops, so each day is now a nested
+    // TouristTrip that carries its own ItemList of attractions.
+    itinerary: { "@type": "ItemList", numberOfItems: daysBlock.items.length, itemListOrder: "https://schema.org/ItemListOrderAscending", itemListElement: daysBlock.items.map((d, i) => ({ "@type": "ListItem", position: i + 1, item: { "@type": "TouristTrip", name: `${fill(t.day, { n: i + 1 })}: ${d.title}`, description: String(d.text).replace(/<[^>]+>/g, ""), provider: { "@id": `${site.url}/#organization` }, ...((d.stops || []).length ? { itinerary: { "@type": "ItemList", numberOfItems: d.stops.length, itemListElement: d.stops.map((s, k) => ({ "@type": "ListItem", position: k + 1, item: { "@type": "TouristAttraction", name: dname(s), ...(byId[s] && byId[s].page ? { url: `${site.url}/${L.lang.folder}${byId[s].page}/` } : {}), ...(byId[s] ? { geo: { "@type": "GeoCoordinates", latitude: byId[s].lat, longitude: byId[s].lng } } : {}) } })) } } : {}) } })) }
   }] : []), {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",

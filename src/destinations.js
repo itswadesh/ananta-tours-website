@@ -121,5 +121,35 @@ module.exports = [
     blurb: "A Thursday market near Duduma where Bonda and other communities trade. We visit quietly and photograph only with consent.",
     km: 90, drive: "About 3 h",
     best: "Thursdays only, in the morning."
+  },
+  // The two offbeat tops. No Commons photograph exists of either, so each carries a
+  // photoAlt that describes the highland photo we actually show rather than claiming
+  // it is the hill itself. Coordinates are the OSM village at the foot of each climb
+  // (Pendajam for Talamali, Jhadipadar for Kalyamali), not a surveyed summit.
+  {
+    slug: "talamali",
+    name: "Talamali",
+    kind: "Offbeat hilltop",
+    icon: "mountain",
+    lat: 18.7206, lng: 82.9882,
+    photo: "koraput-mist",
+    photoAlt: "Mist lying in the valleys below the Semiliguda–Pottangi highlands, the country Talamali stands in",
+    blurb: "A flat-topped hill above Pendajam, grass instead of forest, usually paired with the village of Putsil. We check the last stretch of road the week you travel.",
+    km: 45, drive: "About 1.5 h",
+    best: "October to February, and early. By midday the haze flattens the view.",
+    page: "talamali-koraput"
+  },
+  {
+    slug: "kalyamali",
+    name: "Kalyamali",
+    kind: "Offbeat hilltop",
+    icon: "mountain",
+    lat: 18.7523, lng: 83.0246,
+    photo: "koraput-fields",
+    photoAlt: "Fields and low hills on the Koraput plateau, the country the Kalyamali climb starts from",
+    blurb: "Spelled Kaliamali as often as not. An open, grass-topped hill with long views towards Pottangi, and an honest walk at the end of the drive.",
+    km: 55, drive: "About 1.75 h",
+    best: "October to February. The monsoon puts the top inside a cloud and the last climb turns to mud.",
+    page: "kalyamali-koraput"
   }
 ];

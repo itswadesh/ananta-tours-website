@@ -191,14 +191,14 @@ module.exports = [
     slug: "koraput-sightseeing",
     title: "Koraput sightseeing, place by place",
     short: "Koraput sightseeing",
-    metaTitle: "Places to Visit in Koraput: 10 Stops and Distances",
-    description: "Ten places worth the drive around Koraput, from Deomali and Duduma to the town temple and museum, with distances, drive times and the best season for each.",
+    metaTitle: "Places to Visit in Koraput: 12 Stops and Distances",
+    description: "Twelve places worth the drive around Koraput, from Deomali and Duduma to the offbeat hilltops, with distances, drive times and the best season for each.",
     kind: "Places", icon: "map",
     hero: "koraput-fields", heroAlt: "Green fields and low hills on the road between Koraput and Jeypore",
     ctaPhoto: "duduma-falls",
-    lede: "Ten places, three directions and one honest line about each: how far it is from Koraput town, when it is at its best and what to expect when you get there.",
+    lede: "Twelve places, three directions and one honest line about each: how far it is from Koraput town, when it is at its best and what to expect when you get there.",
     facts: [
-      { icon: "pin", label: "Places", value: "10" },
+      { icon: "pin", label: "Places", value: "12" },
       { icon: "road", label: "Furthest", value: "Duduma, about 90 km" },
       { icon: "clock", label: "Closest", value: "Temple and museum, in town" },
       { icon: "calendar", label: "Waterfalls at their best", value: "September to December" }
@@ -228,8 +228,12 @@ module.exports = [
       { type: "p", html: "The old capital before Jeypore, about 45 km south. Small stone shrines and the Batrisa Singhasana, the 32-step throne of the old kings. Twenty minutes of history on the road to Rani Duduma." },
       { type: "h2", text: "Onukadelli", id: "onukadelli" },
       { type: "p", html: "A weekly market near Duduma, on Thursdays, where Bonda and other communities come to trade. It is a working market, not a show. We visit quietly, buy something, and photograph people only when they agree." },
-      { type: "h2", text: "Offbeat: Talamali, Kaliamali, Dudhari", id: "offbeat" },
-      { type: "p", html: "Three places local groups ask about that we do not put on a first-visit plan without checking the road that week. <a href=\"../talamali-koraput/\"><strong>Talamali</strong></a> and <a href=\"../kalyamali-koraput/\"><strong>Kaliamali</strong></a> are open highland tops in the Semiliguda–Pottangi hills with long views and rough final approaches. <strong>Dudhari</strong> is a smaller waterfall whose access changes with the season. If you want one of them, ask us on WhatsApp and we will tell you honestly whether the Traveller can get there that week." }
+      { type: "h2", text: "Talamali", id: "talamali" },
+      { type: "p", html: "A flat-topped hill above Pendajam in the Semiliguda–Pottangi highlands, about 45 km and an hour and a half from town, usually paired with the village of Putsil on the same morning. Grass instead of forest, and a rough last stretch we check the week you travel. <a href=\"../talamali-koraput/\">Full Talamali and Putsil guide.</a>" },
+      { type: "h2", text: "Kalyamali", id: "kalyamali" },
+      { type: "p", html: "Spelled Kaliamali as often as not. Another open, grass-topped hill in the same highlands, about 55 km from town, with long views towards Pottangi and an honest walk at the end of the drive. Best October to February. <a href=\"../kalyamali-koraput/\">Full Kalyamali guide.</a>" },
+      { type: "h2", text: "Offbeat: Dudhari", id: "offbeat" },
+      { type: "p", html: "<strong>Dudhari</strong> is a smaller waterfall whose access changes with the season, and the one place here we will not put on a first-visit plan without checking the road that week. Ask us on WhatsApp and we will tell you honestly whether the Traveller can get there." }
     ],
     related: ["deomali-tour", "duduma-waterfall-tour", "jagannath-temple-koraput", "talamali-koraput"],
     message: "Hi Ananta Tours, we are planning Koraput sightseeing. Please suggest a route and share the 17-seater Traveller price."
